@@ -1,0 +1,8 @@
+Centre-ville;1410 de l'Adresse;366.5
+Chaise;D;190.5;Un meuble pour s'asseoir;En mauvais etat;8/9/1995
+Mazda;V;300.5;Une jolie voiture;En bon etat;23/12/857;40000;Bleue;2005
+Bague;B;25;Une magnifique bague;En bon etat;7/4/2011;2;Diamant
+Chevrolet;V;300.5;Une voiture laide;En bon etat;23/12/857;40000;Grise;2005
+Collier;B;25;Un beau collier;En bon etat;7/4/2011;4;Rubis
+Tablette;D;40.45;Une tablette en bois;Neuve;12/12/2014
+Table;D;190.5;Un meuble pour manger;En mauvais etat;8/9/1995
