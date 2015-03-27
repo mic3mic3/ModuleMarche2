@@ -44,6 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -64,6 +65,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Acheteur.h" />
+    <ClInclude Include="..\Affichage.h" />
+    <ClInclude Include="..\Article.h" />
+    <ClInclude Include="..\Bijou.h" />
+    <ClInclude Include="..\Client.h" />
+    <ClInclude Include="..\ClientApp.h" />
+    <ClInclude Include="..\Compte.h" />
+    <ClInclude Include="..\Date.h" />
+    <ClInclude Include="..\Divers.h" />
+    <ClInclude Include="..\Employe.h" />
+    <ClInclude Include="..\MarcheAuxPuces.h" />
+    <ClInclude Include="..\Superclient.h" />
+    <ClInclude Include="..\Transaction.h" />
+    <ClInclude Include="..\Vendeur.h" />
+    <ClInclude Include="..\Voiture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Acheteur.cpp" />
+    <ClCompile Include="..\Affichage.cpp" />
+    <ClCompile Include="..\Article.cpp" />
+    <ClCompile Include="..\Bijou.cpp" />
+    <ClCompile Include="..\Client.cpp" />
+    <ClCompile Include="..\ClientApp.cpp" />
+    <ClCompile Include="..\Compte.cpp" />
+    <ClCompile Include="..\Divers.cpp" />
+    <ClCompile Include="..\Employe.cpp" />
+    <ClCompile Include="..\MarcheAuxPuces.cpp" />
+    <ClCompile Include="..\Superclient.cpp" />
+    <ClCompile Include="..\Vendeur.cpp" />
+    <ClCompile Include="..\Voiture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
