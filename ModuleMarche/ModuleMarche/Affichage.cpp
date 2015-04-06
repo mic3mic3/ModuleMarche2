@@ -81,7 +81,8 @@ bool Affichage::validationFloat(const string & solde)
 			nbPoints++;
 			if (nbPoints > 1)
 			{
-				valide = false;
+				//valide = false;
+				return false;
 			}
 		}
 		else if (isdigit(solde[0]))
@@ -91,7 +92,8 @@ bool Affichage::validationFloat(const string & solde)
 				decimales++;
 				if (decimales > 2)
 				{
-					valide = false;
+					//valide = false;
+					return false;
 				}
 			}
 			else
@@ -99,13 +101,15 @@ bool Affichage::validationFloat(const string & solde)
 				avantPoint++;
 				if (avantPoint > 5)
 				{
-					valide = false;
+					//valide = false;
+					return false;
 				}
 			}
 		}
 		else
 		{
-			valide = false;
+			//valide = false;
+			return false;
 		}
 	}
 	return true;
