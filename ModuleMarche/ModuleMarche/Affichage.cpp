@@ -55,6 +55,62 @@ char Affichage::menuDemarrer()
 	return choix[0];
 }
 
+//Vérification si le compte existe déjà
+bool Affichage::validationCompteExistant(const string & nomCompte)
+{
+	fstream compteVerif(nomCompte + ".txt", ios::in);
+	if (compteVerif.is_open())
+	{
+		cout << "Compte existant ou contient un point-virgule" << endl;
+		return false;
+	}
+	compteVerif.close();
+	return true;
+}
+
+bool Affichage::validationFloat(const string & solde)
+{
+	//Vérifier si on peut transférer le string en float
+	int avantPoint = 0;
+	int nbPoints = 0;
+	int decimales = 0;
+	for (int cpt = 0; cpt < solde.length(); cpt++)
+	{
+		if (solde[cpt] == '.')
+		{
+			nbPoints++;
+			if (nbPoints > 1)
+			{
+				valide = false;
+			}
+		}
+		else if (isdigit(solde[0]))
+		{
+			if (nbPoints > 0)
+			{
+				decimales++;
+				if (decimales > 2)
+				{
+					valide = false;
+				}
+			}
+			else
+			{
+				avantPoint++;
+				if (avantPoint > 5)
+				{
+					valide = false;
+				}
+			}
+		}
+		else
+		{
+			valide = false;
+		}
+	}
+	return true;
+}
+
 //Affichage du menu d'inscription et vérification s'il existe déjà
 void Affichage::menuInscription()
 {
@@ -66,34 +122,19 @@ void Affichage::menuInscription()
 	system("cls");
 
 	cout << "Inscription" << endl;
-	bool compteValide = true;
-	
-
 	do
 	{
 		nomCompte = "";
 		
 		string ligne;
-		if (!compteValide)
-		{
-			cout << "Compte existant ou contient un point-virgule" << endl;
-		}
-		compteValide = true;
 		cout << "Nom de compte (exit pour sortir): ";
 		getline(cin,nomCompte);
 		
-		if (nomCompte == "exit")
+		if (nomCompte == CS_EXIT_INPUT)
 		{
 			return;
 		}
-		//Vérification si le compte existe déjà
-		fstream compteVerif(nomCompte+".txt",ios::in);
-		if (compteVerif.is_open())
-		{
-			compteValide = false;
-		}
-		compteVerif.close();
-	}while(!compteValide);
+	}while(!validationCompteExistant(nomCompte));
 
 	//Entrée de différentes informations
 	cout << "Nom: ";
@@ -103,18 +144,18 @@ void Affichage::menuInscription()
 	cout << "Adresse: ";
 	getline(cin,adresse);
 
-	bool valide = true;
+	//bool valide = true;
 
 	do
-	{
+	{/*
 		if (!valide)
 		{
 			cout << "Erreur dans le solde!" << endl;
-		}
-		valide = true;
+		}*/
+		//valide = true;
 		cout << "Solde (maximum de 5 chiffres avant le point et de 2 decimales): ";
 		getline(cin,solde);
-
+		/*
 		//Vérifier si on peut transférer le string en float
 		int avantPoint = 0;
 		int nbPoints = 0;
@@ -152,7 +193,7 @@ void Affichage::menuInscription()
 			{
 				valide = false;
 			}
-		}
+		}*/
 	}while(!valide);
 	string forfait;
 	do
@@ -367,7 +408,6 @@ int Affichage::menuMarche(float solde,const vector<Article*> &listeArticles,char
 		}
 		valide = true;
 		int cpt2=0;
-		int max;
 		//On met une précision aux variables float avec fixed et setprecision(), puis on aligne bien les colonnes avec setw() et left
 		cout << "Marche Aux Puces (Mode Achat)" << "\tVotre solde: " << fixed << setprecision(2) << solde << endl << endl;
 		cout << setw(4) << left << "    " << setw(13) << left << "Article" << setw(10) << left << "Prix" << setw(25) << left << "Description" << setw(17) << left << "Etat" << setw(10) << left << "Date" << endl << endl;

@@ -32,6 +32,10 @@ public:
 	static bool menuVerifAchat(bool);
 	static int menuVenteArticles(float,const vector<Article*> &);
 	static char menuCategories();
+	
+	//Méthodes de validation
+	static bool validationCompteExistant(const string &);
+	static bool validationFloat(const string &);
 };
 
 #endif
