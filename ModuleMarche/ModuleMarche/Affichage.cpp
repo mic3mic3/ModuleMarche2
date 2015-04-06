@@ -198,7 +198,7 @@ void Affichage::menuInscription()
 				valide = false;
 			}
 		}*/
-	}while(!valide);
+	}while(!validationFloat(solde));
 	string forfait;
 	do
 	{
