@@ -338,7 +338,7 @@ void Affichage::menuAchats(const vector<Article*> &achats)
 	system("cls");
 	cout << "Mes achats" << endl << endl;
 	cout << setw(15) << left << "Article" << setw(12) << left << "Prix" << setw(25) << left << "Description" << setw(17) << left << "Etat" << setw(10) << left << "Date" << endl << endl;
-	for (int cpt=0;cpt < achats.size();cpt++)
+	for (size_t cpt=0;cpt < achats.size();cpt++)
 	{
 		cout << achats[cpt];
 	}
