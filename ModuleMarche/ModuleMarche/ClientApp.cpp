@@ -37,6 +37,15 @@ ClientApp::~ClientApp(void)
 {
 }
 
+//Déconnexion: On retire le marché et le client connecté de la mémoire
+void ClientApp::deconnexion()
+{
+	delete client;
+	client = NULL;
+	delete marcheAuxPuces;
+	marcheAuxPuces = NULL;
+}
+
 //On va appeler le premier menu
 void ClientApp::demarrer()
 {
@@ -280,7 +289,7 @@ void ClientApp::creationMarche(const string &nom)
 	fstream marche(nom + ".txt", ios::in);
 	if (!marche.is_open())
 	{
-		// Sans marché aux puces, l'application ne peut plus poursuivre
+		// Sans marché aux puces, l'application ne peut plus poursuivre.
 		cout << "Une erreur est survenue lors de l'ouverture du marche aux puces." << endl
 			<< "L'application doit fermer.";
 		string input;
@@ -624,7 +633,6 @@ void ClientApp::creationMarche(const string &nom)
 //Une fois connecté, on peut voir le menu
 void ClientApp::selection()
 {
-//	char choix = affichage->menuSelection(client);
 	char choix = Affichage::menuSelection(client);
 	Employe* emp;
 	Vendeur* vnd;
@@ -648,12 +656,9 @@ void ClientApp::selection()
 		{
 			voirForfaits();
 		}
-		else //On se déconnecte et supprime le client et le marché
+		else
 		{
-			delete client;
-			client = NULL;
-			delete marcheAuxPuces;
-			marcheAuxPuces = NULL;
+			deconnexion();
 		}
 	}
 	else if (emp = dynamic_cast<Employe*>(client))
@@ -666,12 +671,9 @@ void ClientApp::selection()
 		{
 			voirArticles();
 		}
-		else //On se déconnecte et supprime le client et le marché
+		else
 		{
-			delete client;
-			client = NULL;
-			delete marcheAuxPuces;
-			marcheAuxPuces = NULL;
+			deconnexion();
 		}
 	}
 	else if (ach = dynamic_cast<Acheteur*>(client))
@@ -688,12 +690,9 @@ void ClientApp::selection()
 		{
 			voirForfaits();
 		}
-		else //On se déconnecte et supprime le client et le marché
+		else
 		{
-			delete client;
-			client = NULL;
-			delete marcheAuxPuces;
-			marcheAuxPuces = NULL;
+			deconnexion();
 		}
 	}
 	else if (vnd = dynamic_cast<Vendeur*>(client))
@@ -710,16 +709,12 @@ void ClientApp::selection()
 		{
 			voirForfaits();
 		}
-		else //On se déconnecte et supprime le client et le marché
+		else
 		{
-			delete client;
-			client = NULL;
-			delete marcheAuxPuces;
-			marcheAuxPuces = NULL;
+			deconnexion();
 		}
 	}
 	//On renvoit vers la fonction choisie par l'utilisateur (voir les achats ou voir les articles disponibles au marché)
-	
 }
 
 //Le client voit les forfaits
@@ -741,74 +736,70 @@ void ClientApp::voirForfaits()
 		default:
 			break;
 	}
-	//On update le fichier après avoir changer le forfait
-			fstream achats(compte+".txt");
-			if (achats)
+	//On update le fichier après avoir changé le forfait
+	fstream achats(compte+".txt");
+	if (achats)
+	{
+		achats << compte << ";" << client->getNom() << ";" << client->getPrenom() << ";" << client->getAdresse() << ";" << client->getSolde();
+		Employe* emp;
+		Superclient* sup;
+		Vendeur* vnd;
+		Acheteur* ach;
+		if (sup = dynamic_cast<Superclient*>(client))
+		{
+			achats << ";S\n";	
+		}
+		else if (emp = dynamic_cast<Employe*>(client))
+		{
+			achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";	
+		}
+		else if (ach = dynamic_cast<Acheteur*>(client))
+		{
+			achats << ";A\n";	
+		}
+		else if (vnd = dynamic_cast<Vendeur*>(client))
+		{
+			achats << ";V\n";	
+		}
+		for (size_t cpt=0;cpt < client->getArticles().size();cpt++)
+		{
+			ostringstream conversion; //Conversion avec sstream d'un int en string
+			conversion << client->getArticles()[cpt]->getDate().jour << "/" << client->getArticles()[cpt]->getDate().mois << "/" << client->getArticles()[cpt]->getDate().annee;
+			string date = conversion.str();
+			Divers* div;
+			Bijou* bij;
+			Voiture* voit;
+			if (div = dynamic_cast<Divers*>(client->getArticles()[cpt]))
 			{
-				achats << compte << ";" << client->getNom() << ";" << client->getPrenom() << ";" << client->getAdresse() << ";" << client->getSolde();
-				Employe* emp;
-				Superclient* sup;
-				Vendeur* vnd;
-				Acheteur* ach;
-				if (sup = dynamic_cast<Superclient*>(client))
-				{
-					achats << ";S\n";	
-				}
-				else if (emp = dynamic_cast<Employe*>(client))
-				{
-					achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";	
-				}
-				else if (ach = dynamic_cast<Acheteur*>(client))
-				{
-					achats << ";A\n";	
-				}
-				else if (vnd = dynamic_cast<Vendeur*>(client))
-				{
-					achats << ";V\n";	
-				}
-				for (size_t cpt=0;cpt < client->getArticles().size();cpt++)
-				{
-					ostringstream conversion; //Conversion avec sstream d'un int en string
-					conversion << client->getArticles()[cpt]->getDate().jour << "/" << client->getArticles()[cpt]->getDate().mois << "/" << client->getArticles()[cpt]->getDate().annee;
-					string date = conversion.str();
-					Divers* div;
-					Bijou* bij;
-					Voiture* voit;
-					if (div = dynamic_cast<Divers*>(client->getArticles()[cpt]))
-					{
-						achats << client->getArticles()[cpt]->getNom() << ";D;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<"\n";
-					}
-					else if(bij = dynamic_cast<Bijou*>(client->getArticles()[cpt]))
-					{
-						achats << client->getArticles()[cpt]->getNom() << ";B;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
-					}
-					else if(voit = dynamic_cast<Voiture*>(client->getArticles()[cpt]))
-					{
-						achats << client->getArticles()[cpt]->getNom() << ";V;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
-					}
-					
-				}
+				achats << client->getArticles()[cpt]->getNom() << ";D;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<"\n";
 			}
+			else if(bij = dynamic_cast<Bijou*>(client->getArticles()[cpt]))
+			{
+				achats << client->getArticles()[cpt]->getNom() << ";B;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
+			}
+			else if(voit = dynamic_cast<Voiture*>(client->getArticles()[cpt]))
+			{
+				achats << client->getArticles()[cpt]->getNom() << ";V;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
+			}		
+		}
+	}
 }
 
 //Le client voit les achats qu'il a fait
 void ClientApp::voirAchats()
 {
-	//affichage->menuAchats(client->getArticles());
 	Affichage::menuAchats(client->getArticles());
 }
 
 //On accède à la vente d'articles et on passe les étapes de validation, puis on update les fichiers requis à la fin
 void ClientApp::voirVenteArticles()
 {
-	//int retour = affichage->menuVenteArticles(marcheAuxPuces->getRevenu(),client->getArticles());
 	int retour = Affichage::menuVenteArticles(marcheAuxPuces->getRevenu(), client->getArticles());
 	bool prixValide;
 	bool vendu;
 	if (retour != -1)
 	{
 		prixValide = marcheAuxPuces->validerCompte(client->getArticles()[retour-1]->getPrix());
-		//vendu = affichage->menuVerifAchat(prixValide);
 		vendu = Affichage::menuVerifAchat(prixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
 		if (vendu) //Si le client achète l'article
 		{
@@ -865,10 +856,8 @@ void ClientApp::voirVenteArticles()
 					{
 						achats << client->getArticles()[cpt]->getNom() << ";V;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
 					}
-					
 				}
 			}
-
 			achats.close();
 
 			//On append la transaction dans le fichier de transaction du marché aux puces
@@ -885,7 +874,6 @@ void ClientApp::voirVenteArticles()
 					trans << "-----\n";
 				}
 			}
-
 			trans.close();
 
 			//On enlève l'article qui vient d'être vendu au fichier du marché aux puces
@@ -915,9 +903,7 @@ void ClientApp::voirVenteArticles()
 					}
 				}
 			}
-
 			marche.close();
-			
 		}
 	}
 }
@@ -925,7 +911,6 @@ void ClientApp::voirVenteArticles()
 //On affiche à l'utilisateur les articles disponibles et s'il en choisit un, on demande une validation après la vérification du solde, puis s'il l'achète, on fait la transaction
 void ClientApp::voirArticles()
 {
-	//char categorie = affichage->menuCategories();
 	char categorie = Affichage::menuCategories();
 	if (categorie != 'Q')
 	{
@@ -992,8 +977,8 @@ void ClientApp::voirArticles()
 						}
 					}
 				}
-
 				achats.close();
+
 				marcheAuxPuces->ajouterTransaction(retour-1,client,marcheAuxPuces->getArticlesEnVente()[retour-1]); //On crée la transaction pour le marché aux puces
 
 				//On append la transaction dans le fichier de transaction du marché aux puces
@@ -1006,7 +991,6 @@ void ClientApp::voirArticles()
 					trans << "Date: " << marcheAuxPuces->getDerniereTransaction().date.jour << "/" << marcheAuxPuces->getDerniereTransaction().date.mois << "/" << marcheAuxPuces->getDerniereTransaction().date.annee << "\n";
 					trans << "-----\n";
 				}
-
 				trans.close();
 
 				//On enlève l'article qui vient d'être vendu au fichier du marché aux puces
@@ -1036,7 +1020,6 @@ void ClientApp::voirArticles()
 						}
 					}
 				}
-
 				marche.close();
 			}
 		}
