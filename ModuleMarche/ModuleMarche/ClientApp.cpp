@@ -23,11 +23,6 @@ using namespace std; //Pour ne jamais avoir à écrire std:: puisque j'utilise bea
 
 ClientApp::ClientApp(void)
 {
-}
-
-ClientApp::ClientApp(Affichage* aff)
-{
-	affichage = aff;
 	client = NULL;
 	while (true) //À chaque fois qu'une opération est complétée, on revient à un des deux menus
 	{
@@ -45,7 +40,7 @@ ClientApp::~ClientApp(void)
 //On va appeler le premier menu
 void ClientApp::demarrer()
 {
-	char choix = affichage->menuDemarrer();
+	char choix = Affichage::menuDemarrer();
 	//On envoie l'utilisateur à l'un des deux menus selon son input
 	if (choix == '1')
 	{
@@ -60,24 +55,19 @@ void ClientApp::demarrer()
 //On appelle le menu d'inscription
 void ClientApp::inscription()
 {
-	affichage->menuInscription();
+	Affichage::menuInscription();
 }
 
 //On appelle le menu de connexion, puis on crée le client et le marché si c'est un succès
 void ClientApp::connexion()
 {
-	string retour = affichage->menuConnexion();
+	string retour = Affichage::menuConnexion();
 	if (retour == "exit")
-	{
 		return;
-	}
-	else
-	{
-		
-		compte = retour;
-		creationMarche("Centre-ville");
-		creationClient(retour); //Le nom du marché aux puces, et donc du fichier ***ATTENTION, le programme se fermera automatiquement si le fichier Centre-ville.txt n'existe pas
-	}
+
+	compte = retour;
+	creationMarche("Centre-ville");
+	creationClient(retour); //Le nom du marché aux puces, et donc du fichier ***ATTENTION, le programme se fermera automatiquement si le fichier Centre-ville.txt n'existe pas
 }
 
 //Selon le nom de compte, on va chercher les informations du client (nom, prenom, adresse, solde du compte, achats) dans un fichier
@@ -131,159 +121,154 @@ void ClientApp::creationClient(const string &nomCompte)
 					break;
 				default:
 					break;
-
 			}
 		}
 	}
 	solde = stof(soldeStr.c_str()); //Transfert des string en float
 	switch (forfait)
-		{
-			case 'A':
-				client = new Acheteur(nom,prenom,adresse,new Compte(solde));
-				break;
-			case 'V':
-				client = new Vendeur(nom,prenom,adresse,new Compte(solde));
-				break;
-			case 'S':
-				client = new Superclient(nom,prenom,adresse,new Compte(solde));
-				break;
-			case 'E':
-				bool found= false;
-				for (size_t cpt = 0;cpt < comptesEmployes.size(); cpt++)
+	{
+		case 'A':
+			client = new Acheteur(nom,prenom,adresse,new Compte(solde));
+			break;
+		case 'V':
+			client = new Vendeur(nom,prenom,adresse,new Compte(solde));
+			break;
+		case 'S':
+			client = new Superclient(nom,prenom,adresse,new Compte(solde));
+			break;
+		case 'E':
+			bool found= false;
+			for (size_t cpt = 0;cpt < comptesEmployes.size(); cpt++)
+			{
+				if (compte == comptesEmployes[cpt])
 				{
-					if (compte == comptesEmployes[cpt])
-					{
-						client = marcheAuxPuces->getPersonnel()[cpt];
-						found = true;
-					}
+					client = marcheAuxPuces->getPersonnel()[cpt];
+					found = true;
 				}
-				if (!found)
-				{
-					salaire = stof(salaireStr.c_str());
-					rabais = stof(rabaisStr.c_str());
-					client = new Employe(nom,prenom,adresse,new Compte(solde),salaire,rabais);
-				}
+			}
+			if (!found)
+			{
+				salaire = stof(salaireStr.c_str());
+				rabais = stof(rabaisStr.c_str());
+				client = new Employe(nom,prenom,adresse,new Compte(solde),salaire,rabais);
+			}
 				
-				break;
-		}
-
+			break;
+	}
 
 	//On récupère les achats du client après la première ligne du fichier
 	if (forfait != 'E')
 	{
-	if (compte2.is_open())
-	{
-		
-	string ligneAchats;
-	while (getline(compte2,ligneAchats) && ligneAchats.length() != NULL)
-	{
-		string nomArticle;
-		string prixStr;
-		float prix;
-		string description;
-		string etat;
-		string dateFabricationStr;
-		struct Date dateFabrication;
-		nbPtsVirgs = 0;
-		char type;
-		string attribut1Str;
-		string attribut3Str;
-		int attribut1;
-		string attribut2;
-		int attribut3;
-		for (size_t cpt=0;cpt < ligneAchats.length();cpt++)
+		if (compte2.is_open())
 		{
-			if (ligneAchats[cpt]==';')
+			string ligneAchats;
+			while (getline(compte2,ligneAchats) && ligneAchats.length() != NULL)
 			{
-				nbPtsVirgs++;
-			}
-			else
-			{
-				switch(nbPtsVirgs)
+				string nomArticle;
+				string prixStr;
+				float prix;
+				string description;
+				string etat;
+				string dateFabricationStr;
+				struct Date dateFabrication;
+				nbPtsVirgs = 0;
+				char type;
+				string attribut1Str;
+				string attribut3Str;
+				int attribut1;
+				string attribut2;
+				int attribut3;
+				for (size_t cpt=0;cpt < ligneAchats.length();cpt++)
 				{
-					case 0:
-						nomArticle+=ligneAchats[cpt];
+					if (ligneAchats[cpt]==';')
+					{
+						nbPtsVirgs++;
+					}
+					else
+					{
+						switch(nbPtsVirgs)
+						{
+							case 0:
+								nomArticle+=ligneAchats[cpt];
+								break;
+							case 1:
+								type = ligneAchats[cpt];
+								break;
+							case 2:
+								prixStr+=ligneAchats[cpt];
+								break;
+							case 3:
+								description+=ligneAchats[cpt];
+								break;
+							case 4:
+								etat+=ligneAchats[cpt];
+								break;
+							case 5:
+								dateFabricationStr+=ligneAchats[cpt];
+								break;
+							case 6:
+								attribut1Str+=ligneAchats[cpt];
+								break;
+							case 7:
+								attribut2+=ligneAchats[cpt];
+								break;
+							case 8:
+								attribut3Str+=ligneAchats[cpt];
+								break;
+							default:
+								break;
+						}
+					}
+				}
+				prix = stof(prixStr.c_str());
+				string jourStr = "";
+				string moisStr = "";
+				string anneeStr = "";
+				int nbSlashs=0;
+				for (size_t cpt=0;cpt < dateFabricationStr.length();cpt++)
+				{
+					if (dateFabricationStr[cpt]=='/')
+					{
+						nbSlashs++;
+					}
+					else
+					{
+						switch(nbSlashs)
+						{
+							case 0:
+								jourStr+=dateFabricationStr[cpt];
+								break;
+							case 1:
+								moisStr+=dateFabricationStr[cpt];
+								break;
+							case 2:
+								anneeStr+=dateFabricationStr[cpt];
+								break;
+							default:
+								break;
+						}
+					}
+				}
+				dateFabrication.jour = atoi(jourStr.c_str());
+				dateFabrication.mois = atoi(moisStr.c_str());
+				dateFabrication.annee = atoi(anneeStr.c_str());
+				switch (type)
+				{
+					case 'D':
+						client->ajouterArticle(new Divers(nomArticle,prix,description,etat,dateFabrication));
 						break;
-					case 1:
-						type = ligneAchats[cpt];
+					case 'V':
+						attribut1 = atoi(attribut1Str.c_str());
+						attribut3 = atoi(attribut3Str.c_str());
+						client->ajouterArticle(new Voiture(nomArticle,prix,description,etat,dateFabrication,attribut1,attribut2,attribut3));
 						break;
-					case 2:
-						prixStr+=ligneAchats[cpt];
+					case 'B':
+						attribut1 = atoi(attribut1Str.c_str());
+						client->ajouterArticle(new Bijou(nomArticle,prix,description,etat,dateFabrication,attribut2,attribut1));
 						break;
-					case 3:
-						description+=ligneAchats[cpt];
-						break;
-					case 4:
-						etat+=ligneAchats[cpt];
-						break;
-					case 5:
-						dateFabricationStr+=ligneAchats[cpt];
-						break;
-					case 6:
-						attribut1Str+=ligneAchats[cpt];
-						break;
-					case 7:
-						attribut2+=ligneAchats[cpt];
-						break;
-					case 8:
-						attribut3Str+=ligneAchats[cpt];
-						break;
-					default:
-						break;
-
 				}
 			}
 		}
-		prix = stof(prixStr.c_str());
-		string jourStr = "";
-		string moisStr = "";
-		string anneeStr = "";
-		int nbSlashs=0;
-		for (size_t cpt=0;cpt < dateFabricationStr.length();cpt++)
-		{
-			if (dateFabricationStr[cpt]=='/')
-			{
-				nbSlashs++;
-			}
-			else
-			{
-				switch(nbSlashs)
-				{
-					case 0:
-						jourStr+=dateFabricationStr[cpt];
-						break;
-					case 1:
-						moisStr+=dateFabricationStr[cpt];
-						break;
-					case 2:
-						anneeStr+=dateFabricationStr[cpt];
-						break;
-					default:
-						break;
-
-				}
-			}
-		}
-		dateFabrication.jour = atoi(jourStr.c_str());
-		dateFabrication.mois = atoi(moisStr.c_str());
-		dateFabrication.annee = atoi(anneeStr.c_str());
-		switch (type)
-		{
-			case 'D':
-				client->ajouterArticle(new Divers(nomArticle,prix,description,etat,dateFabrication));
-				break;
-			case 'V':
-				attribut1 = atoi(attribut1Str.c_str());
-				attribut3 = atoi(attribut3Str.c_str());
-				client->ajouterArticle(new Voiture(nomArticle,prix,description,etat,dateFabrication,attribut1,attribut2,attribut3));
-				break;
-			case 'B':
-				attribut1 = atoi(attribut1Str.c_str());
-				client->ajouterArticle(new Bijou(nomArticle,prix,description,etat,dateFabrication,attribut2,attribut1));
-				break;
-		}
-	}
-	}
 	}
 	compte2.close();
 }
@@ -319,7 +304,6 @@ void ClientApp::creationMarche(const string &nom)
 						break;
 					default:
 						break;
-
 				}
 			}
 		}
@@ -355,35 +339,34 @@ void ClientApp::creationMarche(const string &nom)
 					switch(nbPtsVirgs)
 					{
 						case 0:
-						nomArticle+=ligne[cpt];
-						break;
-					case 1:
-						type = ligne[cpt];
-						break;
-					case 2:
-						prixStr+=ligne[cpt];
-						break;
-					case 3:
-						description+=ligne[cpt];
-						break;
-					case 4:
-						etat+=ligne[cpt];
-						break;
-					case 5:
-						dateFabricationStr+=ligne[cpt];
-						break;
-					case 6:
-						attribut1Str+=ligne[cpt];
-						break;
-					case 7:
-						attribut2+=ligne[cpt];
-						break;
-					case 8:
-						attribut3Str+=ligne[cpt];
-						break;
-					default:
-						break;
-
+							nomArticle+=ligne[cpt];
+							break;
+						case 1:
+							type = ligne[cpt];
+							break;
+						case 2:
+							prixStr+=ligne[cpt];
+							break;
+						case 3:
+							description+=ligne[cpt];
+							break;
+						case 4:
+							etat+=ligne[cpt];
+							break;
+						case 5:
+							dateFabricationStr+=ligne[cpt];
+							break;
+						case 6:
+							attribut1Str+=ligne[cpt];
+							break;
+						case 7:
+							attribut2+=ligne[cpt];
+							break;
+						case 8:
+							attribut3Str+=ligne[cpt];
+							break;
+						default:
+							break;
 					}
 				}
 			}
@@ -643,7 +626,8 @@ void ClientApp::creationMarche(const string &nom)
 //Une fois connecté, on peut voir le menu
 void ClientApp::selection()
 {
-	char choix = affichage->menuSelection(client);
+//	char choix = affichage->menuSelection(client);
+	char choix = Affichage::menuSelection(client);
 	Employe* emp;
 	Vendeur* vnd;
 	Acheteur* ach;
@@ -743,7 +727,8 @@ void ClientApp::selection()
 //Le client voit les forfaits
 void ClientApp::voirForfaits()
 {
-	char newForfait = affichage->menuForfaits();
+	//char newForfait = affichage->menuForfaits();
+	char newForfait = Affichage::menuForfaits();
 	switch(newForfait)
 	{
 		case 'A':
@@ -811,19 +796,22 @@ void ClientApp::voirForfaits()
 //Le client voit les achats qu'il a fait
 void ClientApp::voirAchats()
 {
-	affichage->menuAchats(client->getArticles());
+	//affichage->menuAchats(client->getArticles());
+	Affichage::menuAchats(client->getArticles());
 }
 
 //On accède à la vente d'articles et on passe les étapes de validation, puis on update les fichiers requis à la fin
 void ClientApp::voirVenteArticles()
 {
-	int retour = affichage->menuVenteArticles(marcheAuxPuces->getRevenu(),client->getArticles());
+	//int retour = affichage->menuVenteArticles(marcheAuxPuces->getRevenu(),client->getArticles());
+	int retour = Affichage::menuVenteArticles(marcheAuxPuces->getRevenu(), client->getArticles());
 	bool prixValide;
 	bool vendu;
 	if (retour != -1)
 	{
 		prixValide = marcheAuxPuces->validerCompte(client->getArticles()[retour-1]->getPrix());
-		vendu = affichage->menuVerifAchat(prixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
+		//vendu = affichage->menuVerifAchat(prixValide);
+		vendu = Affichage::menuVerifAchat(prixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
 		if (vendu) //Si le client achète l'article
 		{
 			marcheAuxPuces->acheter(client->getArticles()[retour-1]); //On crée la transaction pour le marché aux puces
@@ -939,16 +927,19 @@ void ClientApp::voirVenteArticles()
 //On affiche à l'utilisateur les articles disponibles et s'il en choisit un, on demande une validation après la vérification du solde, puis s'il l'achète, on fait la transaction
 void ClientApp::voirArticles()
 {
-	char categorie = affichage->menuCategories();
+	//char categorie = affichage->menuCategories();
+	char categorie = Affichage::menuCategories();
 	if (categorie != 'Q')
 	{
-		int retour = affichage->menuMarche(client->getSolde(),marcheAuxPuces->getArticlesEnVente(),categorie);
+		//int retour = affichage->menuMarche(client->getSolde(),marcheAuxPuces->getArticlesEnVente(),categorie);
+		int retour = Affichage::menuMarche(client->getSolde(), marcheAuxPuces->getArticlesEnVente(), categorie);
 		bool prixValide;
 		bool vendu;
 		if (retour != -1)
 		{
 			prixValide = client->validerCompte(marcheAuxPuces->getArticlesEnVente()[retour-1]->getPrix());
-			vendu = affichage->menuVerifAchat(prixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
+			//vendu = affichage->menuVerifAchat(prixValide);
+			vendu = Affichage::menuVerifAchat(prixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
 			if (vendu) //Si le client achète l'article
 			{
 				Acheteur* acht;
@@ -1060,6 +1051,7 @@ void ClientApp::voirArticles()
 
 int main()
 {
-	ClientApp app(new Affichage); //Le main crée un objet ClientApp qui gère tout le reste
+	//ClientApp app(new Affichage);
+	ClientApp app; //Le main crée un objet ClientApp qui gère tout le reste
 	return 0;
 }
