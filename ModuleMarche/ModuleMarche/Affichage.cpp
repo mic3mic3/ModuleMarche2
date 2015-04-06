@@ -68,6 +68,7 @@ bool Affichage::validationCompteExistant(const string & nomCompte)
 	return true;
 }
 
+////Vérifier si on peut transférer le string en float (chiffres et un point: «99999.99» ou «9» ou «.9»).
 bool Affichage::validationFloat(const string & solde)
 {
 	//Vérifier si on peut transférer le string en float
@@ -81,7 +82,6 @@ bool Affichage::validationFloat(const string & solde)
 			nbPoints++;
 			if (nbPoints > 1)
 			{
-				//valide = false;
 				return false;
 			}
 		}
@@ -92,7 +92,6 @@ bool Affichage::validationFloat(const string & solde)
 				decimales++;
 				if (decimales > 2)
 				{
-					//valide = false;
 					return false;
 				}
 			}
@@ -101,14 +100,12 @@ bool Affichage::validationFloat(const string & solde)
 				avantPoint++;
 				if (avantPoint > 5)
 				{
-					//valide = false;
 					return false;
 				}
 			}
 		}
 		else
 		{
-			//valide = false;
 			return false;
 		}
 	}
@@ -156,48 +153,8 @@ void Affichage::menuInscription()
 		{
 			cout << "Erreur dans le solde!" << endl;
 		}*/
-		//valide = true;
 		cout << "Solde (maximum de 5 chiffres avant le point et de 2 decimales): ";
 		getline(cin,solde);
-		/*
-		//Vérifier si on peut transférer le string en float
-		int avantPoint = 0;
-		int nbPoints = 0;
-		int decimales = 0;
-		for (int cpt=0; cpt < solde.length(); cpt++)
-		{
-			if (solde[cpt]=='.')
-			{
-				nbPoints++;
-				if (nbPoints > 1)
-				{
-					valide = false;
-				}
-			}
-			else if (isdigit(solde[0]))
-			{
-				if (nbPoints > 0)
-				{
-					decimales++;
-					if (decimales > 2)
-					{
-						valide = false;
-					}
-				}
-				else
-				{
-					avantPoint++;
-					if (avantPoint > 5)
-					{
-						valide =false;
-					}
-				}
-			}
-			else
-			{
-				valide = false;
-			}
-		}*/
 	}while(!validationFloat(solde));
 	string forfait;
 	do
