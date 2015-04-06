@@ -15,6 +15,8 @@ class Client;
 class Affichage
 {
 public:
+	static const string CS_EXIT_INPUT;
+
 	Affichage(void);
 	~Affichage(void);
 

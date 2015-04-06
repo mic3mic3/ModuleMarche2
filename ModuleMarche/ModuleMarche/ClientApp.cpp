@@ -62,7 +62,7 @@ void ClientApp::inscription()
 void ClientApp::connexion()
 {
 	string retour = Affichage::menuConnexion();
-	if (retour == "exit")
+	if (retour == Affichage::CS_EXIT_INPUT)
 		return;
 
 	compte = retour;
@@ -599,7 +599,6 @@ void ClientApp::creationMarche(const string &nom)
 								unEmploye->ajouterArticle(new Bijou(nomArticle,prix,description,etat,dateFabrication,attribut2,attribut1));
 								break;
 						}
-
 					}
 					marcheAuxPuces->ajouterEmploye(unEmploye);
 					infos.close();
@@ -608,7 +607,6 @@ void ClientApp::creationMarche(const string &nom)
 				{
 					exit(0);
 				}
-
 			}
 		}
 		else
@@ -994,7 +992,6 @@ void ClientApp::voirArticles()
 						{
 							achats << client->getArticles()[cpt]->getNom() << ";V;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
 						}
-					
 					}
 				}
 
@@ -1043,7 +1040,6 @@ void ClientApp::voirArticles()
 				}
 
 				marche.close();
-			
 			}
 		}
 	}

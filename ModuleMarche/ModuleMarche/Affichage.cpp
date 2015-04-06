@@ -19,6 +19,8 @@
 
 using namespace std; //Pour ne jamais avoir à écrire std:: puisque j'utilise beaucoup de fonctions de std dans ce fichier
 
+const string Affichage::CS_EXIT_INPUT = "exit";
+
 Affichage::Affichage(void)
 {
 }

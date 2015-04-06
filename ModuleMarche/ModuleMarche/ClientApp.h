@@ -23,7 +23,6 @@ private:
 	vector<string> comptesEmployes;//Le nom du compte (inscription) du client (pas la classe Compte)
 public:
 	ClientApp(void);
-	//ClientApp(Affichage*);
 	~ClientApp(void);
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
