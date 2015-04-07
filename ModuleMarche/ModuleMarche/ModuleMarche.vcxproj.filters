@@ -60,6 +60,9 @@
     <ClInclude Include="Voiture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Fichier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Acheteur.cpp">
@@ -99,6 +102,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Voiture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fichier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
