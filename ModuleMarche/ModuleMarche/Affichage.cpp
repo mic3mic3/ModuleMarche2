@@ -75,7 +75,7 @@ bool Affichage::validationFloat(const string & solde)
 	int avantPoint = 0;
 	int nbPoints = 0;
 	int decimales = 0;
-	for (int cpt = 0; cpt < solde.length(); cpt++)
+	for (size_t cpt = 0; cpt < solde.length(); cpt++)
 	{
 		if (solde[cpt] == '.')
 		{
@@ -540,7 +540,7 @@ char Affichage::menuCategories()
 int Affichage::validationChoixArticle(const string & choix,int max)
 {
 	system("cls");
-	for (int cpt = 0; cpt < choix.length(); cpt++)
+	for (size_t cpt = 0; cpt < choix.length(); cpt++)
 	{
 		if (!isdigit(choix[cpt]))
 		{
