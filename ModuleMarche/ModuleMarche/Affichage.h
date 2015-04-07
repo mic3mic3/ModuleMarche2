@@ -36,6 +36,9 @@ public:
 	//Méthodes de validation
 	static bool validationCompteExistant(const string &);
 	static bool validationFloat(const string &);
+	static int validationChoixArticle(const string &,int);
+
+	static void creationFichierCompte(const string &, const string &, const string &, const string &, const string &, const string &);
 };
 
 #endif

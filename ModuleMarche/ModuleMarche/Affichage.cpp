@@ -82,34 +82,50 @@ bool Affichage::validationFloat(const string & solde)
 			nbPoints++;
 			if (nbPoints > 1)
 			{
+				cout << "Erreur: Trop de points dans le solde." << endl;
 				return false;
 			}
 		}
-		else if (isdigit(solde[0]))
+		else if (isdigit(solde[cpt]))
 		{
 			if (nbPoints > 0)
 			{
 				decimales++;
 				if (decimales > 2)
 				{
+					cout << "Erreur: Trop de decimales." << endl;
 					return false;
 				}
 			}
 			else
 			{
 				avantPoint++;
-				if (avantPoint > 5)
+				if (avantPoint > 7)
 				{
+					cout << "Erreur: Trop de chiffres avant le point." << endl;
 					return false;
 				}
 			}
 		}
 		else
 		{
+			cout << "Erreur: Contient un caractere invalide." << endl;
 			return false;
 		}
 	}
 	return true;
+}
+
+//Création du fichier avec les informations sur le compte (première ligne du fichier)
+void Affichage::creationFichierCompte(const string & nomCompte, const string & nom, const string & prenom, const string & adresse, const string & solde, const string & forfait)
+{
+	fstream compte(nomCompte + ".txt", ios::app);
+	if (compte)
+	{
+		compte << nomCompte << ";" << nom << ";" << prenom << ";" << adresse << ";" << solde << ";" << forfait << "\n";
+	}
+
+	compte.close();
 }
 
 //Affichage du menu d'inscription et vérification s'il existe déjà
@@ -128,7 +144,7 @@ void Affichage::menuInscription()
 		nomCompte = "";
 		
 		string ligne;
-		cout << "Nom de compte (exit pour sortir): ";
+		cout << "Nom de compte (" << CS_EXIT_INPUT << " pour sortir): ";
 		getline(cin,nomCompte);
 		
 		if (nomCompte == CS_EXIT_INPUT)
@@ -145,15 +161,9 @@ void Affichage::menuInscription()
 	cout << "Adresse: ";
 	getline(cin,adresse);
 
-	//bool valide = true;
-
 	do
-	{/*
-		if (!valide)
-		{
-			cout << "Erreur dans le solde!" << endl;
-		}*/
-		cout << "Solde (maximum de 5 chiffres avant le point et de 2 decimales): ";
+	{
+		cout << "Solde (maximum de 7 chiffres avant le point et de 2 decimales): ";
 		getline(cin,solde);
 	}while(!validationFloat(solde));
 	string forfait;
@@ -164,13 +174,7 @@ void Affichage::menuInscription()
 	}while(forfait != "A" && forfait != "V" && forfait != "S");
 
 	//Puisque tout est valide, on crée le fichier avec les informations sur le compte (première ligne du fichier)
-	fstream compte(nomCompte+".txt",ios::app);
-	if (compte)
-	{
-		compte << nomCompte << ";"<<nom<<";"<<prenom<<";"<<adresse<<";"<<solde<<";"<<forfait<<"\n";
-	}
-
-	compte.close();
+	creationFichierCompte(nomCompte,nom,prenom,adresse,solde,forfait);
 }
 
 //Affichage du menu de connexion, puis vérification de l'existence du compte, puis on renvoie le nom du compte avec lequel on s'est connecté
@@ -191,10 +195,10 @@ string Affichage::menuConnexion()
 			cout << "Compte non-existant" << endl;
 		}
 		compteValide = false;
-		cout << "Nom de compte (exit pour sortir): ";
+		cout << "Nom de compte (" << CS_EXIT_INPUT << " pour sortir): ";
 		cin >> nomCompte;
 		cin.ignore();
-		if (nomCompte == "exit")
+		if (nomCompte == CS_EXIT_INPUT)
 		{
 			return nomCompte;
 		}
@@ -360,9 +364,10 @@ int Affichage::menuMarche(float solde,const vector<Article*> &listeArticles,char
 {
 	bool valide = true;
 	int retour;
+	system("cls");
 	do
 	{
-		system("cls");
+		
 		if (!valide)
 		{
 			cout << "Erreur dans l'entree" << endl;
@@ -413,78 +418,61 @@ int Affichage::menuMarche(float solde,const vector<Article*> &listeArticles,char
 			cout << "Aucun article en vente" << endl;
 		}
 		string choix;
-		cout << endl << "Choisir l'article selon son numero (exit pour sortir):" << endl;
+		cout << endl << "Choisir l'article selon son numero (" << CS_EXIT_INPUT << " pour sortir):" << endl;
 		getline(cin,choix);
 
-		if (choix == "exit")
+		if (choix == CS_EXIT_INPUT)
 		{
 			return -1;
 		}
-		for (int cpt=0; cpt < choix.length();cpt++)
+		retour = validationChoixArticle(choix, cpt2);
+	}while(retour == 0);
+
+	int cpt2 = 0;
+	int trueposition = retour;
+	for (size_t cpt = 0; cpt < listeArticles.size(); cpt++)
+	{
+		switch (categorie)
 		{
-			if (!isdigit(choix[cpt]))
+		case 'B':
+			Bijou* bij;
+			if (bij = dynamic_cast<Bijou*>(listeArticles[cpt]))
 			{
-				valide = false;
-				break;
-			}
-		}
-		if (valide)
-		{
-			retour = atoi(choix.c_str());
-			if (!(retour > 0 && retour <= cpt2))
-			{
-				valide =false;
-			}
-			else
-			{
-				int cpt2= 0;
-				int trueposition = retour;
-				for (size_t cpt=0;cpt < listeArticles.size();cpt++)
+				cpt2++;
+				if (cpt2 == retour)
 				{
-					switch(categorie)
-					{
-						case 'B':
-							Bijou* bij;
-							if (bij = dynamic_cast<Bijou*>(listeArticles[cpt]))
-							{
-								cpt2++;
-								if (cpt2 == retour)
-								{
-									trueposition = cpt + 1;
-								}
-							}
-							break;
-						case 'V':
-							Voiture* voi;
-							if (voi = dynamic_cast<Voiture*>(listeArticles[cpt]))
-							{
-								cpt2++;
-								if (cpt2 == retour)
-								{
-									trueposition = cpt + 1;
-								}
-							}
-							break;
-						case 'D':
-							Divers* div;
-							if (div = dynamic_cast<Divers*>(listeArticles[cpt]))
-							{
-								cpt2++;
-								if (cpt2 == retour)
-								{
-									trueposition = cpt + 1;
-								}
-							}
-							break;
-						default:
-							break;
-					}
+					trueposition = cpt + 1;
 				}
-				retour = trueposition;
-				listeArticles[retour-1]->afficherDetails();
 			}
+			break;
+		case 'V':
+			Voiture* voi;
+			if (voi = dynamic_cast<Voiture*>(listeArticles[cpt]))
+			{
+				cpt2++;
+				if (cpt2 == retour)
+				{
+					trueposition = cpt + 1;
+				}
+			}
+			break;
+		case 'D':
+			Divers* div;
+			if (div = dynamic_cast<Divers*>(listeArticles[cpt]))
+			{
+				cpt2++;
+				if (cpt2 == retour)
+				{
+					trueposition = cpt + 1;
+				}
+			}
+			break;
+		default:
+			break;
 		}
-	}while(!valide);
+	}
+	retour = trueposition;
+	listeArticles[retour - 1]->afficherDetails();
 
 	return retour;
 }
@@ -548,19 +536,35 @@ char Affichage::menuCategories()
 	return choix[0];
 }
 
+//Validation choix d'un article (vente ou achat)
+int Affichage::validationChoixArticle(const string & choix,int max)
+{
+	system("cls");
+	for (int cpt = 0; cpt < choix.length(); cpt++)
+	{
+		if (!isdigit(choix[cpt]))
+		{
+			cout << "Erreur: Digits seulement" << endl;
+			return 0;
+		}
+	}
+	int retour = atoi(choix.c_str());
+	if (!(retour > 0 && retour <= max))
+	{
+		cout << "Erreur: Nombre invalide." << endl;
+		return 0;
+	}
+	return retour;
+}
+
 //Le menu pour la vente d'articles
 int Affichage::menuVenteArticles(float solde,const vector<Article*> &listeArticles)
 {
-	bool valide = true;
 	int retour;
+	system("cls");
 	do
 	{
-		system("cls");
-		if (!valide)
-		{
-			cout << "Erreur dans l'entree" << endl;
-		}
-		valide = true;
+		
 
 		//On met une précision aux variables float avec fixed et setprecision(), puis on aligne bien les colonnes avec setw() et left
 		cout << "Marche Aux Puces (Mode Vente)" << "\tSon solde: " << fixed << setprecision(2) << solde << endl << endl;
@@ -574,34 +578,18 @@ int Affichage::menuVenteArticles(float solde,const vector<Article*> &listeArticl
 			cout << "Aucun article a vendre" << endl;
 		}
 		string choix;
-		cout << endl << "Choisir l'article selon son numero (exit pour sortir):" << endl;
+		cout << endl << "Choisir l'article selon son numero (" << CS_EXIT_INPUT << " pour sortir):" << endl;
 		getline(cin,choix);
 
-		if (choix == "exit")
+		if (choix == CS_EXIT_INPUT)
 		{
 			return -1;
 		}
-		for (int cpt=0; cpt < choix.length();cpt++)
-		{
-			if (!isdigit(choix[cpt]))
-			{
-				valide = false;
-				break;
-			}
-		}
-		if (valide)
-		{
-			retour = atoi(choix.c_str());
-			if (!(retour > 0 && retour <= listeArticles.size()))
-			{
-				valide =false;
-			}
-			else
-			{
-				listeArticles[retour-1]->afficherDetails();
-			}
-		}
-	}while(!valide);
+		
+		retour = validationChoixArticle(choix, listeArticles.size());
+	} while (retour == 0);
+
+	listeArticles[retour - 1]->afficherDetails();
 
 	return retour;
 }
