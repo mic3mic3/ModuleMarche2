@@ -428,8 +428,15 @@ int Affichage::menuMarche(float solde,const vector<Article*> &listeArticles,char
 		retour = validationChoixArticle(choix, cpt2);
 	}while(retour == 0);
 
+	retour = transformationEnPositionTableau(retour,categorie,listeArticles);
+	listeArticles[retour - 1]->afficherDetails();
+
+	return retour;
+}
+
+int Affichage::transformationEnPositionTableau(int retour,char categorie,const vector<Article*> & listeArticles)
+{
 	int cpt2 = 0;
-	int trueposition = retour;
 	for (size_t cpt = 0; cpt < listeArticles.size(); cpt++)
 	{
 		switch (categorie)
@@ -441,7 +448,7 @@ int Affichage::menuMarche(float solde,const vector<Article*> &listeArticles,char
 				cpt2++;
 				if (cpt2 == retour)
 				{
-					trueposition = cpt + 1;
+					return cpt + 1;
 				}
 			}
 			break;
@@ -452,7 +459,7 @@ int Affichage::menuMarche(float solde,const vector<Article*> &listeArticles,char
 				cpt2++;
 				if (cpt2 == retour)
 				{
-					trueposition = cpt + 1;
+					return cpt + 1;
 				}
 			}
 			break;
@@ -463,7 +470,7 @@ int Affichage::menuMarche(float solde,const vector<Article*> &listeArticles,char
 				cpt2++;
 				if (cpt2 == retour)
 				{
-					trueposition = cpt + 1;
+					return cpt + 1;
 				}
 			}
 			break;
@@ -471,10 +478,6 @@ int Affichage::menuMarche(float solde,const vector<Article*> &listeArticles,char
 			break;
 		}
 	}
-	retour = trueposition;
-	listeArticles[retour - 1]->afficherDetails();
-
-	return retour;
 }
 
 //Affichage de la vérification de l'achat selon si le solde était assez grand pour l'achat de l'objet choisi, puis on renvoit si l'utilisateur valide l'achat (true) ou non (false)

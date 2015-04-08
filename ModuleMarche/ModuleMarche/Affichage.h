@@ -38,6 +38,9 @@ public:
 	static bool validationFloat(const string &);
 	static int validationChoixArticle(const string &,int);
 
+	//Transformation du choix d'affichage dans le choix correspondant au tableau
+	static int transformationEnPositionTableau(int,char,const vector<Article*> &);
+
 	static void creationFichierCompte(const string &, const string &, const string &, const string &, const string &, const string &);
 };
 
