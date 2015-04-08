@@ -307,55 +307,10 @@ void ClientApp::creationMarche(const string &nom)
 	for (size_t cptLigne = 1; cptLigne < loEntreesMarche.size(); cptLigne++)
 	{
 		//Obtention des valeurs des propriétés d'un article
-		string nomArticle = loEntreesMarche.at(cptLigne)[0];
-
-		string typeString = loEntreesMarche.at(cptLigne)[1];
-		char type = NULL;
-		if (typeString.size() > 0)
-			type = typeString[0];
-
-		string prixStr = loEntreesMarche.at(cptLigne)[2];
-		float prix = stof(prixStr.c_str());
-
-		string description = loEntreesMarche.at(cptLigne)[3];
-
-		string etat = loEntreesMarche.at(cptLigne)[4];
-
-		//Processus pour transformer la date du fichier en struct Date. Note: Extraire ce traitement
-		string dateFabricationStr = loEntreesMarche.at(cptLigne)[5];
-		struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
-
-		switch (type)
-		{
-			case 'D':
-				marcheAuxPuces->ajouterArticle(new Divers(nomArticle,prix,description,etat,dateFabrication));
-				break;
-			case 'V':
-			{
-				string kilometrageStr = loEntreesMarche.at(cptLigne)[6];
-				int kilometrage = atoi(kilometrageStr.c_str());
-
-				string couleur = loEntreesMarche.at(cptLigne)[7];
-
-				string anneeStr = loEntreesMarche.at(cptLigne)[8];
-				int annee = atoi(anneeStr.c_str());
-
-				marcheAuxPuces->ajouterArticle(new Voiture(nomArticle, prix, description, etat, dateFabrication, kilometrage, couleur, annee));
-			}
-				break;
-			case 'B':
-			{
-				string pureteStr = loEntreesMarche.at(cptLigne)[6];
-				int purete = atoi(pureteStr.c_str());
-
-				string materiau = loEntreesMarche.at(cptLigne)[7];
-
-				marcheAuxPuces->ajouterArticle(new Bijou(nomArticle, prix, description, etat, dateFabrication, materiau, purete));
-			}
-				break;
-		}
+		Article* loArticle = getArticleFromStructure(loEntreesMarche, cptLigne);
+		if (loArticle != nullptr)
+			marcheAuxPuces->ajouterArticle(loArticle);
 	}
-
 	
 	//Maintenant, on ajoute le personnel à la liste d'employés du MarcheAuxPuces
 	vector<vector<string>> loEntreesEmploye = Fichier::getContenu(nom + "_Employes");
@@ -390,58 +345,9 @@ void ClientApp::creationMarche(const string &nom)
 		// Obtention des achats de l'employé dans les lignes qui suivent.
 		for (size_t cpt = 1; cpt < loEmploye.size(); cpt++)
 		{
-			string nomArticle = loEmploye.at(cpt)[0];
-
-			string typeStr = loEmploye.at(cpt)[1];
-			char type = NULL;
-			if (typeStr.length() > 0)
-				type = typeStr[0];
-
-			string prixStr = loEmploye.at(cpt)[2];
-			float prix = stof(prixStr.c_str());
-
-			string description = loEmploye.at(cpt)[3];
-
-			string etat = loEmploye.at(cpt)[4];
-
-			string dateFabricationStr = loEmploye.at(cpt)[5];
-			struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
-
-			Article* loArticle = nullptr;
-			switch (type)
-			{
-				case 'D':
-					loArticle = new Divers(nomArticle, prix, description, etat, dateFabrication);
-					break;
-				case 'V':
-				{
-					string attribut1Str = loEmploye.at(cpt)[6];
-					int attribut1 = atoi(attribut1Str.c_str());
-
-					string attribut2 = loEmploye.at(cpt)[7];
-
-					string attribut3Str = loEmploye.at(cpt)[8];
-					int attribut3 = atoi(attribut3Str.c_str());
-
-					loArticle = new Voiture(nomArticle, prix, description, etat, dateFabrication, attribut1, attribut2, attribut3);
-				}
-					break;
-				case 'B':
-				{
-					string attribut1Str = loEmploye.at(cpt)[6];
-					int attribut1 = atoi(attribut1Str.c_str());
-
-					string attribut2 = loEmploye.at(cpt)[7];
-
-					loArticle = new Bijou(nomArticle, prix, description, etat, dateFabrication, attribut2, attribut1);
-				}
-					break;
-			}
-
+			Article* loArticle = getArticleFromStructure(loEmploye, cpt);
 			if (loArticle != nullptr)
-			{
 				unEmploye->ajouterArticle(loArticle);
-			}
 		}
 
 		marcheAuxPuces->ajouterEmploye(unEmploye);
@@ -842,6 +748,64 @@ void ClientApp::voirArticles()
 			}
 		}
 	}
+}
+
+Article* ClientApp::getArticleFromStructure(vector<vector<string>>& poArticleStructure, size_t piLigne)
+{
+	// On vérifie que la ligne de de l'article est valide.
+	if (poArticleStructure.size() - 1 < piLigne)
+		return nullptr;
+
+	// On construit l'article à partir de la ligne de la structure.
+	string nomArticle = poArticleStructure.at(piLigne)[0];
+
+	string typeStr = poArticleStructure.at(piLigne)[1];
+	char type = NULL;
+	if (typeStr.length() > 0)
+		type = typeStr[0];
+
+	string prixStr = poArticleStructure.at(piLigne)[2];
+	float prix = stof(prixStr.c_str());
+
+	string description = poArticleStructure.at(piLigne)[3];
+
+	string etat = poArticleStructure.at(piLigne)[4];
+
+	string dateFabricationStr = poArticleStructure.at(piLigne)[5];
+	struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
+
+	Article* loArticle = nullptr;
+	switch (type)
+	{
+		case 'D':
+			loArticle = new Divers(nomArticle, prix, description, etat, dateFabrication);
+			break;
+		case 'V':
+		{
+					string attribut1Str = poArticleStructure.at(piLigne)[6];
+			int attribut1 = atoi(attribut1Str.c_str());
+
+			string attribut2 = poArticleStructure.at(piLigne)[7];
+
+			string attribut3Str = poArticleStructure.at(piLigne)[8];
+			int attribut3 = atoi(attribut3Str.c_str());
+
+			loArticle = new Voiture(nomArticle, prix, description, etat, dateFabrication, attribut1, attribut2, attribut3);
+		}
+			break;
+		case 'B':
+		{
+			string attribut1Str = poArticleStructure.at(piLigne)[6];
+			int attribut1 = atoi(attribut1Str.c_str());
+
+			string attribut2 = poArticleStructure.at(piLigne)[7];
+
+			loArticle = new Bijou(nomArticle, prix, description, etat, dateFabrication, attribut2, attribut1);
+		}
+			break;
+	}
+
+	return loArticle;
 }
 
 int main()

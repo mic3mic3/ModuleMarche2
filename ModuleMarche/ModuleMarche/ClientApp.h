@@ -12,6 +12,7 @@ using std::string;
 class Affichage; //Pour que le compilateur sache que la classe Affichage existe
 class Client; //Pour que le compilateur sache que la classe  Client existe
 class MarcheAuxPuces; //Pour que le compilateur sache que la classe MarcheAuxPuces existe
+class Article;
 
 class ClientApp
 {
@@ -38,8 +39,7 @@ public:
 	void voirForfaits();
 	void voirVenteArticles();
 
-	static struct Date getStringToDate(string);
-
+	Article* getArticleFromStructure(vector<vector<string>>&, size_t);
 };
 
 #endif
