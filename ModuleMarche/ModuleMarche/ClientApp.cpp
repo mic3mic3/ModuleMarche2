@@ -231,37 +231,7 @@ void ClientApp::creationClient(const string &nomCompte)
 					}
 				}
 				prix = stof(prixStr.c_str());
-				string jourStr = "";
-				string moisStr = "";
-				string anneeStr = "";
-				int nbSlashs=0;
-				for (size_t cpt=0;cpt < dateFabricationStr.length();cpt++)
-				{
-					if (dateFabricationStr[cpt]=='/')
-					{
-						nbSlashs++;
-					}
-					else
-					{
-						switch(nbSlashs)
-						{
-							case 0:
-								jourStr+=dateFabricationStr[cpt];
-								break;
-							case 1:
-								moisStr+=dateFabricationStr[cpt];
-								break;
-							case 2:
-								anneeStr+=dateFabricationStr[cpt];
-								break;
-							default:
-								break;
-						}
-					}
-				}
-				dateFabrication.jour = atoi(jourStr.c_str());
-				dateFabrication.mois = atoi(moisStr.c_str());
-				dateFabrication.annee = atoi(anneeStr.c_str());
+				dateFabrication = Date::getDateFromString(dateFabricationStr);
 				switch (type)
 				{
 					case 'D':
