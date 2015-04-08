@@ -56,12 +56,12 @@ char Affichage::menuDemarrer()
 }
 
 //Vérification si le compte existe déjà
-bool Affichage::validationCompteExistant(const string & nomCompte)
+bool Affichage::validationCompteInscription(const string & nomCompte)
 {
 	fstream compteVerif(nomCompte + ".txt", ios::in);
 	if (compteVerif.is_open())
 	{
-		cout << "Compte existant ou contient un point-virgule" << endl;
+		cout << "Compte existant." << endl;
 		return false;
 	}
 	compteVerif.close();
@@ -151,7 +151,7 @@ void Affichage::menuInscription()
 		{
 			return;
 		}
-	}while(!validationCompteExistant(nomCompte));
+	}while(!validationCompteInscription(nomCompte));
 
 	//Entrée de différentes informations
 	cout << "Nom: ";
