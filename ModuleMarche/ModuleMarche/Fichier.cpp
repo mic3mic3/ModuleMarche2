@@ -18,13 +18,13 @@ Fichier::~Fichier(void)
 }
 
 ///<summary>Prépare la mise en forme des données avant l'écriture dans un fichier. (Valeurs séparées par des «;», entrées sur des lignes différentes, etc.)</summary>
-string Fichier::getContenuFormatePourPourEcriture(vector<vector<string>>* poEntrees)
+string Fichier::getContenuFormatePourPourEcriture(vector<vector<string>>& poEntrees)
 {
-	if (poEntrees == nullptr)
-		return "";
+	//if (poEntrees == NULL)
+	//	return "";
 
 	string lsContenu = "";
-	for each (vector<string> loEntree in *poEntrees)
+	for each (vector<string> loEntree in poEntrees)
 	{
 		for each (string lsParametre in loEntree)
 		{
@@ -41,16 +41,17 @@ string Fichier::getContenuFormatePourPourEcriture(vector<vector<string>>* poEntr
 }
 
 ///<summary>Renvoie le contenu du fichier. Chaque ligne sera un vecteur de chaînes, dont chaque valeur entre «;» sera une chaîne.</summary>
-vector<vector<string>>* Fichier::getContenu(string psNomCompletFichier)
+vector<vector<string>> Fichier::getContenu(const string& psNomCompletFichier)
 {
+	vector<vector<string>>& loEntrees = vector<vector<string>>();
+
 	// Ouverture du fichier
 	fstream loFStream(psNomCompletFichier + ".txt", ios::in);
 	if (!loFStream.is_open())
-		return nullptr;
+		return loEntrees;
 
 	// Lecture de chaque ligne du fichier
 	string ligne;
-	vector<vector<string>>* loEntrees = new vector<vector<string>>();
 	vector<string> loEntree;
 	while (getline(loFStream, ligne) && ligne.length() != NULL)
 	{
@@ -71,13 +72,13 @@ vector<vector<string>>* Fichier::getContenu(string psNomCompletFichier)
 				loEntree.at(nbPtsVirgs) += ligne[cpt];
 			}
 		}
-		loEntrees->insert(loEntrees->end(), loEntree);
+		loEntrees.insert(loEntrees.end(), loEntree);
 	}
 	return loEntrees;
 }
 
 ///<summary>Remplace le contenu d'un fichier par les entrées fournies en paramètre.</summary>
-bool Fichier::setContenu(string psNomCompletFichier, vector<vector<string>>* poEntrees)
+bool Fichier::setContenu(string& psNomCompletFichier, vector<vector<string>>& poEntrees)
 {
 	fstream loFStream(psNomCompletFichier, ios::app);
 	if (!loFStream.is_open())

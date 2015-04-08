@@ -286,8 +286,8 @@ void ClientApp::creationClient(const string &nomCompte)
 //On crée le marché à partir d'un fichier
 void ClientApp::creationMarche(const string &nom)
 {
-	vector<vector<string>>* loEntreesMarche = Fichier::getContenu(nom);
-	if (loEntreesMarche == nullptr || loEntreesMarche->size() < 1)
+	vector<vector<string>> loEntreesMarche = Fichier::getContenu(nom);
+	if (loEntreesMarche.size() < 1)
 	{
 		// Sans marché aux puces, l'application ne peut plus poursuivre.
 		cout << "Une erreur est survenue lors de l'ouverture du marche aux puces." << endl
@@ -298,31 +298,31 @@ void ClientApp::creationMarche(const string &nom)
 	}
 
 	// Création du marché à partir de la première ligne du fichier contenant dans l'ordre: nom, adresse, revenu.
-	string adresse = loEntreesMarche->at(1)[1];
-	string revenuStr = loEntreesMarche->at(1)[2];
+	string adresse = loEntreesMarche.at(1)[1];
+	string revenuStr = loEntreesMarche.at(1)[2];
 	float revenu = stof(revenuStr.c_str());
 	marcheAuxPuces = new MarcheAuxPuces(nom,adresse,new Compte(revenu));
 	
 	//On crée les articles de ce marché à partir du reste du fichier
-	for (size_t cptLigne = 1; cptLigne < loEntreesMarche->size(); cptLigne++)
+	for (size_t cptLigne = 1; cptLigne < loEntreesMarche.size(); cptLigne++)
 	{
 		//Obtention des valeurs des propriétés d'un article
-		string nomArticle = loEntreesMarche->at(cptLigne)[0];
+		string nomArticle = loEntreesMarche.at(cptLigne)[0];
 
-		string typeString = loEntreesMarche->at(cptLigne)[1];
+		string typeString = loEntreesMarche.at(cptLigne)[1];
 		char type = NULL;
 		if (typeString.size() > 0)
 			type = typeString[0];
 
-		string prixStr = loEntreesMarche->at(cptLigne)[2];
+		string prixStr = loEntreesMarche.at(cptLigne)[2];
 		float prix = stof(prixStr.c_str());
 
-		string description = loEntreesMarche->at(cptLigne)[3];
+		string description = loEntreesMarche.at(cptLigne)[3];
 
-		string etat = loEntreesMarche->at(cptLigne)[4];
+		string etat = loEntreesMarche.at(cptLigne)[4];
 
 		//Processus pour transformer la date du fichier en struct Date. Note: Extraire ce traitement
-		string dateFabricationStr = loEntreesMarche->at(cptLigne)[5];
+		string dateFabricationStr = loEntreesMarche.at(cptLigne)[5];
 		struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
 
 		switch (type)
@@ -332,12 +332,12 @@ void ClientApp::creationMarche(const string &nom)
 				break;
 			case 'V':
 			{
-				string kilometrageStr = loEntreesMarche->at(cptLigne)[6];
+				string kilometrageStr = loEntreesMarche.at(cptLigne)[6];
 				int kilometrage = atoi(kilometrageStr.c_str());
 
-				string couleur = loEntreesMarche->at(cptLigne)[7];
+				string couleur = loEntreesMarche.at(cptLigne)[7];
 
-				string anneeStr = loEntreesMarche->at(cptLigne)[8];
+				string anneeStr = loEntreesMarche.at(cptLigne)[8];
 				int annee = atoi(anneeStr.c_str());
 
 				marcheAuxPuces->ajouterArticle(new Voiture(nomArticle, prix, description, etat, dateFabrication, kilometrage, couleur, annee));
@@ -345,10 +345,10 @@ void ClientApp::creationMarche(const string &nom)
 				break;
 			case 'B':
 			{
-				string pureteStr = loEntreesMarche->at(cptLigne)[6];
+				string pureteStr = loEntreesMarche.at(cptLigne)[6];
 				int purete = atoi(pureteStr.c_str());
 
-				string materiau = loEntreesMarche->at(cptLigne)[7];
+				string materiau = loEntreesMarche.at(cptLigne)[7];
 
 				marcheAuxPuces->ajouterArticle(new Bijou(nomArticle, prix, description, etat, dateFabrication, materiau, purete));
 			}
@@ -358,59 +358,53 @@ void ClientApp::creationMarche(const string &nom)
 
 	
 	//Maintenant, on ajoute le personnel à la liste d'employés du MarcheAuxPuces
-	vector<vector<string>>* loEntreesEmploye = Fichier::getContenu(nom + "_Employes");
-	if (loEntreesEmploye == nullptr)
-	{
-		cout << "Aucun employe n'a été trouve." << endl;
-		return;
-	}
-
-	for (size_t cptLigne = 0; cptLigne < loEntreesEmploye->size(); cptLigne++)
+	vector<vector<string>> loEntreesEmploye = Fichier::getContenu(nom + "_Employes");
+	for (size_t cptLigne = 0; cptLigne < loEntreesEmploye.size(); cptLigne++)
 	{
 		// Obtention des informations d'un employé.
-		string lsEmploye = loEntreesEmploye->at(cptLigne)[0];
-		vector<vector<string>>* loEmploye = Fichier::getContenu(lsEmploye);
+		string lsEmploye = loEntreesEmploye.at(cptLigne)[0];
+		vector<vector<string>> loEmploye = Fichier::getContenu(lsEmploye);
 
-		string nomP = loEmploye->at(0)[1];
+		string nomP = loEmploye.at(0)[1];
 
-		string prenomP = loEmploye->at(0)[2];
+		string prenomP = loEmploye.at(0)[2];
 
-		string adresseP = loEmploye->at(0)[3];
+		string adresseP = loEmploye.at(0)[3];
 
-		string soldeStrP = loEmploye->at(0)[4];
+		string soldeStrP = loEmploye.at(0)[4];
 		float soldeP = stof(soldeStrP.c_str());
 
-		string forfaitStr = loEmploye->at(0)[5];
+		string forfaitStr = loEmploye.at(0)[5];
 		char forfait = NULL;
 		if (forfaitStr.length() > 0)
 			forfait = forfaitStr[0];
 
-		string salaireStr = loEmploye->at(0)[6];
+		string salaireStr = loEmploye.at(0)[6];
 		float salaire = stof(salaireStr.c_str());
 
-		string rabaisStr = loEmploye->at(0)[7];
+		string rabaisStr = loEmploye.at(0)[7];
 		float rabais = stof(rabaisStr.c_str());
 
 		Employe* unEmploye = new Employe(nomP, prenomP, adresseP, new Compte(soldeP), salaire, rabais);
 
 		// Obtention des achats de l'employé dans les lignes qui suivent.
-		for (size_t cpt = 1; cpt < loEmploye->size(); cpt++)
+		for (size_t cpt = 1; cpt < loEmploye.size(); cpt++)
 		{
-			string nomArticle = loEmploye->at(cpt)[0];
+			string nomArticle = loEmploye.at(cpt)[0];
 
-			string typeStr = loEmploye->at(cpt)[1];
+			string typeStr = loEmploye.at(cpt)[1];
 			char type = NULL;
 			if (typeStr.length() > 0)
 				type = typeStr[0];
 
-			string prixStr = loEmploye->at(cpt)[2];
+			string prixStr = loEmploye.at(cpt)[2];
 			float prix = stof(prixStr.c_str());
 
-			string description = loEmploye->at(cpt)[3];
+			string description = loEmploye.at(cpt)[3];
 
-			string etat = loEmploye->at(cpt)[4];
+			string etat = loEmploye.at(cpt)[4];
 
-			string dateFabricationStr = loEmploye->at(cpt)[5];
+			string dateFabricationStr = loEmploye.at(cpt)[5];
 			struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
 
 			Article* loArticle = nullptr;
@@ -421,12 +415,12 @@ void ClientApp::creationMarche(const string &nom)
 					break;
 				case 'V':
 				{
-					string attribut1Str = loEmploye->at(cpt)[6];
+					string attribut1Str = loEmploye.at(cpt)[6];
 					int attribut1 = atoi(attribut1Str.c_str());
 
-					string attribut2 = loEmploye->at(cpt)[7];
+					string attribut2 = loEmploye.at(cpt)[7];
 
-					string attribut3Str = loEmploye->at(cpt)[8];
+					string attribut3Str = loEmploye.at(cpt)[8];
 					int attribut3 = atoi(attribut3Str.c_str());
 
 					loArticle = new Voiture(nomArticle, prix, description, etat, dateFabrication, attribut1, attribut2, attribut3);
@@ -434,10 +428,10 @@ void ClientApp::creationMarche(const string &nom)
 					break;
 				case 'B':
 				{
-					string attribut1Str = loEmploye->at(cpt)[6];
+					string attribut1Str = loEmploye.at(cpt)[6];
 					int attribut1 = atoi(attribut1Str.c_str());
 
-					string attribut2 = loEmploye->at(cpt)[7];
+					string attribut2 = loEmploye.at(cpt)[7];
 
 					loArticle = new Bijou(nomArticle, prix, description, etat, dateFabrication, attribut2, attribut1);
 				}

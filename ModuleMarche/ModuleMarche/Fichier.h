@@ -18,9 +18,9 @@ public:
 	~Fichier(void);
 
 
-	static string getContenuFormatePourPourEcriture(vector<vector<string>>*);
-	static vector<vector<string>>* getContenu(string);
-	static bool setContenu(string, vector<vector<string>>*);
+	static string getContenuFormatePourPourEcriture(vector<vector<string>>&);
+	static vector<vector<string>> getContenu(const string&);
+	static bool setContenu(string&, vector<vector<string>>&);
 };
 
 #endif
