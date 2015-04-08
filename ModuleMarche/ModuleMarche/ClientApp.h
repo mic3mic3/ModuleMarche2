@@ -38,6 +38,8 @@ public:
 	void voirForfaits();
 	void voirVenteArticles();
 
+	static struct Date getStringToDate(string);
+
 };
 
 #endif

@@ -18,6 +18,7 @@
 #include "Vendeur.h"
 #include "Superclient.h"
 #include "Employe.h"
+#include "Fichier.h"
 
 using namespace std; //Pour ne jamais avoir à écrire std:: puisque j'utilise beaucoup de fonctions de std dans ce fichier
 
@@ -285,9 +286,8 @@ void ClientApp::creationClient(const string &nomCompte)
 //On crée le marché à partir d'un fichier
 void ClientApp::creationMarche(const string &nom)
 {
-	//La première ligne contient les informations de base (nom, adresse, revenu)
-	fstream marche(nom + ".txt", ios::in);
-	if (!marche.is_open())
+	vector<vector<string>>* loEntreesMarche = Fichier::getContenu(nom);
+	if (loEntreesMarche == nullptr || loEntreesMarche->size() < 1)
 	{
 		// Sans marché aux puces, l'application ne peut plus poursuivre.
 		cout << "Une erreur est survenue lors de l'ouverture du marche aux puces." << endl
@@ -297,337 +297,161 @@ void ClientApp::creationMarche(const string &nom)
 		exit(EXIT_FAILURE);
 	}
 
-	string ligne;
-	getline(marche,ligne);
-	int nbPtsVirgs = 0;
-	string adresse;
-	string revenuStr;
-	float revenu;
-	for (size_t cpt=0;cpt < ligne.length();cpt++)
+	// Création du marché à partir de la première ligne du fichier contenant dans l'ordre: nom, adresse, revenu.
+	string adresse = loEntreesMarche->at(1)[1];
+	string revenuStr = loEntreesMarche->at(1)[2];
+	float revenu = stof(revenuStr.c_str());
+	marcheAuxPuces = new MarcheAuxPuces(nom,adresse,new Compte(revenu));
+	
+	//On crée les articles de ce marché à partir du reste du fichier
+	for (size_t cptLigne = 1; cptLigne < loEntreesMarche->size(); cptLigne++)
 	{
-		if (ligne[cpt]==';')
-		{
-			nbPtsVirgs++;
-		}
-		else
-		{
-			switch(nbPtsVirgs)
-			{
-				case 1:
-					adresse+=ligne[cpt];
-					break;
-				case 2:
-					revenuStr+=ligne[cpt];
-					break;
-				default:
-					break;
-			}
-		}
-	}
-	revenu = stof(revenuStr.c_str()); //
-	marcheAuxPuces = new MarcheAuxPuces(nom,adresse,new Compte(revenu)); //Création du marché
+		//Obtention des valeurs des propriétés d'un article
+		string nomArticle = loEntreesMarche->at(cptLigne)[0];
 
-	//On recherche les articles de ce marché dans le reste du fichier
-	while (getline(marche,ligne) && ligne.length() != NULL)
-	{
-		//Processus pour mettre les parties du fichier (séparées par point-virgule) dans les bonnes variables
-		string nomArticle;
-		string prixStr;
-		float prix;
-		string description;
-		string etat;
-		string dateFabricationStr;
-		struct Date dateFabrication;
-		nbPtsVirgs = 0;
-		char type;
-		string attribut1Str;
-		string attribut2;
-		string attribut3Str;
-		int attribut1;
-		int attribut3;
-		for (size_t cpt=0;cpt < ligne.length();cpt++)
-		{
-			if (ligne[cpt]==';')
-			{
-				nbPtsVirgs++;
-			}
-			else
-			{
-				switch(nbPtsVirgs)
-				{
-					case 0:
-						nomArticle+=ligne[cpt];
-						break;
-					case 1:
-						type = ligne[cpt];
-						break;
-					case 2:
-						prixStr+=ligne[cpt];
-						break;
-					case 3:
-						description+=ligne[cpt];
-						break;
-					case 4:
-						etat+=ligne[cpt];
-						break;
-					case 5:
-						dateFabricationStr+=ligne[cpt];
-						break;
-					case 6:
-						attribut1Str+=ligne[cpt];
-						break;
-					case 7:
-						attribut2+=ligne[cpt];
-						break;
-					case 8:
-						attribut3Str+=ligne[cpt];
-						break;
-					default:
-						break;
-				}
-			}
-		}
-		prix = stof(prixStr.c_str());
+		string typeString = loEntreesMarche->at(cptLigne)[1];
+		char type = NULL;
+		if (typeString.size() > 0)
+			type = typeString[0];
 
-		//Processus pour transformer la date du fichier en struct Date
-		string jourStr = "";
-		string moisStr = "";
-		string anneeStr = "";
-		int nbSlashs=0;
-		for (size_t cpt=0;cpt < dateFabricationStr.length();cpt++)
-		{
-			if (dateFabricationStr[cpt]=='/')
-			{
-				nbSlashs++;
-			}
-			else
-			{
-				switch(nbSlashs)
-				{
-					case 0:
-						jourStr+=dateFabricationStr[cpt];
-						break;
-					case 1:
-						moisStr+=dateFabricationStr[cpt];
-						break;
-					case 2:
-						anneeStr+=dateFabricationStr[cpt];
-						break;
-					default:
-						break;
-				}
-			}
-		}
-		dateFabrication.jour = atoi(jourStr.c_str());
-		dateFabrication.mois = atoi(moisStr.c_str());
-		dateFabrication.annee = atoi(anneeStr.c_str());
+		string prixStr = loEntreesMarche->at(cptLigne)[2];
+		float prix = stof(prixStr.c_str());
+
+		string description = loEntreesMarche->at(cptLigne)[3];
+
+		string etat = loEntreesMarche->at(cptLigne)[4];
+
+		//Processus pour transformer la date du fichier en struct Date. Note: Extraire ce traitement
+		string dateFabricationStr = loEntreesMarche->at(cptLigne)[5];
+		struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
+
 		switch (type)
 		{
 			case 'D':
 				marcheAuxPuces->ajouterArticle(new Divers(nomArticle,prix,description,etat,dateFabrication));
 				break;
 			case 'V':
-				attribut1 = atoi(attribut1Str.c_str());
-				attribut3 = atoi(attribut3Str.c_str());
-				marcheAuxPuces->ajouterArticle(new Voiture(nomArticle,prix,description,etat,dateFabrication,attribut1,attribut2,attribut3));
+			{
+				string kilometrageStr = loEntreesMarche->at(cptLigne)[6];
+				int kilometrage = atoi(kilometrageStr.c_str());
+
+				string couleur = loEntreesMarche->at(cptLigne)[7];
+
+				string anneeStr = loEntreesMarche->at(cptLigne)[8];
+				int annee = atoi(anneeStr.c_str());
+
+				marcheAuxPuces->ajouterArticle(new Voiture(nomArticle, prix, description, etat, dateFabrication, kilometrage, couleur, annee));
+			}
 				break;
 			case 'B':
-				attribut1 = atoi(attribut1Str.c_str());
-				marcheAuxPuces->ajouterArticle(new Bijou(nomArticle,prix,description,etat,dateFabrication,attribut2,attribut1));
+			{
+				string pureteStr = loEntreesMarche->at(cptLigne)[6];
+				int purete = atoi(pureteStr.c_str());
+
+				string materiau = loEntreesMarche->at(cptLigne)[7];
+
+				marcheAuxPuces->ajouterArticle(new Bijou(nomArticle, prix, description, etat, dateFabrication, materiau, purete));
+			}
 				break;
 		}
 	}
+
+	
 	//Maintenant, on ajoute le personnel à la liste d'employés du MarcheAuxPuces
-	fstream personnel(nom+"_Employes.txt",ios::in);
-	if (personnel.is_open())
+	vector<vector<string>>* loEntreesEmploye = Fichier::getContenu(nom + "_Employes");
+	if (loEntreesEmploye == nullptr)
 	{
-		string employe;
-		while (getline(personnel,employe) && employe.length() != NULL)
+		cout << "Aucun employe n'a été trouve." << endl;
+		return;
+	}
+
+	for (size_t cptLigne = 0; cptLigne < loEntreesEmploye->size(); cptLigne++)
+	{
+		// Obtention des informations d'un employé.
+		string lsEmploye = loEntreesEmploye->at(cptLigne)[0];
+		vector<vector<string>>* loEmploye = Fichier::getContenu(lsEmploye);
+
+		string nomP = loEmploye->at(0)[1];
+
+		string prenomP = loEmploye->at(0)[2];
+
+		string adresseP = loEmploye->at(0)[3];
+
+		string soldeStrP = loEmploye->at(0)[4];
+		float soldeP = stof(soldeStrP.c_str());
+
+		string forfaitStr = loEmploye->at(0)[5];
+		char forfait = NULL;
+		if (forfaitStr.length() > 0)
+			forfait = forfaitStr[0];
+
+		string salaireStr = loEmploye->at(0)[6];
+		float salaire = stof(salaireStr.c_str());
+
+		string rabaisStr = loEmploye->at(0)[7];
+		float rabais = stof(rabaisStr.c_str());
+
+		Employe* unEmploye = new Employe(nomP, prenomP, adresseP, new Compte(soldeP), salaire, rabais);
+
+		// Obtention des achats de l'employé dans les lignes qui suivent.
+		for (size_t cpt = 1; cpt < loEmploye->size(); cpt++)
 		{
-			fstream infos(employe+".txt",ios::in);
-			if (infos.is_open())
+			string nomArticle = loEmploye->at(cpt)[0];
+
+			string typeStr = loEmploye->at(cpt)[1];
+			char type = NULL;
+			if (typeStr.length() > 0)
+				type = typeStr[0];
+
+			string prixStr = loEmploye->at(cpt)[2];
+			float prix = stof(prixStr.c_str());
+
+			string description = loEmploye->at(cpt)[3];
+
+			string etat = loEmploye->at(cpt)[4];
+
+			string dateFabricationStr = loEmploye->at(cpt)[5];
+			struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
+
+			Article* loArticle = nullptr;
+			switch (type)
 			{
-				comptesEmployes.push_back(employe);
-				string ligne;
-				getline(infos,ligne);
-				int nbPtsVirgs = 0;
-				string nomP;
-				string prenomP;
-				string adresseP;
-				string soldeStrP;
-				char forfait;
-				string salaireStr;
-				string rabaisStr;
-				float salaire;
-				float rabais;
-				float soldeP;
-				for (size_t cpt=0;cpt < ligne.length();cpt++)
+				case 'D':
+					loArticle = new Divers(nomArticle, prix, description, etat, dateFabrication);
+					break;
+				case 'V':
 				{
-					if (ligne[cpt]==';')
-					{
-						nbPtsVirgs++;
-					}
-					else
-					{
-						switch(nbPtsVirgs)
-						{
-							case 1:
-								nomP+=ligne[cpt];
-								break;
-							case 2:
-								prenomP+=ligne[cpt];
-								break;
-							case 3:
-								adresseP+=ligne[cpt];
-								break;
-							case 4:
-								soldeStrP+=ligne[cpt];
-								break;
-							case 5:
-								forfait=ligne[cpt];
-								break;
-							case 6:
-								salaireStr+=ligne[cpt];
-								break;
-							case 7:
-								rabaisStr+=ligne[cpt];
-								break;
-							default:
-								break;
-						}
-					}
+					string attribut1Str = loEmploye->at(cpt)[6];
+					int attribut1 = atoi(attribut1Str.c_str());
+
+					string attribut2 = loEmploye->at(cpt)[7];
+
+					string attribut3Str = loEmploye->at(cpt)[8];
+					int attribut3 = atoi(attribut3Str.c_str());
+
+					loArticle = new Voiture(nomArticle, prix, description, etat, dateFabrication, attribut1, attribut2, attribut3);
 				}
-				soldeP = stof(soldeStrP.c_str()); //Transfert des string en float
-
-				salaire = stof(salaireStr.c_str());
-				rabais = stof(rabaisStr.c_str());
-				Employe* unEmploye = new Employe(nomP,prenomP,adresseP,new Compte(soldeP),salaire,rabais);
-
-
-				//On récupère les achats du client après la première ligne du fichier
-				string ligneAchats;
-				while (getline(infos,ligneAchats) && ligneAchats.length() != NULL)
+					break;
+				case 'B':
 				{
-					string nomArticle;
-					string prixStr;
-					float prix;
-					string description;
-					string etat;
-					string dateFabricationStr;
-					struct Date dateFabrication;
-					nbPtsVirgs = 0;
-					char type;
-					string attribut1Str;
-					string attribut3Str;
-					int attribut1;
-					string attribut2;
-					int attribut3;
-					for (size_t cpt=0;cpt < ligneAchats.length();cpt++)
-					{
-						if (ligneAchats[cpt]==';')
-						{
-							nbPtsVirgs++;
-						}
-						else
-						{
-							switch(nbPtsVirgs)
-							{
-								case 0:
-									nomArticle+=ligneAchats[cpt];
-									break;
-								case 1:
-									type = ligneAchats[cpt];
-									break;
-								case 2:
-									prixStr+=ligneAchats[cpt];
-									break;
-								case 3:
-									description+=ligneAchats[cpt];
-									break;
-								case 4:
-									etat+=ligneAchats[cpt];
-									break;
-								case 5:
-									dateFabricationStr+=ligneAchats[cpt];
-									break;
-								case 6:
-									attribut1Str+=ligneAchats[cpt];
-									break;
-								case 7:
-									attribut2+=ligneAchats[cpt];
-									break;
-								case 8:
-									attribut3Str+=ligneAchats[cpt];
-									break;
-								default:
-									break;
-							}
-						}
-					}
-					prix = stof(prixStr.c_str());
-					string jourStr = "";
-					string moisStr = "";
-					string anneeStr = "";
-					int nbSlashs=0;
-					for (size_t cpt=0;cpt < dateFabricationStr.length();cpt++)
-					{
-						if (dateFabricationStr[cpt]=='/')
-						{
-							nbSlashs++;
-						}
-						else
-						{
-							switch(nbSlashs)
-							{
-								case 0:
-									jourStr+=dateFabricationStr[cpt];
-									break;
-								case 1:
-									moisStr+=dateFabricationStr[cpt];
-									break;
-								case 2:
-									anneeStr+=dateFabricationStr[cpt];
-									break;
-								default:
-									break;
+					string attribut1Str = loEmploye->at(cpt)[6];
+					int attribut1 = atoi(attribut1Str.c_str());
 
-							}
-						}
-					}
-					dateFabrication.jour = atoi(jourStr.c_str());
-					dateFabrication.mois = atoi(moisStr.c_str());
-					dateFabrication.annee = atoi(anneeStr.c_str());
-					switch (type)
-					{
-						case 'D':
-							unEmploye->ajouterArticle(new Divers(nomArticle,prix,description,etat,dateFabrication));
-							break;
-						case 'V':
-							attribut1 = atoi(attribut1Str.c_str());
-							attribut3 = atoi(attribut3Str.c_str());
-							unEmploye->ajouterArticle(new Voiture(nomArticle,prix,description,etat,dateFabrication,attribut1,attribut2,attribut3));
-							break;
-						case 'B':
-							attribut1 = atoi(attribut1Str.c_str());
-							unEmploye->ajouterArticle(new Bijou(nomArticle,prix,description,etat,dateFabrication,attribut2,attribut1));
-							break;
-					}
+					string attribut2 = loEmploye->at(cpt)[7];
+
+					loArticle = new Bijou(nomArticle, prix, description, etat, dateFabrication, attribut2, attribut1);
 				}
-				marcheAuxPuces->ajouterEmploye(unEmploye);
-				infos.close();
+					break;
 			}
-			else
+
+			if (loArticle != nullptr)
 			{
-				exit(0);
+				unEmploye->ajouterArticle(loArticle);
 			}
 		}
-	}
-	else
-	{
-		exit(0);
-	}
 
-	marche.close();
+		marcheAuxPuces->ajouterEmploye(unEmploye);
+	}
 }
 
 //Une fois connecté, on peut voir le menu

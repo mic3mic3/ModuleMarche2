@@ -567,8 +567,6 @@ int Affichage::menuVenteArticles(float solde,const vector<Article*> &listeArticl
 	system("cls");
 	do
 	{
-		
-
 		//On met une précision aux variables float avec fixed et setprecision(), puis on aligne bien les colonnes avec setw() et left
 		cout << "Marche Aux Puces (Mode Vente)" << "\tSon solde: " << fixed << setprecision(2) << solde << endl << endl;
 		cout << setw(4) << left << "    " << setw(13) << left << "Article" << setw(10) << left << "Prix" << setw(25) << left << "Description" << setw(17) << left << "Etat" << setw(10) << left << "Date" << endl << endl;

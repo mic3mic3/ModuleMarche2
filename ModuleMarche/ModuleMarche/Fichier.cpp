@@ -44,7 +44,7 @@ string Fichier::getContenuFormatePourPourEcriture(vector<vector<string>>* poEntr
 vector<vector<string>>* Fichier::getContenu(string psNomCompletFichier)
 {
 	// Ouverture du fichier
-	fstream loFStream(psNomCompletFichier, ios::in);
+	fstream loFStream(psNomCompletFichier + ".txt", ios::in);
 	if (!loFStream.is_open())
 		return nullptr;
 
@@ -65,7 +65,7 @@ vector<vector<string>>* Fichier::getContenu(string psNomCompletFichier)
 			}
 			else
 			{
-				if (loEntree.size() < nbPtsVirgs)
+				if (loEntree.size() <= nbPtsVirgs)
 					loEntree.insert(loEntree.end(), "");
 
 				loEntree.at(nbPtsVirgs) += ligne[cpt];
