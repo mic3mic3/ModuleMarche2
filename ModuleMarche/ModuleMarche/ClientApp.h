@@ -13,6 +13,7 @@ class Affichage; //Pour que le compilateur sache que la classe Affichage existe
 class Client; //Pour que le compilateur sache que la classe  Client existe
 class MarcheAuxPuces; //Pour que le compilateur sache que la classe MarcheAuxPuces existe
 class Article;
+class Employe;
 
 class ClientApp
 {
@@ -40,6 +41,7 @@ public:
 	void voirVenteArticles();
 
 	Article* getArticleFromStructure(vector<vector<string>>&, size_t);
+	Employe* getEmployeFromStructure(vector<vector<string>>&, size_t);
 };
 
 #endif

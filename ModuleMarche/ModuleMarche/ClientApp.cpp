@@ -319,28 +319,9 @@ void ClientApp::creationMarche(const string &nom)
 		// Obtention des informations d'un employé.
 		string lsEmploye = loEntreesEmploye.at(cptLigne)[0];
 		vector<vector<string>> loEmploye = Fichier::getContenu(lsEmploye);
-
-		string nomP = loEmploye.at(0)[1];
-
-		string prenomP = loEmploye.at(0)[2];
-
-		string adresseP = loEmploye.at(0)[3];
-
-		string soldeStrP = loEmploye.at(0)[4];
-		float soldeP = stof(soldeStrP.c_str());
-
-		string forfaitStr = loEmploye.at(0)[5];
-		char forfait = NULL;
-		if (forfaitStr.length() > 0)
-			forfait = forfaitStr[0];
-
-		string salaireStr = loEmploye.at(0)[6];
-		float salaire = stof(salaireStr.c_str());
-
-		string rabaisStr = loEmploye.at(0)[7];
-		float rabais = stof(rabaisStr.c_str());
-
-		Employe* unEmploye = new Employe(nomP, prenomP, adresseP, new Compte(soldeP), salaire, rabais);
+		Employe* unEmploye = getEmployeFromStructure(loEmploye, 0);
+		if (unEmploye == nullptr)
+			continue;
 
 		// Obtention des achats de l'employé dans les lignes qui suivent.
 		for (size_t cpt = 1; cpt < loEmploye.size(); cpt++)
@@ -806,6 +787,38 @@ Article* ClientApp::getArticleFromStructure(vector<vector<string>>& poArticleStr
 	}
 
 	return loArticle;
+}
+
+Employe* ClientApp::getEmployeFromStructure(vector<vector<string>>& poEmployeStructure, size_t piLigne)
+{
+	// On vérifie que la ligne de de l'employé est valide.
+	if (poEmployeStructure.size() - 1 < piLigne)
+		return nullptr;
+
+	// On construit l'article à partir de la ligne de la structure.
+	string nomP = poEmployeStructure.at(0)[1];
+
+	string prenomP = poEmployeStructure.at(0)[2];
+
+	string adresseP = poEmployeStructure.at(0)[3];
+
+	string soldeStrP = poEmployeStructure.at(0)[4];
+	float soldeP = stof(soldeStrP.c_str());
+
+	string forfaitStr = poEmployeStructure.at(0)[5];
+	char forfait = NULL;
+	if (forfaitStr.length() > 0)
+		forfait = forfaitStr[0];
+
+	string salaireStr = poEmployeStructure.at(0)[6];
+	float salaire = stof(salaireStr.c_str());
+
+	string rabaisStr = poEmployeStructure.at(0)[7];
+	float rabais = stof(rabaisStr.c_str());
+
+	Employe* loEmploye = new Employe(nomP, prenomP, adresseP, new Compte(soldeP), salaire, rabais);
+
+	return loEmploye;
 }
 
 int main()
