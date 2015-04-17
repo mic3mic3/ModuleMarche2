@@ -583,10 +583,3 @@ Employe* ClientApp::getEmployeFromStructure(vector<vector<string>>& poEmployeStr
 //Client* ClientApp::getClientFromStructure(vector<vector<string>>& poClientStructure, size_t piLigne)
 //{
 //}
-
-//int main()
-//{
-//	//ClientApp app(new Affichage);
-//	ClientApp app; //Le main crée un objet ClientApp qui gère tout le reste
-//	return 0;
-//}
