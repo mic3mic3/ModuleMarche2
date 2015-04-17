@@ -144,7 +144,7 @@ void ClientApp::creationMarche(const string &nom)
 		getline(cin, input);
 		exit(EXIT_FAILURE);
 	}
-
+	
 	// Création du marché à partir de la première ligne du fichier contenant dans l'ordre: nom, adresse, revenu.
 	string adresse = loEntreesMarche.at(1)[1];
 	string revenuStr = loEntreesMarche.at(1)[2];
