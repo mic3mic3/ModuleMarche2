@@ -53,13 +53,20 @@ void Affichage::menuDemarrer()
 		cout << "2 - Se connecter avec un compte existant" << endl;
 		cout << "3 - Quitter le programme" << endl;
 		getline(cin, choix);
-		if (choix[0] == '1')
+		try
 		{
-			menuInscription();
+			if (choix[0] == '1')
+			{
+				menuInscription();
+			}
+			else if (choix[0] == '2')
+			{
+				menuConnexion();
+			}
 		}
-		else if (choix[0] == '2')
+		catch (ExceptionMarche loExceptionMarche)
 		{
-			menuConnexion();
+			loExceptionMarche.Gerer();
 		}
 	} while (choix[0] != '3');
 }
@@ -197,15 +204,8 @@ void Affichage::menuConnexion()
 		}
 	} while (!Fichier::fichierExistant(nomCompte));
 
-	try
-	{
-		clientApp.connexion(nomCompte);
-		menuSelection();
-	}
-	catch (ExceptionMarche loExceptionMarche)
-	{
-		loExceptionMarche.Gerer();
-	}
+	clientApp.connexion(nomCompte);
+	menuSelection();
 }
 
 //Affichage du menu de sélection de fonctions une fois connecté, puis on renvoie le choix -> il change selon le forfait du client
@@ -232,22 +232,29 @@ void Affichage::menuSelection()
 			cout << "4 - Changer mon forfait" << endl;
 			cout << "5 - Deconnexion" << endl;
 			getline(cin, choix);
-			if (choix == "1")
-			{
-				menuAchats();
-			}
-			else if (choix == "2")
-			{
-				clientApp.voirArticles();
-			}
-			else if (choix == "3")
-			{
-				menuVenteArticles();
-			}
-			else if (choix == "4")
-			{
-				menuForfaits();
-			}
+			//try
+			//{
+				if (choix == "1")
+				{
+					menuAchats();
+				}
+				else if (choix == "2")
+				{
+					clientApp.voirArticles();
+				}
+				else if (choix == "3")
+				{
+					menuVenteArticles();
+				}
+				else if (choix == "4")
+				{
+					menuForfaits();
+				}
+			//}
+			//catch (ExceptionMarche loExceptionMarche)
+			//{
+			//	loExceptionMarche.Gerer();
+			//}
 		} while (choix != "5");
 	}
 	else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
@@ -264,14 +271,21 @@ void Affichage::menuSelection()
 			cout << "2 - Voir les articles achetables" << endl;
 			cout << "3 - Deconnexion" << endl;
 			getline(cin, choix);
-			if (choix == "1")
-			{
-				menuAchats();
-			}
-			else if (choix == "2")
-			{
-				clientApp.voirArticles();
-			}
+			//try
+			//{
+				if (choix == "1")
+				{
+					menuAchats();
+				}
+				else if (choix == "2")
+				{
+					clientApp.voirArticles();
+				}
+			//}
+			//catch (ExceptionMarche loExceptionMarche)
+			//{
+			//	loExceptionMarche.Gerer();
+			//}
 		} while (choix != "3");
 	}
 	else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
@@ -437,9 +451,9 @@ void Affichage::menuAchats()
 	{
 		cout << "Aucun article en votre possession" << endl;
 	}
-	string x;
-	cout << endl << "Appuyez sur une touche pour revenir au menu";
-	getline(cin, x);
+	string lsInput;
+	cout << endl << "Appuyez sur Entrée pour revenir au menu";
+	getline(cin, lsInput);
 }
 
 //Affichage du marché aux puces avec du solde du client et les articles à vendre du marché, puis on retourne le choix de l'article ou -1 si l'utilisateur veut sortir (a écrit exit)
@@ -450,7 +464,6 @@ int Affichage::menuMarche(float solde, const vector<Article*> &listeArticles, ch
 	system("cls");
 	do
 	{
-
 		if (!valide)
 		{
 			cout << "Erreur dans l'entree" << endl;
@@ -796,6 +809,10 @@ int main()
 	Affichage::menuDemarrer();
 
 	cout << "Fermeture de l'application..." << endl;
+
+	string lsInput;
+	cout << endl << "Appuyez sur Entrée pour quitter...";
+	getline(cin, lsInput);
 
 	return EXIT_SUCCESS;
 }

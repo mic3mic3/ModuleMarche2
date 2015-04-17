@@ -60,12 +60,6 @@ void ClientApp::deconnexion()
 	marcheAuxPuces = NULL;
 }
 
-//On appelle le menu d'inscription
-void ClientApp::inscription()
-{
-	Affichage::menuInscription();
-}
-
 // On crée le client et le marché
 void ClientApp::connexion(const string& psNomCompte)
 {
@@ -131,7 +125,7 @@ void ClientApp::creationClient(const string &nomCompte)
 
 	if (client == nullptr)
 	{
-		// Todo: Throw Exception?  Si le forfait n'a pas été géré et que le client n'est pas créé, on revient au menu de départ.
+		throw ExceptionMarche(string("Le client n'a pas pu être ouvert."), false);
 	}
 	
 	//On récupère les achats du client après la première ligne du fichier

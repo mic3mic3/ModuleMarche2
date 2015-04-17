@@ -33,7 +33,6 @@ public:
 	void setClient(Client*);
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
-	void inscription();
 	void connexion(const string&);
 	void creationClient(const string &);
 	void creationMarche(const string &);
