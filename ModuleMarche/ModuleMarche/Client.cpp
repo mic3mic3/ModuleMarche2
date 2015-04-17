@@ -71,11 +71,6 @@ vector<Article*> Client::getArticles() const
 	return articles;
 }
 
-float Client::getSolde() const
-{
-	return compte->getSolde();
-}
-
 string Client::getNom() const
 {
 	return nom;

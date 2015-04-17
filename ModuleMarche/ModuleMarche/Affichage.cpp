@@ -19,6 +19,7 @@
 #include "Bijou.h"
 #include "Divers.h"
 #include "Voiture.h"
+#include "Compte.h"
 
 #include "ClientApp.h"
 
@@ -376,7 +377,7 @@ void Affichage::menuForfaits()
 	fstream achats(clientApp.getCompte() + ".txt");
 	if (achats)
 	{
-		achats << clientApp.getCompte() << ";" << clientApp.getClient()->getNom() << ";" << clientApp.getClient()->getPrenom() << ";" << clientApp.getClient()->getAdresse() << ";" << clientApp.getClient()->getSolde();
+		achats << clientApp.getCompte() << ";" << clientApp.getClient()->getNom() << ";" << clientApp.getClient()->getPrenom() << ";" << clientApp.getClient()->getAdresse() << ";" << clientApp.getClient()->getCompte()->getSolde();
 		Employe* emp;
 		Superclient* sup;
 		Vendeur* vnd;

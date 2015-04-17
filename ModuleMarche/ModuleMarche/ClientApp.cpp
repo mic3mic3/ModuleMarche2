@@ -215,7 +215,7 @@ void ClientApp::voirVenteArticles()
 			fstream achats(compte+".txt",std::ofstream::out | std::ofstream::trunc);
 			if (achats)
 			{
-				achats << compte << ";" << client->getNom() << ";" << client->getPrenom() << ";" << client->getAdresse() << ";" << client->getSolde();
+				achats << compte << ";" << client->getNom() << ";" << client->getPrenom() << ";" << client->getAdresse() << ";" << client->getCompte()->getSolde();
 				Employe* emp;
 				Superclient* sup;
 				Vendeur* vnd;
@@ -292,15 +292,15 @@ void ClientApp::voirVenteArticles()
 					Voiture* voit;
 					if (div = dynamic_cast<Divers*>(marcheAuxPuces->getArticlesEnVente()[cpt]))
 					{
-						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";D;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()<<";"<<date<<"\n";
+						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";D;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()->getDescription()<<";"<<date<<"\n";
 					}
 					else if(bij = dynamic_cast<Bijou*>(marcheAuxPuces->getArticlesEnVente()[cpt]))
 					{
-						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";B;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
+						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";B;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()->getDescription()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
 					}
 					else if(voit = dynamic_cast<Voiture*>(marcheAuxPuces->getArticlesEnVente()[cpt]))
 					{
-						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";V;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
+						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";V;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()->getDescription()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
 					}
 				}
 			}
@@ -315,7 +315,7 @@ void ClientApp::voirArticles()
 	char categorie = Affichage::menuCategories();
 	if (categorie != 'Q')
 	{
-		int retour = Affichage::menuMarche(client->getSolde(), marcheAuxPuces->getArticlesEnVente(), categorie);
+		int retour = Affichage::menuMarche(client->getCompte()->getSolde(), marcheAuxPuces->getArticlesEnVente(), categorie);
 		bool prixValide;
 		bool vendu;
 		if (retour != -1)
@@ -334,7 +334,7 @@ void ClientApp::voirArticles()
 				fstream achats(compte+".txt");
 				if (achats)
 				{
-					achats << compte << ";" << client->getNom() << ";" << client->getPrenom() << ";" << client->getAdresse() << ";" << client->getSolde();
+					achats << compte << ";" << client->getNom() << ";" << client->getPrenom() << ";" << client->getAdresse() << ";" << client->getCompte()->getSolde();
 					Employe* emp;
 					Superclient* sup;
 					Vendeur* vnd;
@@ -366,15 +366,15 @@ void ClientApp::voirArticles()
 						Voiture* voit;
 						if (div = dynamic_cast<Divers*>(client->getArticles()[cpt]))
 						{
-							achats << client->getArticles()[cpt]->getNom() << ";D;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<"\n";
+							achats << client->getArticles()[cpt]->getNom() << ";D;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()->getDescription()<<";"<<date<<"\n";
 						}
 						else if(bij = dynamic_cast<Bijou*>(client->getArticles()[cpt]))
 						{
-							achats << client->getArticles()[cpt]->getNom() << ";B;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
+							achats << client->getArticles()[cpt]->getNom() << ";B;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()->getDescription()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
 						}
 						else if(voit = dynamic_cast<Voiture*>(client->getArticles()[cpt]))
 						{
-							achats << client->getArticles()[cpt]->getNom() << ";V;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
+							achats << client->getArticles()[cpt]->getNom() << ";V;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()->getDescription()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
 						}
 					}
 				}
@@ -388,7 +388,7 @@ void ClientApp::voirArticles()
 				{
 					trans << "Client: " << marcheAuxPuces->getDerniereTransaction().client->getNom() << ";" << marcheAuxPuces->getDerniereTransaction().client->getPrenom() << ";" << marcheAuxPuces->getDerniereTransaction().client->getAdresse() << "\n";
 					trans << "Marche: " << marcheAuxPuces->getDerniereTransaction().marche->getNom() << ";" << marcheAuxPuces->getDerniereTransaction().marche->getAdresse() << "\n";
-					trans << "Article: " << marcheAuxPuces->getDerniereTransaction().article->getNom() << ";" << marcheAuxPuces->getDerniereTransaction().article->getPrix() << ";" << marcheAuxPuces->getDerniereTransaction().article->getDescription() << ";" << marcheAuxPuces->getDerniereTransaction().article->getEtat() << ";" << marcheAuxPuces->getDerniereTransaction().article->getDate().jour << "/" << marcheAuxPuces->getDerniereTransaction().article->getDate().mois << "/" << marcheAuxPuces->getDerniereTransaction().article->getDate().annee << "\n";
+					trans << "Article: " << marcheAuxPuces->getDerniereTransaction().article->getNom() << ";" << marcheAuxPuces->getDerniereTransaction().article->getPrix() << ";" << marcheAuxPuces->getDerniereTransaction().article->getDescription() << ";" << marcheAuxPuces->getDerniereTransaction().article->getEtat()->getDescription() << ";" << marcheAuxPuces->getDerniereTransaction().article->getDate().jour << "/" << marcheAuxPuces->getDerniereTransaction().article->getDate().mois << "/" << marcheAuxPuces->getDerniereTransaction().article->getDate().annee << "\n";
 					trans << "Date: " << marcheAuxPuces->getDerniereTransaction().date.jour << "/" << marcheAuxPuces->getDerniereTransaction().date.mois << "/" << marcheAuxPuces->getDerniereTransaction().date.annee << "\n";
 					trans << "-----\n";
 				}
