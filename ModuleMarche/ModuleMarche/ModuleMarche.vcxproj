@@ -27,6 +27,7 @@
     <ClInclude Include="EtatUsage.h" />
     <ClInclude Include="FabriqueArticle.h" />
     <ClInclude Include="FabriqueClient.h" />
+    <ClInclude Include="ExceptionMarche.h" />
     <ClInclude Include="Fichier.h" />
     <ClInclude Include="MarcheAuxPuces.h" />
     <ClInclude Include="Superclient.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="EtatUsage.cpp" />
     <ClCompile Include="FabriqueArticle.cpp" />
     <ClCompile Include="FabriqueClient.cpp" />
+    <ClCompile Include="ExceptionMarche.cpp" />
     <ClCompile Include="Fichier.cpp" />
     <ClCompile Include="MarcheAuxPuces.cpp" />
     <ClCompile Include="Superclient.cpp" />

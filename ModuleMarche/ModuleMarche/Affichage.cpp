@@ -7,6 +7,9 @@
 #include <iomanip> //Pour des opérations sur l'affichage (utilisé pour mieux aligner les trucs)
 #include <sstream> //Pour la conversion int en string
 
+#include "Fichier.h"
+#include "ExceptionMarche.h"
+
 #include "Article.h"
 #include "Vendeur.h"
 #include "Acheteur.h"
@@ -17,9 +20,12 @@
 #include "Divers.h"
 #include "Voiture.h"
 
+#include "ClientApp.h"
+
 using namespace std; //Pour ne jamais avoir à écrire std:: puisque j'utilise beaucoup de fonctions de std dans ce fichier
 
 const string Affichage::CS_EXIT_INPUT = "exit";
+ClientApp Affichage::clientApp = ClientApp();
 
 Affichage::Affichage(void)
 {
@@ -30,10 +36,9 @@ Affichage::~Affichage(void)
 }
 
 //On affiche le premier menu, l'utilisateur décide s'il veut faire un nouveau compte ou se connecter, puis on renvoit le choix
-char Affichage::menuDemarrer()
+void Affichage::menuDemarrer()
 {
-	string choix;
-	choix = "1";
+	string choix = "1";
 	do
 	{
 		system("cls"); //Pour effacer la console
@@ -46,13 +51,15 @@ char Affichage::menuDemarrer()
 		cout << "2 - Se connecter avec un compte existant" << endl;
 		cout << "3 - Quitter le programme" << endl;
 		getline(cin,choix);
-		if (choix == "3")
+		if (choix[0] == '1')
 		{
-			exit(0); //Fermeture du programme
+			menuInscription();
 		}
-	}while(choix[0] != '1' && choix[0] != '2');
-
-	return choix[0];
+		else if(choix[0] == '2')
+		{
+			menuConnexion();
+		}
+	}while(choix[0] != '3');
 }
 
 //Vérification si le compte existe déjà
@@ -178,54 +185,48 @@ void Affichage::menuInscription()
 }
 
 //Affichage du menu de connexion, puis vérification de l'existence du compte, puis on renvoie le nom du compte avec lequel on s'est connecté
-string Affichage::menuConnexion()
+void Affichage::menuConnexion()
 {
 	system("cls");
-	string nomCompte;
 	cout << "Connexion" << endl;
-	bool compteValide = true;
-	
 
+	string nomCompte = "";
+	bool compteValide = true;
 	do
 	{
-		string ligne;
-		nomCompte = "";
 		if (!compteValide)
 		{
 			cout << "Compte non-existant" << endl;
 		}
 		compteValide = false;
 		cout << "Nom de compte (" << CS_EXIT_INPUT << " pour sortir): ";
-		cin >> nomCompte;
-		cin.ignore();
+		getline(cin, nomCompte);
 		if (nomCompte == CS_EXIT_INPUT)
 		{
-			return nomCompte;
+			return;
 		}
+	} while (!Fichier::fichierExistant(nomCompte));
 
-		//Vérification de l'existence du compte
-		fstream compteVerif(nomCompte+".txt",ios::in);
-		if (compteVerif.is_open())
-		{
-			compteValide = true;
-		}
-		compteVerif.close();
-	}while(!compteValide);
-	
-
-	return nomCompte;
+	try
+	{
+		clientApp.connexion(nomCompte);
+		menuSelection();
+	}
+	catch (ExceptionMarche loExceptionMarche)
+	{
+		loExceptionMarche.Gerer();
+	}
 }
 
 //Affichage du menu de sélection de fonctions une fois connecté, puis on renvoie le choix -> il change selon le forfait du client
-char Affichage::menuSelection(Client* cli)
+void Affichage::menuSelection()
 {
-	string choix;
-	choix = "1";
+	string choix = "1";
 	Employe* emp;
 	Vendeur* vnd;
 	Acheteur* ach;
 	Superclient* sup;
-	if (sup = dynamic_cast<Superclient*>(cli))
+	if (sup = dynamic_cast<Superclient*>(clientApp.getClient()))
 	{
 		do
 		{
@@ -241,13 +242,25 @@ char Affichage::menuSelection(Client* cli)
 			cout << "4 - Changer mon forfait" << endl;
 			cout << "5 - Deconnexion" << endl;
 			getline(cin,choix);
-			if (choix == "5")
+			if (choix == "1")
 			{
-				return '5';
+				clientApp.voirAchats();
 			}
-		}while(choix != "1" && choix != "2" && choix != "3" && choix != "4");
+			else if (choix == "2")
+			{
+				clientApp.voirArticles();
+			}
+			else if (choix == "3")
+			{
+				clientApp.voirVenteArticles();
+			}
+			else if (choix == "4")
+			{
+				clientApp.voirForfaits();
+			}
+		}while(choix != "5");
 	}
-	else if (emp = dynamic_cast<Employe*>(cli))
+	else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
 	{
 		do
 		{
@@ -261,13 +274,17 @@ char Affichage::menuSelection(Client* cli)
 			cout << "2 - Voir les articles achetables" << endl;
 			cout << "3 - Deconnexion" << endl;
 			getline(cin,choix);
-			if (choix == "3")
+			if (choix == "1")
 			{
-				return '3';
+				clientApp.voirAchats();
 			}
-		}while(choix != "1" && choix != "2");
+			else if (choix == "2")
+			{
+				clientApp.voirArticles();
+			}
+		}while(choix != "3");
 	}
-	else if (ach = dynamic_cast<Acheteur*>(cli))
+	else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
 	{
 		do
 		{
@@ -282,13 +299,21 @@ char Affichage::menuSelection(Client* cli)
 			cout << "3 - Changer mon forfait" << endl;
 			cout << "4 - Deconnexion" << endl;
 			getline(cin,choix);
-			if (choix == "4")
+			if (choix == "1")
 			{
-				return '4';
+				clientApp.voirAchats();
 			}
-		}while(choix != "1" && choix != "2" && choix != "3");
+			else if (choix == "2")
+			{
+				clientApp.voirArticles();
+			}
+			else if (choix == "3")
+			{
+				clientApp.voirForfaits();
+			}
+		}while(choix != "4");
 	}
-	else if (vnd = dynamic_cast<Vendeur*>(cli))
+	else if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
 	{
 		do
 		{
@@ -303,14 +328,22 @@ char Affichage::menuSelection(Client* cli)
 			cout << "3 - Changer mon forfait" << endl;
 			cout << "4 - Deconnexion" << endl;
 			getline(cin,choix);
-			if (choix == "4")
+			if (choix == "1")
 			{
-				return '4';
+				clientApp.voirAchats();
 			}
-		}while(choix != "1" && choix != "2" && choix != "3");
+			else if (choix == "2")
+			{
+				clientApp.voirVenteArticles();
+			}
+			else if (choix == "3")
+			{
+				clientApp.voirForfaits();
+			}
+		}while(choix != "4");
 	}
 
-	return choix[0];
+	clientApp.deconnexion();
 }
 
 //Affichage du menu pour changer de forfait
@@ -593,4 +626,13 @@ int Affichage::menuVenteArticles(float solde,const vector<Article*> &listeArticl
 	listeArticles[retour - 1]->afficherDetails();
 
 	return retour;
+}
+
+int main()
+{
+	Affichage::menuDemarrer();
+
+	cout << "Fermeture de l'application..." << endl;
+	
+	return EXIT_SUCCESS;
 }

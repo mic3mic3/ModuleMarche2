@@ -79,6 +79,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EtatMateriaux.h">
+    <ClInclude Include="ExceptionMarche.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -141,6 +142,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EtatMateriaux.cpp">
+    <ClCompile Include="ExceptionMarche.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

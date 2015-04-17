@@ -27,14 +27,14 @@ public:
 	ClientApp(void);
 	~ClientApp(void);
 
+	Client* getClient();
+
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
-	void demarrer();
 	void inscription();
-	void connexion();
+	void connexion(const string&);
 	void creationClient(const string &);
 	void creationMarche(const string &);
 	void deconnexion();
-	void selection();
 	void voirAchats();
 	void voirArticles();
 	void voirForfaits();
