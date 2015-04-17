@@ -29,7 +29,7 @@ public:
 	static void menuConnexion();
 	static void menuSelection();
 	static char menuForfaits();
-	static void menuAchats(const vector<Article*> &);
+	static void menuAchats();
 	static int menuMarche(float,const vector<Article*> &,char);
 	static bool menuVerifAchat(bool);
 	static int menuVenteArticles(float,const vector<Article*> &);

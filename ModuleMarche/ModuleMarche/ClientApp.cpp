@@ -248,12 +248,6 @@ void ClientApp::voirForfaits()
 	}
 }
 
-//Le client voit les achats qu'il a faits
-void ClientApp::voirAchats()
-{
-	Affichage::menuAchats(client->getArticles());
-}
-
 //On accède à la vente d'articles et on passe les étapes de validation, puis on update les fichiers requis à la fin
 void ClientApp::voirVenteArticles()
 {

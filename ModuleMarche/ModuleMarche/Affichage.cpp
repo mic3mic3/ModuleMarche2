@@ -244,7 +244,7 @@ void Affichage::menuSelection()
 			getline(cin,choix);
 			if (choix == "1")
 			{
-				clientApp.voirAchats();
+				menuAchats();
 			}
 			else if (choix == "2")
 			{
@@ -276,7 +276,7 @@ void Affichage::menuSelection()
 			getline(cin,choix);
 			if (choix == "1")
 			{
-				clientApp.voirAchats();
+				menuAchats();
 			}
 			else if (choix == "2")
 			{
@@ -301,7 +301,7 @@ void Affichage::menuSelection()
 			getline(cin,choix);
 			if (choix == "1")
 			{
-				clientApp.voirAchats();
+				menuAchats();
 			}
 			else if (choix == "2")
 			{
@@ -330,7 +330,7 @@ void Affichage::menuSelection()
 			getline(cin,choix);
 			if (choix == "1")
 			{
-				clientApp.voirAchats();
+				menuAchats();
 			}
 			else if (choix == "2")
 			{
@@ -373,17 +373,17 @@ char Affichage::menuForfaits()
 	return choix[0];
 }
 
-//Affichage des achats faits par le client, on reçoit une référence de son vecteur d'achats
-void Affichage::menuAchats(const vector<Article*> &achats)
+//Affichage des achats faits par le client
+void Affichage::menuAchats()
 {
 	system("cls");
 	cout << "Mes achats" << endl << endl;
 	cout << setw(15) << left << "Article" << setw(12) << left << "Prix" << setw(25) << left << "Description" << setw(17) << left << "Etat" << setw(10) << left << "Date" << endl << endl;
-	for (size_t cpt=0;cpt < achats.size();cpt++)
+	for (size_t cpt=0;cpt < clientApp.getClient()->getArticles().size();cpt++)
 	{
-		cout << achats[cpt];
+		cout << clientApp.getClient()->getArticles()[cpt];
 	}
-	if (achats.size() == 0)
+	if (clientApp.getClient()->getArticles().size() == 0)
 	{
 		cout << "Aucun article en votre possession" << endl;
 	}

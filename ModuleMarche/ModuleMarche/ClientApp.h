@@ -35,7 +35,6 @@ public:
 	void creationClient(const string &);
 	void creationMarche(const string &);
 	void deconnexion();
-	void voirAchats();
 	void voirArticles();
 	void voirForfaits();
 	void voirVenteArticles();

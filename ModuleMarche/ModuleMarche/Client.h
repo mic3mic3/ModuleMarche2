@@ -38,8 +38,6 @@ public:
 	string getPrenom() const;
 	string getAdresse() const;
 	Compte* getCompte() const;
-
-
 };
 
 #endif
