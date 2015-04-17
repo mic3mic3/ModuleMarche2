@@ -14,8 +14,11 @@ private:
 	string couleur;
 	int annee;
 public:
+	static const float prixMin;
+	static const float prixMax;
+
 	Voiture(void);
-	Voiture(string,float,string ,string,struct Date,int,string,int);
+	Voiture(string,float,string ,Etat*,struct Date,int,string,int);
 	~Voiture(void);
 
 	void afficherDetails() const;

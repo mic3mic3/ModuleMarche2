@@ -14,6 +14,8 @@ class Vendeur : virtual public Client
 private:
 	vector<Transaction> transactionsEffectuees; //On stocke toutes les transactions faites (les ventes)
 public:
+	static const float FORFAIT;
+
 	Vendeur(void);
 	Vendeur(string,string,string,Compte*);
 	Vendeur(Client*);

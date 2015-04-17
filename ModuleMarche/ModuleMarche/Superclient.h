@@ -8,6 +8,8 @@
 class Superclient : public Vendeur, public Acheteur
 {
 public:
+	static const float FORFAIT;
+
 	Superclient(void);
 	Superclient(string,string,string,Compte*);
 	Superclient(Client*);

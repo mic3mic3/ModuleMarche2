@@ -7,12 +7,14 @@
 #include <sstream>
 using namespace std;
 
+const float PRIX_MIN = 15000;
+const float PRIX_MAX = 100000;
 
 Voiture::Voiture(void)
 {
 }
 
-Voiture::Voiture(string n, float p, string d, string e, struct Date date,int k,string c,int a):Article(n,p,d,e,date)
+Voiture::Voiture(string n, float p, string d, Etat* e, struct Date date,int k,string c,int a):Article(n,p,d,e,date)
 {
 	kilometrage = k;
 	couleur = c;

@@ -15,8 +15,11 @@ private:
 	string materiau;
 	int purete;
 public:
+	static const float prixMin;
+	static const float prixMax;
+
 	Bijou(void);
-	Bijou(string,float,string ,string,struct Date,string,int);
+	Bijou(string,float,string ,Etat*,struct Date,string,int);
 	~Bijou(void);
 
 	void afficherDetails() const;

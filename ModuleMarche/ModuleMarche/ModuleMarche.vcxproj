@@ -21,6 +21,12 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="Divers.h" />
     <ClInclude Include="Employe.h" />
+    <ClInclude Include="Etat.h" />
+    <ClInclude Include="EtatMateriaux.h" />
+    <ClInclude Include="EtatNeuf.h" />
+    <ClInclude Include="EtatUsage.h" />
+    <ClInclude Include="FabriqueArticle.h" />
+    <ClInclude Include="FabriqueClient.h" />
     <ClInclude Include="Fichier.h" />
     <ClInclude Include="MarcheAuxPuces.h" />
     <ClInclude Include="Superclient.h" />
@@ -38,6 +44,12 @@
     <ClCompile Include="Compte.cpp" />
     <ClCompile Include="Divers.cpp" />
     <ClCompile Include="Employe.cpp" />
+    <ClCompile Include="Etat.cpp" />
+    <ClCompile Include="EtatMateriaux.cpp" />
+    <ClCompile Include="EtatNeuf.cpp" />
+    <ClCompile Include="EtatUsage.cpp" />
+    <ClCompile Include="FabriqueArticle.cpp" />
+    <ClCompile Include="FabriqueClient.cpp" />
     <ClCompile Include="Fichier.cpp" />
     <ClCompile Include="MarcheAuxPuces.cpp" />
     <ClCompile Include="Superclient.cpp" />

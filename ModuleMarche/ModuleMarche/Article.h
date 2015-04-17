@@ -7,6 +7,10 @@
 #include <iostream>
 
 #include "Date.h"
+#include "Etat.h"
+#include "EtatNeuf.h"
+#include "EtatUsage.h"
+#include "EtatMateriaux.h"
 
 using std::string; //Pour utiliser les string sans std::
 using std::ostream;
@@ -19,15 +23,15 @@ private:
 	string nom;
 	float prix;
 	string description;
-	string etat;
+	Etat* etat;
 	struct Date dateFabrication;
 public:
 	Article(void);
-	Article(string,float,string,string,struct Date);
+	Article(string,float,string,Etat*,struct Date);
 	~Article(void);
 
 	void mettreAJourPrix(const float);
-	void mettreAJourEtat(const string &);
+	void mettreAJourEtat(Etat*);
 
 	virtual void afficherDetails() const = 0;
 

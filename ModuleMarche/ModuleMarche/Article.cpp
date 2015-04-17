@@ -12,7 +12,7 @@ Article::Article(void)
 
 
 //Le constructeur qui sera utilisé
-Article::Article(string n, float p, string d, string e, struct Date date)
+Article::Article(string n, float p, string d, Etat* e, struct Date date)
 {
 	nom = n;
 	prix = p;
@@ -23,6 +23,7 @@ Article::Article(string n, float p, string d, string e, struct Date date)
 
 Article::~Article(void)
 {
+	delete etat;
 }
 
 void Article::mettreAJourPrix(float p)
@@ -30,8 +31,9 @@ void Article::mettreAJourPrix(float p)
 	prix = p;
 }
 
-void Article::mettreAJourEtat(const string &e) //Par référence pour une string
+void Article::mettreAJourEtat(Etat* e) //Par référence pour une string
 {
+	delete etat;
 	etat = e;
 }
 
@@ -52,7 +54,7 @@ string Article::getDescription() const
 
 string Article::getEtat() const
 {
-	return etat;
+	return etat->getDescription();
 }
 
 struct Date Article::getDate() const

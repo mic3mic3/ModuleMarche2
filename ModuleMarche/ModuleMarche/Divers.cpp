@@ -5,11 +5,14 @@
 
 using namespace std;
 
+const float PRIX_MIN = 1;
+const float PRIX_MAX = 15000;
+
 Divers::Divers(void)
 {
 }
 
-Divers::Divers(string n, float p, string d, string e, struct Date date):Article(n,p,d,e,date)
+Divers::Divers(string n, float p, string d, Etat* e, struct Date date):Article(n,p,d,e,date)
 {
 }
 

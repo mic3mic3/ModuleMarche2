@@ -4,11 +4,14 @@
 #include <sstream>
 using namespace std;
 
+const float PRIX_MIN = 10;
+const float PRIX_MAX = 3000;
+
 Bijou::Bijou(void)
 {
 }
 
-Bijou::Bijou(string n, float p, string d, string e, struct Date date,string m,int pu):Article(n,p,d,e,date)
+Bijou::Bijou(string n, float p, string d, Etat* e, struct Date date,string m,int pu):Article(n,p,d,e,date)
 {
 	materiau = m;
 	purete = pu;

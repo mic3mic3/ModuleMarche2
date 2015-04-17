@@ -6,6 +6,8 @@
 class Acheteur : virtual public Client //hérite virtuellement de client (causé par Superclient)
 {
 public:
+	static const float FORFAIT;
+
 	Acheteur(void);
 	Acheteur(string,string,string,Compte*);
 	Acheteur(Client*);

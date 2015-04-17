@@ -1,5 +1,6 @@
 #include "Superclient.h"
 
+const float FORFAIT = 25;
 
 Superclient::Superclient(void)
 {

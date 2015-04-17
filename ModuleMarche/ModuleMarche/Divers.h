@@ -11,8 +11,11 @@ using std::string;
 class Divers : public Article
 {
 public:
+	static const float prixMin;
+	static const float prixMax;
+
 	Divers(void);
-	Divers(string,float,string ,string,struct Date);
+	Divers(string,float,string ,Etat*,struct Date);
 
 	void afficherDetails() const;
 	~Divers(void);
