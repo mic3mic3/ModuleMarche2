@@ -256,7 +256,7 @@ void Affichage::menuSelection()
 			}
 			else if (choix == "4")
 			{
-				clientApp.voirForfaits();
+				menuForfaits();
 			}
 		}while(choix != "5");
 	}
@@ -309,7 +309,7 @@ void Affichage::menuSelection()
 			}
 			else if (choix == "3")
 			{
-				clientApp.voirForfaits();
+				menuForfaits();
 			}
 		}while(choix != "4");
 	}
@@ -338,7 +338,7 @@ void Affichage::menuSelection()
 			}
 			else if (choix == "3")
 			{
-				clientApp.voirForfaits();
+				menuForfaits();
 			}
 		}while(choix != "4");
 	}
@@ -347,7 +347,7 @@ void Affichage::menuSelection()
 }
 
 //Affichage du menu pour changer de forfait
-char Affichage::menuForfaits()
+void Affichage::menuForfaits()
 {
 	string choix;
 	choix = "A";
@@ -358,19 +358,79 @@ char Affichage::menuForfaits()
 		{
 			cout << "Erreur dans le choix!" << endl;
 		}
-		cout << "Quel forfait voulez-vous?" << endl;
+		cout << "Quel forfait voulez-vous? (" << CS_EXIT_INPUT << " pour sortir):" << endl;
 		cout << "A - Acheteur" << endl;
 		cout << "V - Vendeur" << endl;
 		cout << "S - Superclient" << endl;
-		cout << "Q - Quitter" << endl;
 		getline(cin,choix);
-		if (choix == "Q")
+		if (choix == CS_EXIT_INPUT)
 		{
-			return 'Q';
+			return;
 		}
 	}while(choix != "A" && choix != "V" && choix != "S");
 
-	return choix[0];
+	switch (choix[0])
+	{
+	case 'A':
+		clientApp.setClient(new Acheteur(clientApp.getClient()));
+		break;
+	case 'V':
+		clientApp.setClient(new Vendeur(clientApp.getClient()));
+		break;
+	case 'S':
+		clientApp.setClient(new Superclient(clientApp.getClient()));
+		break;
+	default:
+		throw ExceptionMarche(string("Type de forfait non gere: «" + choix + "».  Le forfait du client n'a pas pu etre change."), false);
+		break;
+	}
+	//On update le fichier après avoir changé le forfait
+	fstream achats(clientApp.getCompte() + ".txt");
+	if (achats)
+	{
+		achats << clientApp.getCompte() << ";" << clientApp.getClient()->getNom() << ";" << clientApp.getClient()->getPrenom() << ";" << clientApp.getClient()->getAdresse() << ";" << clientApp.getClient()->getSolde();
+		Employe* emp;
+		Superclient* sup;
+		Vendeur* vnd;
+		Acheteur* ach;
+		if (sup = dynamic_cast<Superclient*>(clientApp.getClient()))
+		{
+			achats << ";S\n";
+		}
+		else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
+		{
+			achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";
+		}
+		else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
+		{
+			achats << ";A\n";
+		}
+		else if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+		{
+			achats << ";V\n";
+		}
+		for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
+		{
+			ostringstream conversion; //Conversion avec sstream d'un int en string
+			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" << clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" << clientApp.getClient()->getArticles()[cpt]->getDate().annee;
+			string date = conversion.str();
+			Divers* div;
+			Bijou* bij;
+			Voiture* voit;
+			if (div = dynamic_cast<Divers*>(clientApp.getClient()->getArticles()[cpt]))
+			{
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << "\n";
+			}
+			else if (bij = dynamic_cast<Bijou*>(clientApp.getClient()->getArticles()[cpt]))
+			{
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << ";" << bij->getPurete() << ";" << bij->getMateriau() << "\n";
+			}
+			else if (voit = dynamic_cast<Voiture*>(clientApp.getClient()->getArticles()[cpt]))
+			{
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << ";" << voit->getKilometrage() << ";" << voit->getCouleur() << ";" << voit->getAnnee() << "\n";
+			}
+		}
+	}
 }
 
 //Affichage des achats faits par le client

@@ -34,8 +34,24 @@ bool ExceptionMarche::getFatale() const
 
 void ExceptionMarche::Gerer() const
 {
-	cout << message;
+	// Affichage du message sous le format: 
+	// «Erreur fatale: 
+	// Le marché aux puces n'a pas pu être créé.
+	// L'application doit fermer...»
+	string lsMessageAAfficher = "Erreur";
+	if (fatale)
+		lsMessageAAfficher += " fatale";
+	lsMessageAAfficher += ": ";
+	if (message.size() == 0)
+		lsMessageAAfficher += "Désolé, une erreur s'est produite dans l'application.";
+	else
+		lsMessageAAfficher += message;
+	lsMessageAAfficher += "\n";
+	if (fatale)
+		lsMessageAAfficher += "L'application doit fermer...\n";
+	cout << lsMessageAAfficher;
 
+	// Si l'erreur est fatale et empêche le programme de fonctionner, on quitte.
 	if (fatale)
 		exit(EXIT_FAILURE);
 }

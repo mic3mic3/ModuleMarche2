@@ -27,7 +27,9 @@ public:
 	ClientApp(void);
 	~ClientApp(void);
 
-	Client* getClient();
+	Client* getClient() const;
+	string getCompte() const;
+	void setClient(Client*);
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
 	void inscription();
@@ -36,7 +38,6 @@ public:
 	void creationMarche(const string &);
 	void deconnexion();
 	void voirArticles();
-	void voirForfaits();
 	void voirVenteArticles();
 
 	Article* getArticleFromStructure(vector<vector<string>>&, size_t);

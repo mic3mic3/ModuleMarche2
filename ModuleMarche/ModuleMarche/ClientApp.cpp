@@ -31,9 +31,19 @@ ClientApp::~ClientApp(void)
 {
 }
 
-Client* ClientApp::getClient()
+Client* ClientApp::getClient() const
 {
 	return client;
+}
+
+string ClientApp::getCompte() const
+{
+	return compte;
+}
+
+void ClientApp::setClient(Client* poClient)
+{
+	client = poClient;
 }
 
 //Déconnexion: On retire le marché et le client connecté de la mémoire
@@ -178,73 +188,6 @@ void ClientApp::creationMarche(const string &nom)
 		}
 
 		marcheAuxPuces->ajouterEmploye(unEmploye);
-	}
-}
-
-//Le client voit les forfaits
-void ClientApp::voirForfaits()
-{
-	char newForfait = Affichage::menuForfaits();
-	switch(newForfait)
-	{
-		case 'A':
-			client = new Acheteur(client);
-			break;
-		case 'V':
-			client = new Vendeur(client);
-			break;
-		case 'S':
-			client = new Superclient(client);
-			break;
-		default:
-			break;
-	}
-	//On update le fichier après avoir changé le forfait
-	fstream achats(compte+".txt");
-	if (achats)
-	{
-		achats << compte << ";" << client->getNom() << ";" << client->getPrenom() << ";" << client->getAdresse() << ";" << client->getSolde();
-		Employe* emp;
-		Superclient* sup;
-		Vendeur* vnd;
-		Acheteur* ach;
-		if (sup = dynamic_cast<Superclient*>(client))
-		{
-			achats << ";S\n";	
-		}
-		else if (emp = dynamic_cast<Employe*>(client))
-		{
-			achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";	
-		}
-		else if (ach = dynamic_cast<Acheteur*>(client))
-		{
-			achats << ";A\n";	
-		}
-		else if (vnd = dynamic_cast<Vendeur*>(client))
-		{
-			achats << ";V\n";	
-		}
-		for (size_t cpt=0;cpt < client->getArticles().size();cpt++)
-		{
-			ostringstream conversion; //Conversion avec sstream d'un int en string
-			conversion << client->getArticles()[cpt]->getDate().jour << "/" << client->getArticles()[cpt]->getDate().mois << "/" << client->getArticles()[cpt]->getDate().annee;
-			string date = conversion.str();
-			Divers* div;
-			Bijou* bij;
-			Voiture* voit;
-			if (div = dynamic_cast<Divers*>(client->getArticles()[cpt]))
-			{
-				achats << client->getArticles()[cpt]->getNom() << ";D;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<"\n";
-			}
-			else if(bij = dynamic_cast<Bijou*>(client->getArticles()[cpt]))
-			{
-				achats << client->getArticles()[cpt]->getNom() << ";B;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
-			}
-			else if(voit = dynamic_cast<Voiture*>(client->getArticles()[cpt]))
-			{
-				achats << client->getArticles()[cpt]->getNom() << ";V;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
-			}		
-		}
 	}
 }
 

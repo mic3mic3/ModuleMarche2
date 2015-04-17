@@ -28,7 +28,7 @@ public:
 	static void menuInscription();
 	static void menuConnexion();
 	static void menuSelection();
-	static char menuForfaits();
+	static void menuForfaits();
 	static void menuAchats();
 	static int menuMarche(float,const vector<Article*> &,char);
 	static bool menuVerifAchat(bool);

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Fichier.h"
+#include "ExceptionMarche.h"
 
 using namespace std;
 
@@ -20,9 +21,6 @@ Fichier::~Fichier(void)
 ///<summary>Prépare la mise en forme des données avant l'écriture dans un fichier. (Valeurs séparées par des «;», entrées sur des lignes différentes, etc.)</summary>
 string Fichier::getContenuFormatePourPourEcriture(vector<vector<string>>& poEntrees)
 {
-	//if (poEntrees == NULL)
-	//	return "";
-
 	string lsContenu = "";
 	for each (vector<string> loEntree in poEntrees)
 	{
@@ -49,7 +47,10 @@ vector<vector<string>> Fichier::getContenu(const string& psNomCompletFichier)
 	// Ouverture du fichier
 	fstream loFStream(psNomCompletFichier + ".txt", ios::in);
 	if (!loFStream.is_open())
+	{
+		throw ExceptionMarche(string("Le fichier «" + psNomCompletFichier + "» n'a pas pu être ouvert"), false);
 		return loEntrees;
+	}
 
 	// Lecture de chaque ligne du fichier
 	string ligne;
@@ -83,7 +84,10 @@ bool Fichier::setContenu(string& psNomCompletFichier, vector<vector<string>>& po
 {
 	fstream loFStream(psNomCompletFichier, ios::app);
 	if (!loFStream.is_open())
+	{
+		throw ExceptionMarche(string("Le fichier «" + psNomCompletFichier + "» n'a pas pu être ouvert"), false);
 		return false;
+	}
 
 	loFStream << getContenuFormatePourPourEcriture(poEntrees);
 	loFStream.close();
