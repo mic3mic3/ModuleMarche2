@@ -80,6 +80,7 @@ vector<vector<string>> Fichier::getContenu(const string& psNomCompletFichier)
 }
 
 ///<summary>Remplace le contenu d'un fichier par les entrées fournies en paramètre.</summary>
+/// <param name='psNomCompletFichier'>Chemin et nom du fichier, ne pas indiquer l'extension (.txt seulement pour l'instant)</param>
 bool Fichier::setContenu(string& psNomCompletFichier, vector<vector<string>>& poEntrees)
 {
 	fstream loFStream(psNomCompletFichier, ios::app);
@@ -95,9 +96,10 @@ bool Fichier::setContenu(string& psNomCompletFichier, vector<vector<string>>& po
 }
 
 ///<summary>Retourne «true» si le compte existe, false sinon.</summary>
+/// <param name='psNomCompletFichier'>Chemin et nom du fichier, ne pas indiquer l'extension (.txt seulement pour l'instant)</param>
 bool Fichier::fichierExistant(string& psNomCompletFichier)
 {
-	fstream loFStream(psNomCompletFichier, ios::in);
+	fstream loFStream(psNomCompletFichier + ".txt", ios::in);
 	if (!loFStream.is_open())
 		return false;
 
