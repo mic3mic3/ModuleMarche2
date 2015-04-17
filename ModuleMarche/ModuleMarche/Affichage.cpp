@@ -138,7 +138,11 @@ void Affichage::menuInscription()
 	{
 		if (lbCompteDejaExistant)
 			cout << "Ce compte existe deja" << endl;
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		nomCompte = "";
 		cout << "Nom de compte (" << CS_EXIT_INPUT << " pour sortir): ";
 		getline(cin, nomCompte);
@@ -147,7 +151,11 @@ void Affichage::menuInscription()
 		{
 			return;
 		}
+<<<<<<< HEAD
 	} while (lbCompteDejaExistant = Fichier::fichierExistant(nomCompte)); // Si le compte existe déjà, on demande d'en saisir un différent.
+=======
+	}while(lbCompteDejaExistant = Fichier::fichierExistant(nomCompte)); // Si le compte existe déjà, on demande d'en saisir un différent.
+>>>>>>> origin/master
 
 	//Entrée de différentes informations
 	cout << "Nom: ";

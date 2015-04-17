@@ -36,7 +36,6 @@ public:
 	static char menuCategories();
 	
 	//Méthodes de validation
-	static bool validationCompteInscription(const string &);
 	static bool validationFloat(const string &);
 	static int validationChoixArticle(const string &,int);
 

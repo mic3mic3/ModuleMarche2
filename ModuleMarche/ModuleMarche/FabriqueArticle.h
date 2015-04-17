@@ -1,7 +1,7 @@
 #ifndef FABRIQUEARTICLE_H
 #define FABRIQUEARTICLE_H
 
-#include "Article.h";
+#include "Article.h"
 
 class FabriqueArticle
 {
