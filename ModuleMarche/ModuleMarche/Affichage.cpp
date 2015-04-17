@@ -511,6 +511,8 @@ int Affichage::transformationEnPositionTableau(int retour,char categorie,const v
 			break;
 		}
 	}
+
+	return -1;
 }
 
 //Affichage de la vérification de l'achat selon si le solde était assez grand pour l'achat de l'objet choisi, puis on renvoit si l'utilisateur valide l'achat (true) ou non (false)
