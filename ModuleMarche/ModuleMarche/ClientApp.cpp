@@ -41,6 +41,11 @@ string ClientApp::getCompte() const
 	return compte;
 }
 
+MarcheAuxPuces* ClientApp::getMarcheAuxPuces() const
+{
+	return marcheAuxPuces;
+}
+
 void ClientApp::setClient(Client* poClient)
 {
 	client = poClient;
@@ -102,7 +107,7 @@ void ClientApp::creationClient(const string &nomCompte)
 		case 'E':
 			// Todo: Extract method int GetEmployeExistant, renvoie l'employé ou null
 			bool found= false;
-			for (size_t cpt = 0;cpt < comptesEmployes.size(); cpt++)
+			for (size_t cpt = 0;cpt < comptesEmployes.size() && found == false; cpt++)
 			{
 				if (compte == comptesEmployes[cpt])
 				{
@@ -173,8 +178,8 @@ void ClientApp::creationMarche(const string &nom)
 	for (size_t cptLigne = 0; cptLigne < loEntreesEmploye.size(); cptLigne++)
 	{
 		// Obtention des informations d'un employé.
-		string lsEmploye = loEntreesEmploye.at(cptLigne)[0];
-		vector<vector<string>> loEmploye = Fichier::getContenu(lsEmploye);
+		string lsNomCompteEmploye = loEntreesEmploye.at(cptLigne)[0];
+		vector<vector<string>> loEmploye = Fichier::getContenu(lsNomCompteEmploye);
 		Employe* unEmploye = getEmployeFromStructure(loEmploye, 0);
 		if (unEmploye == nullptr)
 			continue;
@@ -186,126 +191,8 @@ void ClientApp::creationMarche(const string &nom)
 			if (loArticle != nullptr)
 				unEmploye->ajouterArticle(loArticle);
 		}
-
+		comptesEmployes.push_back(lsNomCompteEmploye);
 		marcheAuxPuces->ajouterEmploye(unEmploye);
-	}
-}
-
-//On accède à la vente d'articles et on passe les étapes de validation, puis on update les fichiers requis à la fin
-void ClientApp::voirVenteArticles()
-{
-	// Todo: Séparer ce gros traitement
-	int retour = Affichage::menuVenteArticles(marcheAuxPuces->getRevenu(), client->getArticles());
-	bool prixValide;
-	bool vendu;
-	if (retour != -1)
-	{
-		prixValide = marcheAuxPuces->validerCompte(client->getArticles()[retour-1]->getPrix());
-		vendu = Affichage::menuVerifAchat(prixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
-		if (vendu) //Si le client achète l'article
-		{
-			marcheAuxPuces->acheter(client->getArticles()[retour-1]); //On crée la transaction pour le marché aux puces
-			Vendeur* vnd;
-			if (vnd = dynamic_cast<Vendeur*>(client))
-			{
-				vnd->ajouterTransaction(retour-1,marcheAuxPuces,client->getArticles()[retour-1]); //On appelle la fonction acheter de client
-			}
-			
-			//On ajoute l'achat au fichier du client
-			fstream achats(compte+".txt",std::ofstream::out | std::ofstream::trunc);
-			if (achats)
-			{
-				achats << compte << ";" << client->getNom() << ";" << client->getPrenom() << ";" << client->getAdresse() << ";" << client->getCompte()->getSolde();
-				Employe* emp;
-				Superclient* sup;
-				Vendeur* vnd;
-				Acheteur* ach;
-				if (sup = dynamic_cast<Superclient*>(client))
-				{
-					achats << ";S\n";	
-				}
-				else if (emp = dynamic_cast<Employe*>(client))
-				{
-					achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";	
-				}
-				else if (ach = dynamic_cast<Acheteur*>(client))
-				{
-					achats << ";A\n";	
-				}
-				else if (vnd = dynamic_cast<Vendeur*>(client))
-				{
-					achats << ";V\n";	
-				}
-				
-				for (size_t cpt=0;cpt < client->getArticles().size();cpt++)
-				{
-					ostringstream conversion; //Conversion avec sstream d'un int en string
-					conversion << client->getArticles()[cpt]->getDate().jour << "/" << client->getArticles()[cpt]->getDate().mois << "/" << client->getArticles()[cpt]->getDate().annee;
-					string date = conversion.str();
-					Divers* div;
-					Bijou* bij;
-					Voiture* voit;
-					if (div = dynamic_cast<Divers*>(client->getArticles()[cpt]))
-					{
-						achats << client->getArticles()[cpt]->getNom() << ";D;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<"\n";
-					}
-					else if(bij = dynamic_cast<Bijou*>(client->getArticles()[cpt]))
-					{
-						achats << client->getArticles()[cpt]->getNom() << ";B;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
-					}
-					else if(voit = dynamic_cast<Voiture*>(client->getArticles()[cpt]))
-					{
-						achats << client->getArticles()[cpt]->getNom() << ";V;"<<client->getArticles()[cpt]->getPrix()<<";"<<client->getArticles()[cpt]->getDescription()<<";"<<client->getArticles()[cpt]->getEtat()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
-					}
-				}
-			}
-			achats.close();
-
-			//On append la transaction dans le fichier de transaction du marché aux puces
-			fstream trans(compte+"_Trans.txt",ios::app);
-			if (trans)
-			{
-				Vendeur* vnd;
-				if (vnd = dynamic_cast<Vendeur*>(client))
-				{
-					trans << "Client: " << vnd->getDerniereTransaction().client->getNom() << ";" << vnd->getDerniereTransaction().client->getPrenom() << ";" << vnd->getDerniereTransaction().client->getAdresse() << "\n";
-					trans << "Marche: " << vnd->getDerniereTransaction().marche->getNom() << ";" << vnd->getDerniereTransaction().marche->getAdresse() << "\n";
-					trans << "Article: " << vnd->getDerniereTransaction().article->getNom() << ";" << vnd->getDerniereTransaction().article->getPrix() << ";" << vnd->getDerniereTransaction().article->getDescription() << ";" << vnd->getDerniereTransaction().article->getEtat() << ";" << vnd->getDerniereTransaction().article->getDate().jour << "/" << vnd->getDerniereTransaction().article->getDate().mois << "/" << vnd->getDerniereTransaction().article->getDate().annee << "\n";
-					trans << "Date: " << vnd->getDerniereTransaction().date.jour << "/" << vnd->getDerniereTransaction().date.mois << "/" << vnd->getDerniereTransaction().date.annee << "\n";
-					trans << "-----\n";
-				}
-			}
-			trans.close();
-
-			//On enlève l'article qui vient d'être vendu au fichier du marché aux puces
-			ofstream marche(marcheAuxPuces->getNom()+".txt");
-			if (marche)
-			{
-				marche << marcheAuxPuces->getNom() << ";" << marcheAuxPuces->getAdresse() << ";" << marcheAuxPuces->getRevenu() << "\n";
-				for (size_t cpt=0;cpt < marcheAuxPuces->getArticlesEnVente().size();cpt++)
-				{
-					ostringstream conversion;
-					conversion << marcheAuxPuces->getArticlesEnVente()[cpt]->getDate().jour << "/" << marcheAuxPuces->getArticlesEnVente()[cpt]->getDate().mois << "/" << marcheAuxPuces->getArticlesEnVente()[cpt]->getDate().annee;
-					string date = conversion.str();
-					Divers* div;
-					Bijou* bij;
-					Voiture* voit;
-					if (div = dynamic_cast<Divers*>(marcheAuxPuces->getArticlesEnVente()[cpt]))
-					{
-						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";D;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()->getDescription()<<";"<<date<<"\n";
-					}
-					else if(bij = dynamic_cast<Bijou*>(marcheAuxPuces->getArticlesEnVente()[cpt]))
-					{
-						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";B;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()->getDescription()<<";"<<date<<";"<<bij->getPurete()<<";"<<bij->getMateriau()<<"\n";
-					}
-					else if(voit = dynamic_cast<Voiture*>(marcheAuxPuces->getArticlesEnVente()[cpt]))
-					{
-						marche << marcheAuxPuces->getArticlesEnVente()[cpt]->getNom() << ";V;"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getPrix()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getDescription()<<";"<<marcheAuxPuces->getArticlesEnVente()[cpt]->getEtat()->getDescription()<<";"<<date<<";"<<voit->getKilometrage()<<";"<<voit->getCouleur()<<";"<<voit->getAnnee()<<"\n";
-					}
-				}
-			}
-			marche.close();
-		}
 	}
 }
 

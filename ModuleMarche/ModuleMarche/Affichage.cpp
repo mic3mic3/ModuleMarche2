@@ -20,6 +20,7 @@
 #include "Divers.h"
 #include "Voiture.h"
 #include "Compte.h"
+#include "Transaction.h"
 
 #include "ClientApp.h"
 
@@ -241,7 +242,7 @@ void Affichage::menuSelection()
 			}
 			else if (choix == "3")
 			{
-				clientApp.voirVenteArticles();
+				menuVenteArticles();
 			}
 			else if (choix == "4")
 			{
@@ -323,7 +324,7 @@ void Affichage::menuSelection()
 			}
 			else if (choix == "2")
 			{
-				clientApp.voirVenteArticles();
+				menuVenteArticles();
 			}
 			else if (choix == "3")
 			{
@@ -645,38 +646,149 @@ int Affichage::validationChoixArticle(const string & choix, int max)
 }
 
 //Le menu pour la vente d'articles
-int Affichage::menuVenteArticles(float solde, const vector<Article*> &listeArticles)
+void Affichage::menuVenteArticles()
 {
 	int retour;
 	system("cls");
 	do
 	{
 		//On met une précision aux variables float avec fixed et setprecision(), puis on aligne bien les colonnes avec setw() et left
-		cout << "Marche Aux Puces (Mode Vente)" << "\tSon solde: " << fixed << setprecision(2) << solde << endl << endl;
+		cout << "Marche Aux Puces (Mode Vente)" << "\tSon solde: " << fixed << setprecision(2) << clientApp.getMarcheAuxPuces()->getRevenu() << endl << endl;
 		cout << setw(4) << left << "    " << setw(13) << left << "Article" << setw(10) << left << "Prix" << setw(25) << left << "Description" << setw(17) << left << "Etat" << setw(10) << left << "Date" << endl << endl;
-		for (size_t cpt = 0; cpt < listeArticles.size(); cpt++)
-		{
-			cout << setw(4) << left << (cpt + 1) << listeArticles[cpt];
-		}
-		if (listeArticles.size() == 0)
+		
+		if (clientApp.getClient()->getArticles().size() == 0)
 		{
 			cout << "Aucun article a vendre" << endl;
 		}
+		else
+		{
+			// Affichage des articles
+			for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
+			{
+				cout << setw(4) << left << (cpt + 1) << clientApp.getClient()->getArticles()[cpt];
+			}
+		}
+
 		string choix;
 		cout << endl << "Choisir l'article selon son numero (" << CS_EXIT_INPUT << " pour sortir):" << endl;
 		getline(cin, choix);
-
 		if (choix == CS_EXIT_INPUT)
-		{
-			return -1;
-		}
+			return;
 
-		retour = validationChoixArticle(choix, listeArticles.size());
+		retour = validationChoixArticle(choix, clientApp.getClient()->getArticles().size());
 	} while (retour == 0);
 
-	listeArticles[retour - 1]->afficherDetails();
+	clientApp.getClient()->getArticles()[retour - 1]->afficherDetails();
 
-	return retour;
+	if (retour == -1)
+		return;
+	bool prixValide = clientApp.getMarcheAuxPuces()->validerCompte(clientApp.getClient()->getArticles()[retour - 1]->getPrix());
+	bool vendu = menuVerifAchat(prixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
+
+	if (!vendu) //Si le client n'achète pas l'article, on arrête ici
+		return;
+
+	clientApp.getMarcheAuxPuces()->acheter(clientApp.getClient()->getArticles()[retour - 1]); //On crée la transaction pour le marché aux puces
+	Vendeur* vnd;
+	if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+	{
+		vnd->ajouterTransaction(retour - 1, clientApp.getMarcheAuxPuces(), clientApp.getClient()->getArticles()[retour - 1]); //On appelle la fonction acheter de client
+	}
+
+	//On ajoute l'achat au fichier du client
+	fstream achats(clientApp.getCompte() + ".txt", std::ofstream::out | std::ofstream::trunc);
+	if (achats)
+	{
+		achats << clientApp.getCompte() << ";" << clientApp.getClient()->getNom() << ";" << clientApp.getClient()->getPrenom() << ";" << clientApp.getClient()->getAdresse() << ";" << clientApp.getClient()->getCompte()->getSolde();
+		Employe* emp;
+		Superclient* sup;
+		Vendeur* vnd;
+		Acheteur* ach;
+		if (sup = dynamic_cast<Superclient*>(clientApp.getClient()))
+		{
+			achats << ";S\n";
+		}
+		else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
+		{
+			achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";
+		}
+		else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
+		{
+			achats << ";A\n";
+		}
+		else if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+		{
+			achats << ";V\n";
+		}
+
+		for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
+		{
+			ostringstream conversion; //Conversion avec sstream d'un int en string
+			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" << clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" << clientApp.getClient()->getArticles()[cpt]->getDate().annee;
+			string date = conversion.str();
+			Divers* div;
+			Bijou* bij;
+			Voiture* voit;
+			if (div = dynamic_cast<Divers*>(clientApp.getClient()->getArticles()[cpt]))
+			{
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << "\n";
+			}
+			else if (bij = dynamic_cast<Bijou*>(clientApp.getClient()->getArticles()[cpt]))
+			{
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << ";" << bij->getPurete() << ";" << bij->getMateriau() << "\n";
+			}
+			else if (voit = dynamic_cast<Voiture*>(clientApp.getClient()->getArticles()[cpt]))
+			{
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << ";" << voit->getKilometrage() << ";" << voit->getCouleur() << ";" << voit->getAnnee() << "\n";
+			}
+		}
+	}
+	achats.close();
+
+	//On append la transaction dans le fichier de transaction du marché aux puces
+	fstream trans(clientApp.getCompte() + "_Trans.txt", ios::app);
+	if (trans)
+	{
+		Vendeur* vnd;
+		if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+		{
+			trans << "Client: " << vnd->getDerniereTransaction().client->getNom() << ";" << vnd->getDerniereTransaction().client->getPrenom() << ";" << vnd->getDerniereTransaction().client->getAdresse() << "\n";
+			trans << "Marche: " << vnd->getDerniereTransaction().marche->getNom() << ";" << vnd->getDerniereTransaction().marche->getAdresse() << "\n";
+			trans << "Article: " << vnd->getDerniereTransaction().article->getNom() << ";" << vnd->getDerniereTransaction().article->getPrix() << ";" << vnd->getDerniereTransaction().article->getDescription() << ";" << vnd->getDerniereTransaction().article->getEtat() << ";" << vnd->getDerniereTransaction().article->getDate().jour << "/" << vnd->getDerniereTransaction().article->getDate().mois << "/" << vnd->getDerniereTransaction().article->getDate().annee << "\n";
+			trans << "Date: " << vnd->getDerniereTransaction().date.jour << "/" << vnd->getDerniereTransaction().date.mois << "/" << vnd->getDerniereTransaction().date.annee << "\n";
+			trans << "-----\n";
+		}
+	}
+	trans.close();
+
+	//On enlève l'article qui vient d'être vendu au fichier du marché aux puces
+	ofstream marche(clientApp.getMarcheAuxPuces()->getNom() + ".txt");
+	if (marche)
+	{
+		marche << clientApp.getMarcheAuxPuces()->getNom() << ";" << clientApp.getMarcheAuxPuces()->getAdresse() << ";" << clientApp.getMarcheAuxPuces()->getRevenu() << "\n";
+		for (size_t cpt = 0; cpt < clientApp.getMarcheAuxPuces()->getArticlesEnVente().size(); cpt++)
+		{
+			ostringstream conversion;
+			conversion << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().jour << "/" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().mois << "/" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().annee;
+			string date = conversion.str();
+			Divers* div;
+			Bijou* bij;
+			Voiture* voit;
+			if (div = dynamic_cast<Divers*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
+			{
+				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";D;" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" << date << "\n";
+			}
+			else if (bij = dynamic_cast<Bijou*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
+			{
+				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";B;" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" << date << ";" << bij->getPurete() << ";" << bij->getMateriau() << "\n";
+			}
+			else if (voit = dynamic_cast<Voiture*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
+			{
+				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";V;" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" << date << ";" << voit->getKilometrage() << ";" << voit->getCouleur() << ";" << voit->getAnnee() << "\n";
+			}
+		}
+	}
+	marche.close();
 }
 
 int main()

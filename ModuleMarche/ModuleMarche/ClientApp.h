@@ -29,6 +29,7 @@ public:
 
 	Client* getClient() const;
 	string getCompte() const;
+	MarcheAuxPuces* getMarcheAuxPuces() const;
 	void setClient(Client*);
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
@@ -38,7 +39,6 @@ public:
 	void creationMarche(const string &);
 	void deconnexion();
 	void voirArticles();
-	void voirVenteArticles();
 
 	Article* getArticleFromStructure(vector<vector<string>>&, size_t);
 	Employe* getEmployeFromStructure(vector<vector<string>>&, size_t);

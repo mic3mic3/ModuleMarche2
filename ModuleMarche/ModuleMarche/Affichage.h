@@ -32,7 +32,7 @@ public:
 	static void menuAchats();
 	static int menuMarche(float,const vector<Article*> &,char);
 	static bool menuVerifAchat(bool);
-	static int menuVenteArticles(float,const vector<Article*> &);
+	static void menuVenteArticles();
 	static char menuCategories();
 	
 	//Méthodes de validation
