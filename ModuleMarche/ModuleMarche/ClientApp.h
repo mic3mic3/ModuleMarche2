@@ -42,6 +42,7 @@ public:
 
 	Article* getArticleFromStructure(vector<vector<string>>&, size_t);
 	Employe* getEmployeFromStructure(vector<vector<string>>&, size_t);
+	//Client* getClientFromStructure(vector<vector<string>>&, size_t);
 };
 
 #endif

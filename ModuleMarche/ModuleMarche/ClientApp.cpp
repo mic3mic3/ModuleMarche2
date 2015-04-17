@@ -27,7 +27,7 @@ ClientApp::ClientApp(void)
 	client = NULL;
 	while (true) //À chaque fois qu'une opération est complétée, on revient à un des deux menus
 	{
-		if (client == NULL) //Si aucun client n'est connecté, on envoit au premier menu, sinon on envoie au deuxième
+		if (client == NULL) //Si aucun client n'est connecté, on envoit au premier menu, sinon on envoit au deuxième
 			demarrer();
 		else
 			selection();
@@ -84,57 +84,21 @@ void ClientApp::connexion()
 void ClientApp::creationClient(const string &nomCompte)
 {
 	//On recherche les informations du client sur la première ligne du fichier
-	fstream compte2(nomCompte+".txt",ios::in);
-	string ligne;
-	getline(compte2,ligne);
-	int nbPtsVirgs = 0;
-	string nom;
-	string prenom;
-	string adresse;
-	string soldeStr;
-	char forfait;
-	string salaireStr;
-	string rabaisStr;
-	float salaire;
-	float rabais;
-	float solde;
-	for (size_t cpt=0;cpt < ligne.length();cpt++)
-	{
-		if (ligne[cpt]==';')
-		{
-			nbPtsVirgs++;
-		}
-		else
-		{
-			switch(nbPtsVirgs)
-			{
-				case 1:
-					nom+=ligne[cpt];
-					break;
-				case 2:
-					prenom+=ligne[cpt];
-					break;
-				case 3:
-					adresse+=ligne[cpt];
-					break;
-				case 4:
-					soldeStr+=ligne[cpt];
-					break;
-				case 5:
-					forfait=ligne[cpt];
-					break;
-				case 6:
-					salaireStr+=ligne[cpt];
-					break;
-				case 7:
-					rabaisStr+=ligne[cpt];
-					break;
-				default:
-					break;
-			}
-		}
-	}
-	solde = stof(soldeStr.c_str()); //Transfert des string en float
+	// Todo: Extract Method GetClientFromStructure
+	vector<vector<string>> loEntreesClient = Fichier::getContenu(nomCompte);
+
+	string nom = loEntreesClient.at(0)[1];
+
+	string prenom = loEntreesClient.at(0)[2];
+
+	string adresse = loEntreesClient.at(0)[3];
+
+	string soldeStr = loEntreesClient.at(0)[4];
+	float solde = stof(soldeStr.c_str());
+
+	string forfaitStr = loEntreesClient.at(0)[5];
+	char forfait = forfaitStr[0];
+
 	switch (forfait)
 	{
 		case 'A':
@@ -147,6 +111,7 @@ void ClientApp::creationClient(const string &nomCompte)
 			client = new Superclient(nom,prenom,adresse,new Compte(solde));
 			break;
 		case 'E':
+			// Todo: Extract method int GetEmployeExistant, renvoie l'employé ou null
 			bool found= false;
 			for (size_t cpt = 0;cpt < comptesEmployes.size(); cpt++)
 			{
@@ -158,99 +123,33 @@ void ClientApp::creationClient(const string &nomCompte)
 			}
 			if (!found)
 			{
-				salaire = stof(salaireStr.c_str());
-				rabais = stof(rabaisStr.c_str());
+				string salaireStr = loEntreesClient.at(0)[6];
+				float salaire = stof(salaireStr.c_str());
+
+				string rabaisStr = loEntreesClient.at(0)[7];
+				float rabais = stof(rabaisStr.c_str());
+
 				client = new Employe(nom,prenom,adresse,new Compte(solde),salaire,rabais);
 			}
 				
 			break;
 	}
 
+	if (client == nullptr)
+	{
+		// Todo: Throw Exception?  Si le forfait n'a pas été géré et que le client n'est pas créé, on revient au menu de départ.
+	}
+	
 	//On récupère les achats du client après la première ligne du fichier
+	// Note: Demander à Mathieu pourquoi on ne ramasse pas les articles d'un employé même s'il en a...
 	if (forfait != 'E')
 	{
-		if (compte2.is_open())
+		string ligneAchats;
+		for (size_t cptLigne = 1; cptLigne <= loEntreesClient.size(); cptLigne++)
 		{
-			string ligneAchats;
-			while (getline(compte2,ligneAchats) && ligneAchats.length() != NULL)
-			{
-				string nomArticle;
-				string prixStr;
-				float prix;
-				string description;
-				string etat;
-				string dateFabricationStr;
-				struct Date dateFabrication;
-				nbPtsVirgs = 0;
-				char type;
-				string attribut1Str;
-				string attribut3Str;
-				int attribut1;
-				string attribut2;
-				int attribut3;
-				for (size_t cpt=0;cpt < ligneAchats.length();cpt++)
-				{
-					if (ligneAchats[cpt]==';')
-					{
-						nbPtsVirgs++;
-					}
-					else
-					{
-						switch(nbPtsVirgs)
-						{
-							case 0:
-								nomArticle+=ligneAchats[cpt];
-								break;
-							case 1:
-								type = ligneAchats[cpt];
-								break;
-							case 2:
-								prixStr+=ligneAchats[cpt];
-								break;
-							case 3:
-								description+=ligneAchats[cpt];
-								break;
-							case 4:
-								etat+=ligneAchats[cpt];
-								break;
-							case 5:
-								dateFabricationStr+=ligneAchats[cpt];
-								break;
-							case 6:
-								attribut1Str+=ligneAchats[cpt];
-								break;
-							case 7:
-								attribut2+=ligneAchats[cpt];
-								break;
-							case 8:
-								attribut3Str+=ligneAchats[cpt];
-								break;
-							default:
-								break;
-						}
-					}
-				}
-				prix = stof(prixStr.c_str());
-				dateFabrication = Date::getDateFromString(dateFabricationStr);
-				switch (type)
-				{
-					case 'D':
-						client->ajouterArticle(new Divers(nomArticle,prix,description,etat,dateFabrication));
-						break;
-					case 'V':
-						attribut1 = atoi(attribut1Str.c_str());
-						attribut3 = atoi(attribut3Str.c_str());
-						client->ajouterArticle(new Voiture(nomArticle,prix,description,etat,dateFabrication,attribut1,attribut2,attribut3));
-						break;
-					case 'B':
-						attribut1 = atoi(attribut1Str.c_str());
-						client->ajouterArticle(new Bijou(nomArticle,prix,description,etat,dateFabrication,attribut2,attribut1));
-						break;
-				}
-			}
+			client->ajouterArticle(getArticleFromStructure(loEntreesClient, cptLigne));
 		}
 	}
-	compte2.close();
 }
 
 //On crée le marché à partir d'un fichier
@@ -283,6 +182,7 @@ void ClientApp::creationMarche(const string &nom)
 	}
 	
 	//Maintenant, on ajoute le personnel à la liste d'employés du MarcheAuxPuces
+	// Todo: Extract method: AjouterEmployesDuFichier(Marche)
 	vector<vector<string>> loEntreesEmploye = Fichier::getContenu(nom + "_Employes");
 	for (size_t cptLigne = 0; cptLigne < loEntreesEmploye.size(); cptLigne++)
 	{
@@ -765,7 +665,7 @@ Employe* ClientApp::getEmployeFromStructure(vector<vector<string>>& poEmployeStr
 	if (poEmployeStructure.size() - 1 < piLigne)
 		return nullptr;
 
-	// On construit l'article à partir de la ligne de la structure.
+	// On construit l'employé à partir de la ligne de la structure.
 	string nomP = poEmployeStructure.at(0)[1];
 
 	string prenomP = poEmployeStructure.at(0)[2];
@@ -790,6 +690,10 @@ Employe* ClientApp::getEmployeFromStructure(vector<vector<string>>& poEmployeStr
 
 	return loEmploye;
 }
+
+//Client* ClientApp::getClientFromStructure(vector<vector<string>>& poClientStructure, size_t piLigne)
+//{
+//}
 
 int main()
 {

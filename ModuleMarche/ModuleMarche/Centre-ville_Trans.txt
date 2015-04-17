@@ -18,3 +18,13 @@ Marche: Centre-ville;1410 de l'Adresse
 Article: Tablette;40.45;Une tablette en bois;Neuve;12/12/2014
 Date: 6/4/2015
 -----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Tablette;40.45;Une tablette en bois;Neuve;12/12/2014
+Date: 17/4/2015
+-----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Collier;25;Un beau collier;En bon etat;7/4/2011
+Date: 17/4/2015
+-----

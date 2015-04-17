@@ -1,1 +1,2 @@
-john;Jean;Tremblay;1410 Blabla;2179.55;E;46;5
+John;Jean;Tremblay;1410 Blabla;2117.37;E;46;5
+Collier;B;25;Un beau collier;En bon etat;7/4/2011;4;Rubis

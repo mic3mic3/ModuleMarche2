@@ -40,7 +40,8 @@ string Fichier::getContenuFormatePourPourEcriture(vector<vector<string>>& poEntr
 	return lsContenu;
 }
 
-///<summary>Renvoie le contenu du fichier. Chaque ligne sera un vecteur de chaînes, dont chaque valeur entre «;» sera une chaîne.</summary>
+/// <summary>Renvoie le contenu du fichier. Chaque ligne sera un vecteur de chaînes, dont chaque valeur entre «;» sera une chaîne.</summary>
+/// <param name='psNomCompletFichier'>Chemin et nom du fichier, ne pas indiquer l'extension (.txt seulement pour l'instant)</param>
 vector<vector<string>> Fichier::getContenu(const string& psNomCompletFichier)
 {
 	vector<vector<string>>& loEntrees = vector<vector<string>>();
