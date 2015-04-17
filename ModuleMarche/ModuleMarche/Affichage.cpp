@@ -62,20 +62,7 @@ void Affichage::menuDemarrer()
 	}while(choix[0] != '3');
 }
 
-//Vérification si le compte existe déjà
-bool Affichage::validationCompteInscription(const string & nomCompte)
-{
-	fstream compteVerif(nomCompte + ".txt", ios::in);
-	if (compteVerif.is_open())
-	{
-		cout << "Compte existant." << endl;
-		return false;
-	}
-	compteVerif.close();
-	return true;
-}
-
-////Vérifier si on peut transférer le string en float (chiffres et un point: «99999.99» ou «9» ou «.9»).
+//Vérifier si on peut transférer le string en float (chiffres et un point: «99999.99» ou «9» ou «.9»).
 bool Affichage::validationFloat(const string & solde)
 {
 	//Vérifier si on peut transférer le string en float
@@ -138,19 +125,21 @@ void Affichage::creationFichierCompte(const string & nomCompte, const string & n
 //Affichage du menu d'inscription et vérification s'il existe déjà
 void Affichage::menuInscription()
 {
+	system("cls");
+	cout << "Inscription" << endl;
+
 	string nomCompte;
 	string nom;
 	string prenom;
 	string adresse;
 	string solde;
-	system("cls");
-
-	cout << "Inscription" << endl;
+	bool lbCompteDejaExistant = false;
 	do
 	{
-		nomCompte = "";
+		if (lbCompteDejaExistant)
+			cout << "Ce compte existe déjà" << endl;
 		
-		string ligne;
+		nomCompte = "";
 		cout << "Nom de compte (" << CS_EXIT_INPUT << " pour sortir): ";
 		getline(cin,nomCompte);
 		
@@ -158,7 +147,7 @@ void Affichage::menuInscription()
 		{
 			return;
 		}
-	}while(!validationCompteInscription(nomCompte));
+	}while(lbCompteDejaExistant = Fichier::fichierExistant(nomCompte)); // Si le compte existe déjà, on demande d'en saisir un différent.
 
 	//Entrée de différentes informations
 	cout << "Nom: ";
