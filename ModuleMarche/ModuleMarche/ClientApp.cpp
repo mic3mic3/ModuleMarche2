@@ -52,6 +52,7 @@ void ClientApp::demarrer()
 {
 	char choix = Affichage::menuDemarrer();
 	//On envoie l'utilisateur à l'un des deux menus selon son input
+	// Todo: Je pense que ça devrait aussi être dans l'affichage, à la suite de la fonction MenuDemarrer, parce que c'est l'affichage qui détermine les opérations à faire
 	if (choix == '1')
 	{
 		inscription();
@@ -295,7 +296,6 @@ void ClientApp::selection()
 //Le client voit les forfaits
 void ClientApp::voirForfaits()
 {
-	//char newForfait = affichage->menuForfaits();
 	char newForfait = Affichage::menuForfaits();
 	switch(newForfait)
 	{
@@ -360,7 +360,7 @@ void ClientApp::voirForfaits()
 	}
 }
 
-//Le client voit les achats qu'il a fait
+//Le client voit les achats qu'il a faits
 void ClientApp::voirAchats()
 {
 	Affichage::menuAchats(client->getArticles());
@@ -369,6 +369,7 @@ void ClientApp::voirAchats()
 //On accède à la vente d'articles et on passe les étapes de validation, puis on update les fichiers requis à la fin
 void ClientApp::voirVenteArticles()
 {
+	// Todo: Séparer ce gros traitement
 	int retour = Affichage::menuVenteArticles(marcheAuxPuces->getRevenu(), client->getArticles());
 	bool prixValide;
 	bool vendu;
