@@ -6,6 +6,7 @@
 
 #include "Date.h"
 #include "Affichage.h"
+#include "ExceptionMarche.h"
 #include "Client.h"
 #include "MarcheAuxPuces.h"
 #include "Article.h"
@@ -138,19 +139,15 @@ void ClientApp::creationMarche(const string &nom)
 	if (loEntreesMarche.size() < 1)
 	{
 		// Sans marché aux puces, l'application ne peut plus poursuivre.
-		cout << "Une erreur est survenue lors de l'ouverture du marche aux puces." << endl
-			<< "L'application doit fermer.";
-		string input;
-		getline(cin, input);
-		exit(EXIT_FAILURE);
+		throw ExceptionMarche(string("Une erreur est survenue lors de l'ouverture du marche aux puces.\nL'application doit fermer."), true);
 	}
-	
+
 	// Création du marché à partir de la première ligne du fichier contenant dans l'ordre: nom, adresse, revenu.
 	string adresse = loEntreesMarche.at(1)[1];
 	string revenuStr = loEntreesMarche.at(1)[2];
 	float revenu = stof(revenuStr.c_str());
-	marcheAuxPuces = new MarcheAuxPuces(nom,adresse,new Compte(revenu));
-	
+	marcheAuxPuces = new MarcheAuxPuces(nom, adresse, new Compte(revenu));
+
 	//On crée les articles de ce marché à partir du reste du fichier
 	for (size_t cptLigne = 1; cptLigne < loEntreesMarche.size(); cptLigne++)
 	{
@@ -159,7 +156,7 @@ void ClientApp::creationMarche(const string &nom)
 		if (loArticle != nullptr)
 			marcheAuxPuces->ajouterArticle(loArticle);
 	}
-	
+
 	//Maintenant, on ajoute le personnel à la liste d'employés du MarcheAuxPuces
 	// Todo: Extract method: AjouterEmployesDuFichier(Marche)
 	vector<vector<string>> loEntreesEmploye = Fichier::getContenu(nom + "_Employes");

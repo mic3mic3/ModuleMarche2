@@ -8,6 +8,7 @@
 #include <sstream> //Pour la conversion int en string
 
 #include "Fichier.h"
+#include "ExceptionMarche.h"
 
 #include "Article.h"
 #include "Vendeur.h"
@@ -206,8 +207,15 @@ void Affichage::menuConnexion()
 		}
 	} while (!Fichier::fichierExistant(nomCompte));
 
-	clientApp.connexion(nomCompte);
-	menuSelection();
+	try
+	{
+		clientApp.connexion(nomCompte);
+		menuSelection();
+	}
+	catch (ExceptionMarche loExceptionMarche)
+	{
+		loExceptionMarche.Gerer();
+	}
 }
 
 //Affichage du menu de sélection de fonctions une fois connecté, puis on renvoie le choix -> il change selon le forfait du client

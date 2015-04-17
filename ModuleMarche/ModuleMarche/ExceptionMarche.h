@@ -9,12 +9,17 @@ class ExceptionMarche
 {
 private:
 	string message;
+	bool fatale;
+
 public:
-	ExceptionMarche(string&);
+	ExceptionMarche(string&, bool);
 
 	string getMessage() const;
+	bool getFatale() const;
 
 	~ExceptionMarche(void);
+
+	void Gerer() const;
 };
 
 #endif
