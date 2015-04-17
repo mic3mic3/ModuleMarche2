@@ -582,31 +582,26 @@ int Affichage::transformationEnPositionTableau(int retour, char categorie, const
 bool Affichage::menuVerifAchat(bool soldeOk)
 {
 	string choixStr = "O";
-	if (soldeOk)
+	if (!soldeOk)
 	{
-		do
-		{
-			if (choixStr != "O" && choixStr != "N")
-			{
-				cout << "Erreur! Veuillez entrer O ou N" << endl;
-			}
-			cout << "L'acheteur a assez d'argent pour l'article." << endl;
-
-			cout << "Etes-vous sur de vouloir proceder? (O/N)" << endl;
-			getline(cin, choixStr);
-		} while (choixStr != "O" && choixStr != "N");
-	}
-	else
-	{
-		cout << "L'acheteur n'a pas assez d'argent pour l'article." << endl; //
+		cout << "L'acheteur n'a pas assez d'argent pour l'article." << endl;
 		getline(cin, choixStr);
 		return false;
 	}
-	if (choixStr == "O")
+
+	do
 	{
-		return true;
-	}
-	return false;
+		if (choixStr != "O" && choixStr != "N")
+		{
+			cout << "Erreur! Veuillez entrer O ou N" << endl;
+		}
+		cout << "L'acheteur a assez d'argent pour l'article." << endl;
+
+		cout << "Etes-vous sur de vouloir proceder? (O/N)" << endl;
+		getline(cin, choixStr);
+	} while (choixStr != "O" && choixStr != "N");
+
+	return choixStr == "O";
 }
 
 //Pour choisir la façon dont on trie les articles à vendre
