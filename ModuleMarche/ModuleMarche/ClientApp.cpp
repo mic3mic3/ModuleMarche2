@@ -24,18 +24,15 @@ using namespace std; //Pour ne jamais avoir à écrire std:: puisque j'utilise bea
 
 ClientApp::ClientApp(void)
 {
-	client = NULL;
-	while (true) //À chaque fois qu'une opération est complétée, on revient à un des deux menus
-	{
-		if (client == NULL) //Si aucun client n'est connecté, on envoit au premier menu, sinon on envoit au deuxième
-			demarrer();
-		else
-			selection();
-	}
 }
 
 ClientApp::~ClientApp(void)
 {
+}
+
+Client* ClientApp::getClient()
+{
+	return client;
 }
 
 //Déconnexion: On retire le marché et le client connecté de la mémoire
@@ -47,38 +44,18 @@ void ClientApp::deconnexion()
 	marcheAuxPuces = NULL;
 }
 
-//On va appeler le premier menu
-void ClientApp::demarrer()
-{
-	char choix = Affichage::menuDemarrer();
-	//On envoie l'utilisateur à l'un des deux menus selon son input
-	// Todo: Je pense que ça devrait aussi être dans l'affichage, à la suite de la fonction MenuDemarrer, parce que c'est l'affichage qui détermine les opérations à faire
-	if (choix == '1')
-	{
-		inscription();
-	}
-	else
-	{
-		connexion();
-	}
-}
-
 //On appelle le menu d'inscription
 void ClientApp::inscription()
 {
 	Affichage::menuInscription();
 }
 
-//On appelle le menu de connexion, puis on crée le client et le marché si c'est un succès
-void ClientApp::connexion()
+// On crée le client et le marché
+void ClientApp::connexion(const string& psNomCompte)
 {
-	string retour = Affichage::menuConnexion();
-	if (retour == Affichage::CS_EXIT_INPUT)
-		return;
-
-	compte = retour;
+	compte = psNomCompte;
 	creationMarche("Centre-ville");
-	creationClient(retour); //Le nom du marché aux puces, et donc du fichier
+	creationClient(psNomCompte);
 }
 
 //Selon le nom de compte, on va chercher les informations du client (nom, prenom, adresse, solde du compte, achats) dans un fichier
@@ -142,13 +119,14 @@ void ClientApp::creationClient(const string &nomCompte)
 	}
 	
 	//On récupère les achats du client après la première ligne du fichier
-	// Note: Demander à Mathieu pourquoi on ne ramasse pas les articles d'un employé même s'il en a...
 	if (forfait != 'E')
 	{
 		string ligneAchats;
 		for (size_t cptLigne = 1; cptLigne <= loEntreesClient.size(); cptLigne++)
 		{
-			client->ajouterArticle(getArticleFromStructure(loEntreesClient, cptLigne));
+			Article* loArticle = getArticleFromStructure(loEntreesClient, cptLigne);
+			if(loArticle != nullptr)
+				client->ajouterArticle(loArticle);
 		}
 	}
 }
@@ -204,93 +182,6 @@ void ClientApp::creationMarche(const string &nom)
 
 		marcheAuxPuces->ajouterEmploye(unEmploye);
 	}
-}
-
-//Une fois connecté, on peut voir le menu
-void ClientApp::selection()
-{
-	char choix = Affichage::menuSelection(client);
-	Employe* emp;
-	Vendeur* vnd;
-	Acheteur* ach;
-	Superclient* sup;
-	if (sup = dynamic_cast<Superclient*>(client))
-	{
-		if (choix == '1')
-		{
-			voirAchats();
-		}
-		else if (choix == '2')
-		{
-			voirArticles();
-		}
-		else if (choix == '3')
-		{
-			voirVenteArticles();
-		}
-		else if (choix == '4')
-		{
-			voirForfaits();
-		}
-		else
-		{
-			deconnexion();
-		}
-	}
-	else if (emp = dynamic_cast<Employe*>(client))
-	{
-		if (choix == '1')
-		{
-			voirAchats();
-		}
-		else if (choix == '2')
-		{
-			voirArticles();
-		}
-		else
-		{
-			deconnexion();
-		}
-	}
-	else if (ach = dynamic_cast<Acheteur*>(client))
-	{
-		if (choix == '1')
-		{
-			voirAchats();
-		}
-		else if (choix == '2')
-		{
-			voirArticles();
-		}
-		else if (choix == '3')
-		{
-			voirForfaits();
-		}
-		else
-		{
-			deconnexion();
-		}
-	}
-	else if (vnd = dynamic_cast<Vendeur*>(client))
-	{
-		if (choix == '1')
-		{
-			voirAchats();
-		}
-		else if (choix == '2')
-		{
-			voirVenteArticles();
-		}
-		else if (choix == '3')
-		{
-			voirForfaits();
-		}
-		else
-		{
-			deconnexion();
-		}
-	}
-	//On renvoit vers la fonction choisie par l'utilisateur (voir les achats ou voir les articles disponibles au marché)
 }
 
 //Le client voit les forfaits
@@ -696,9 +587,9 @@ Employe* ClientApp::getEmployeFromStructure(vector<vector<string>>& poEmployeStr
 //{
 //}
 
-int main()
-{
-	//ClientApp app(new Affichage);
-	ClientApp app; //Le main crée un objet ClientApp qui gère tout le reste
-	return 0;
-}
+//int main()
+//{
+//	//ClientApp app(new Affichage);
+//	ClientApp app; //Le main crée un objet ClientApp qui gère tout le reste
+//	return 0;
+//}

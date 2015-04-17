@@ -11,21 +11,23 @@ using std::vector; //Pour utiliser vector sans std::
 
 class Article; //Pour que le compilateur sache que la classe Article existe
 class Client;
+class ClientApp;
 
 class Affichage
 {
 public:
 	static const string CS_EXIT_INPUT;
+	static ClientApp clientApp;
 
 	Affichage(void);
 	~Affichage(void);
 
 
 	//Méthodes d'affichage
-	static char menuDemarrer();
+	static void menuDemarrer();
 	static void menuInscription();
-	static string menuConnexion();
-	static char menuSelection(Client*);
+	static void menuConnexion();
+	static void menuSelection();
 	static char menuForfaits();
 	static void menuAchats(const vector<Article*> &);
 	static int menuMarche(float,const vector<Article*> &,char);

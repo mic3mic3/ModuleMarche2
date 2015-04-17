@@ -89,3 +89,14 @@ bool Fichier::setContenu(string& psNomCompletFichier, vector<vector<string>>& po
 	loFStream.close();
 	return true;
 }
+
+///<summary>Retourne «true» si le compte existe, false sinon.</summary>
+bool Fichier::fichierExistant(string& psNomCompletFichier)
+{
+	fstream loFStream(psNomCompletFichier, ios::app);
+	if (!loFStream.is_open())
+		return false;
+
+	loFStream.close();
+	return true;
+}
