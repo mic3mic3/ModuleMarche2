@@ -1,2 +1,1 @@
-M;M;M;M;75;S
-Bague;B;25;Une magnifique bague;00DFFA78;7/4/2011;2;Diamant
+M;M;M;M;100;S

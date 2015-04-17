@@ -5,8 +5,8 @@
 
 using namespace std;
 
-const float PRIX_MIN = 1;
-const float PRIX_MAX = 15000;
+const float Divers::PRIX_MIN = 1;
+const float Divers::PRIX_MAX = 15000;
 
 Divers::Divers(void)
 {

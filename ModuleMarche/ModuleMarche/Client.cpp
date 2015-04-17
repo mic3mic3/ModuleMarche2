@@ -24,7 +24,7 @@ Client::Client(string n, string p, string a, Compte* c)
 	compte = c;
 }
 
-Client::Client(Client* cli)
+Client::Client(Client* & cli)
 {
 	nom = cli->getNom();
 	prenom = cli->getPrenom();

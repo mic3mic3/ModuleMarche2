@@ -4,8 +4,8 @@
 #include <sstream>
 using namespace std;
 
-const float PRIX_MIN = 10;
-const float PRIX_MAX = 3000;
+const float Bijou::PRIX_MIN = 10;
+const float Bijou::PRIX_MAX = 3000;
 
 Bijou::Bijou(void)
 {

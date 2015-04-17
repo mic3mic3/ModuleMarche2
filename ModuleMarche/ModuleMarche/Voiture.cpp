@@ -7,8 +7,8 @@
 #include <sstream>
 using namespace std;
 
-const float PRIX_MIN = 15000;
-const float PRIX_MAX = 100000;
+const float Voiture::PRIX_MIN = 15000;
+const float Voiture::PRIX_MAX = 100000;
 
 Voiture::Voiture(void)
 {
