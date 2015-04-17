@@ -1,6 +1,6 @@
 #include "EtatUsage.h"
 
-const string DESCRIPTION = "Usagé";
+const string EtatUsage::DESCRIPTION = "Usage";
 
 EtatUsage::EtatUsage()
 {
@@ -11,9 +11,9 @@ EtatUsage::~EtatUsage()
 {
 }
 
-float EtatUsage::calculerPrixEtat(float prix)
+float EtatUsage::calculerPrixEtat(float prix,char type)
 {
-	return 0.5 * prix;
+	return 0.5f * prix;
 }
 
 string EtatUsage::getDescription()

@@ -28,3 +28,8 @@ Marche: Centre-ville;D
 Article: Collier;25;Un beau collier;En bon etat;7/4/2011
 Date: 17/4/2015
 -----
+Client: M;M;M
+Marche: Centre-ville;D
+Article: Bague;25;Une magnifique bague;00DFFA78;7/4/2011
+Date: 17/4/2015
+-----

@@ -47,14 +47,19 @@ float Article::getPrix() const
 	return prix;
 }
 
+float Article::getPrixEtat() const
+{
+	return prix;
+}
+
 string Article::getDescription() const
 {
 	return description;
 }
 
-string Article::getEtat() const
+Etat* Article::getEtat() const
 {
-	return etat->getDescription();
+	return etat;
 }
 
 struct Date Article::getDate() const
@@ -67,7 +72,7 @@ ostream & operator<< (ostream & out, Article* a) //Surcharge de l'opérateur << q
 	int x = 0;
 	conversion << a->getDate().jour << "/" << a->getDate().mois << "/" << a->getDate().annee; 
 	string date = conversion.str();
-	out << setw(13) << left << a->getNom() << setw(10) << left << fixed << setprecision(2) << a->getPrix() << setw(25) << left  << a->getDescription() << setw(17) << left  << a->getEtat() << setw(10) << left  << date << endl;
+	out << setw(13) << left << a->getNom() << setw(10) << left << fixed << setprecision(2) << a->getPrix() << setw(25) << left  << a->getDescription() << setw(17) << left  << a->getEtat()->getDescription() << setw(10) << left  << date << endl;
 	return out;
 }
 

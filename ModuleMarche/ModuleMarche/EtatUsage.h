@@ -13,7 +13,7 @@ public:
 	EtatUsage();
 	~EtatUsage();
 
-	float calculerPrixEtat(float);
+	float calculerPrixEtat(float,char);
 	string getDescription();
 };
 

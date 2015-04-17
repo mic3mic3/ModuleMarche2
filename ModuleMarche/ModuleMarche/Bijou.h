@@ -24,6 +24,8 @@ public:
 
 	void afficherDetails() const;
 
+	float getPrixEtat() const;
+
 	string getMateriau() const;
 	int getPurete() const;
 };

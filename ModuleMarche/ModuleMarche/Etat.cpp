@@ -9,3 +9,8 @@ Etat::Etat()
 Etat::~Etat()
 {
 }
+
+string Etat::getDescription()
+{
+	return "";
+}

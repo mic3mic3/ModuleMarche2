@@ -450,12 +450,24 @@ Article* ClientApp::getArticleFromStructure(vector<vector<string>>& poArticleStr
 
 	string dateFabricationStr = poArticleStructure.at(piLigne)[5];
 	struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
-
+	Etat* vraiEtat;
 	Article* loArticle = nullptr;
+	if (etat == "Neuf")
+	{
+		vraiEtat = new EtatNeuf();
+	}
+	else if (etat == "Usage")
+	{
+		vraiEtat = new EtatUsage();
+	}
+	else
+	{
+		vraiEtat = new EtatMateriaux();
+	}
 	switch (type)
 	{
 		case 'D':
-			loArticle = new Divers(nomArticle, prix, description, etat, dateFabrication);
+			loArticle = new Divers(nomArticle, prix, description, vraiEtat, dateFabrication);
 			break;
 		case 'V':
 		{
@@ -467,7 +479,7 @@ Article* ClientApp::getArticleFromStructure(vector<vector<string>>& poArticleStr
 			string attribut3Str = poArticleStructure.at(piLigne)[8];
 			int attribut3 = atoi(attribut3Str.c_str());
 
-			loArticle = new Voiture(nomArticle, prix, description, etat, dateFabrication, attribut1, attribut2, attribut3);
+			loArticle = new Voiture(nomArticle, prix, description, vraiEtat, dateFabrication, attribut1, attribut2, attribut3);
 		}
 			break;
 		case 'B':
@@ -477,7 +489,7 @@ Article* ClientApp::getArticleFromStructure(vector<vector<string>>& poArticleStr
 
 			string attribut2 = poArticleStructure.at(piLigne)[7];
 
-			loArticle = new Bijou(nomArticle, prix, description, etat, dateFabrication, attribut2, attribut1);
+			loArticle = new Bijou(nomArticle, prix, description, vraiEtat, dateFabrication, attribut2, attribut1);
 		}
 			break;
 	}

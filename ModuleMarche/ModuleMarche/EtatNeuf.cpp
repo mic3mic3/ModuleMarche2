@@ -1,6 +1,6 @@
 #include "EtatNeuf.h"
 
-const string DESCRIPTION = "Neuf";
+const string EtatNeuf::DESCRIPTION = "Neuf";
 
 EtatNeuf::EtatNeuf()
 {
@@ -11,7 +11,7 @@ EtatNeuf::~EtatNeuf()
 {
 }
 
-float EtatNeuf::calculerPrixEtat(float prix)
+float EtatNeuf::calculerPrixEtat(float prix,char type)
 {
 	return prix;
 }

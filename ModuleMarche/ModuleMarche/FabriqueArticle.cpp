@@ -9,3 +9,4 @@ FabriqueArticle::FabriqueArticle()
 FabriqueArticle::~FabriqueArticle()
 {
 }
+

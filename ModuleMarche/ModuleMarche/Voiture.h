@@ -23,6 +23,7 @@ public:
 
 	void afficherDetails() const;
 
+	float getPrixEtat() const;
 	int getKilometrage() const;
 	string getCouleur() const;
 	int getAnnee() const;

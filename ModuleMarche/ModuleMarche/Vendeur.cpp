@@ -6,7 +6,7 @@
 #include "Transaction.h"
 #include "Article.h"
 
-const float FORFAIT = 20;
+const float Vendeur::FORFAIT = 20;
 
 Vendeur::Vendeur(void):Client()
 {

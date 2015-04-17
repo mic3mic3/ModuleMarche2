@@ -11,7 +11,7 @@ public:
 	Etat();
 	~Etat();
 
-	virtual float calculerPrixEtat(float) = 0;
+	virtual float calculerPrixEtat(float,char) = 0;
 	virtual string getDescription();
 };
 

@@ -30,7 +30,12 @@ void Divers::afficherDetails() const
 		<< "Categorie: Divers" << endl
 		<< "Prix: " << getPrix() << endl
 		<< "Description: " << getDescription() << endl
-		<< "Etat: " << getEtat() << endl
+		<< "Etat: " << getEtat()->getDescription() << endl
 		<< "Date: " << date << endl;
 	
+}
+
+float Divers::getPrixEtat() const
+{
+	return getEtat()->calculerPrixEtat(getPrix(), 'D');
 }

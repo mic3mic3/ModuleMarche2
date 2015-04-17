@@ -26,6 +26,11 @@ string Bijou::getMateriau() const
 	return materiau;
 }
 
+float Bijou::getPrixEtat() const
+{
+	return getEtat()->calculerPrixEtat(getPrix(),'B');
+}
+
 int Bijou::getPurete() const
 {
 	return purete;
@@ -41,7 +46,7 @@ void Bijou::afficherDetails() const
 		<< "Categorie: Bijou" << endl
 		<< "Prix: " << getPrix() << endl
 		<< "Description: " << getDescription() << endl
-		<< "Etat: " << getEtat() << endl
+		<< "Etat: " << getEtat()->getDescription() << endl
 		<< "Date: " << date << endl
 		<< "Materiau: " << materiau << endl
 		<< "Purete: " << purete << endl;

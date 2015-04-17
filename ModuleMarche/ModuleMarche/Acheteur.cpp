@@ -6,7 +6,7 @@
 
 using std::string;
 
-const float FORFAIT = 5;
+const float Acheteur::FORFAIT = 5;
 
 Acheteur::Acheteur(void):Client()
 {

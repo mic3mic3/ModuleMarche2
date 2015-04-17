@@ -50,10 +50,15 @@ void Voiture::afficherDetails() const
 		<< "Categorie: Voiture" << endl
 		<< "Prix: " << getPrix() << endl
 		<< "Description: " << getDescription() << endl
-		<< "Etat: " << getEtat() << endl
+		<< "Etat: " << getEtat()->getDescription() << endl
 		<< "Date: " << date << endl
 		<< "Kilometrage: " << kilometrage << endl
 		<< "Couleur: " << couleur << endl
 		<< "Annee: " << annee << endl;
 	
+}
+
+float Voiture::getPrixEtat() const
+{
+	return getEtat()->calculerPrixEtat(getPrix(), 'V');
 }

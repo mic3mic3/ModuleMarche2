@@ -38,8 +38,9 @@ public:
 	//Tous les accesseurs requis
 	string getNom() const;
 	float getPrix() const;
+	virtual float getPrixEtat() const;
 	string getDescription() const;
-	string getEtat() const;
+	Etat* getEtat() const;
 	struct Date getDate() const;
 
 	friend ostream & operator<< (ostream & out,Article*);

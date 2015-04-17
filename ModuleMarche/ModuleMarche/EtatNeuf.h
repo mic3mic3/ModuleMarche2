@@ -13,7 +13,7 @@ public:
 	EtatNeuf();
 	~EtatNeuf();
 
-	float calculerPrixEtat(float);
+	float calculerPrixEtat(float,char);
 	string getDescription();
 };
 
