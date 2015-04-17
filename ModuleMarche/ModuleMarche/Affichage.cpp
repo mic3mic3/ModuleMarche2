@@ -137,7 +137,7 @@ void Affichage::menuInscription()
 	do
 	{
 		if (lbCompteDejaExistant)
-			cout << "Ce compte existe déjà" << endl;
+			cout << "Ce compte existe deja" << endl;
 		
 		nomCompte = "";
 		cout << "Nom de compte (" << CS_EXIT_INPUT << " pour sortir): ";
