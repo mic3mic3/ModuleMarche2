@@ -34,7 +34,7 @@ void Employe::acheter(Article* a)
 {
 	float pourcentage= (100-rabais)/100;
 
-	getCompte()->soustraireMontant(a->getPrix()*pourcentage);	
+	getCompte()->soustraireMontant(a->getPrixEtat()*pourcentage);	
 	ajouterArticle(a);
 }
 

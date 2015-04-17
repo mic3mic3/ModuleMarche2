@@ -30,9 +30,9 @@ Client* FabriqueClient::creationClient(string nom, string prenom, string adresse
 	}
 }
 
-/*Client* FabriqueClient::creationClient(Client* client,char forfait)
+/*Client* FabriqueClient::modificationForfaitClient(Client* client,char forfait)
 {
-	if (forfait == 'A' && solde >= Acheteur::FORFAIT)
+	if (forfait == 'A' && client->get >= Acheteur::FORFAIT)
 	{
 		return new Acheteur(nom, prenom, adresse, new Compte(solde));
 	}

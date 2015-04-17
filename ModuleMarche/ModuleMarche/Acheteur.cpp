@@ -32,6 +32,6 @@ string Acheteur::afficher() const
 
 void Acheteur::acheter(Article* a)
 {
-	getCompte()->soustraireMontant(a->getPrix());	
+	getCompte()->soustraireMontant(a->getPrixEtat());	
 	ajouterArticle(a);
 }
