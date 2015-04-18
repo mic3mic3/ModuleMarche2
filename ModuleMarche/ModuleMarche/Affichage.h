@@ -36,13 +36,14 @@ public:
 	static char menuCategories();
 	
 	//Méthodes de validation
+	static string validationEntreesChaines(string);
 	static bool validationFloat(const string &);
 	static int validationChoixArticle(const string &,int);
 
 	//Transformation du choix d'affichage dans le choix correspondant au tableau
 	static int transformationEnPositionTableau(int,char,const vector<Article*> &);
 
-	static void creationFichierCompte(const string &, const string &, const string &, const string &, const string &, const string &);
+	static void creationFichierCompte(const string &, const string &, const string &, const string &, float, const string &);
 };
 
 #endif

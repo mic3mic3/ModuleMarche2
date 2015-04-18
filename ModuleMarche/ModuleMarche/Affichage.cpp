@@ -21,6 +21,7 @@
 #include "Voiture.h"
 #include "Compte.h"
 #include "Transaction.h"
+#include "FabriqueClient.h"
 
 #include "ClientApp.h"
 
@@ -69,6 +70,34 @@ void Affichage::menuDemarrer()
 			loExceptionMarche.Gerer();
 		}
 	} while (choix[0] != '3');
+}
+
+string Affichage::validationEntreesChaines(string titre)
+{
+	string chaine;
+	do
+	{
+		if (chaine == ";")
+		{
+			cout << "Erreur dans l'entree" << endl;
+		}
+		cout << titre << " (" << CS_EXIT_INPUT << " pour sortir): ";
+		
+		getline(cin, chaine);
+		if (chaine.length() == 0)
+		{
+			chaine = ";";
+		}
+		for (unsigned int cpt = 0; cpt < chaine.length(); cpt++)
+		{
+			if (chaine[cpt] == ';')
+			{
+				chaine = ";";
+				break;
+			}
+		}
+	} while (chaine == ";");
+	return chaine;
 }
 
 //Vérifier si on peut transférer le string en float (chiffres et un point: «99999.99» ou «9» ou «.9»).
@@ -120,7 +149,7 @@ bool Affichage::validationFloat(const string & solde)
 }
 
 //Création du fichier avec les informations sur le compte (première ligne du fichier)
-void Affichage::creationFichierCompte(const string & nomCompte, const string & nom, const string & prenom, const string & adresse, const string & solde, const string & forfait)
+void Affichage::creationFichierCompte(const string & nomCompte, const string & nom, const string & prenom, const string & adresse, float solde, const string & forfait)
 {
 	fstream compte(nomCompte + ".txt", ios::app);
 	if (compte)
@@ -148,18 +177,23 @@ void Affichage::menuInscription()
 		if (lbCompteDejaExistant)
 			cout << "Ce compte existe deja" << endl;
 		nomCompte = "";
-		cout << "Nom de compte (" << CS_EXIT_INPUT << " pour sortir): ";
-		getline(cin, nomCompte);
-
-		if (nomCompte == CS_EXIT_INPUT)
+		//cout << "Nom de compte (" << CS_EXIT_INPUT << " pour sortir): ";
+		//getline(cin, nomCompte);
+		if ((nomCompte = validationEntreesChaines("Nom de compte")) == "exit")
 		{
 			return;
 		}
+		/*if (nomCompte == CS_EXIT_INPUT)
+		{
+			return;
+		}*/
 	} while (lbCompteDejaExistant = Fichier::fichierExistant(nomCompte)); // Si le compte existe déjà, on demande d'en saisir un différent.
 
 	//Entrée de différentes informations
-	cout << "Nom: ";
-	getline(cin, nom);
+	if ((nom = validationEntreesChaines("Nom")) == "exit")
+	{
+		return;
+	}
 	cout << "Prenom: ";
 	getline(cin, prenom);
 	cout << "Adresse: ";
@@ -171,14 +205,22 @@ void Affichage::menuInscription()
 		getline(cin, solde);
 	} while (!validationFloat(solde));
 	string forfait;
+	Client* client;
 	do
 	{
-		cout << "Forfait (A = Acheteur, V = Vendeur, S = Superclient): ";
+		cout << "Forfait (A = Acheteur -> 5$, V = Vendeur -> 20$, S = Superclient -> 25$ ou "+CS_EXIT_INPUT+" pour sortir): ";
 		getline(cin, forfait);
-	} while (forfait != "A" && forfait != "V" && forfait != "S");
+		if (forfait == "exit")
+		{
+			return;
+		}
+	} while ((client = FabriqueClient::creationClient(nom, prenom, adresse, stof(solde.c_str()), forfait)) == nullptr);
 
 	//Puisque tout est valide, on crée le fichier avec les informations sur le compte (première ligne du fichier)
-	creationFichierCompte(nomCompte, nom, prenom, adresse, solde, forfait);
+	creationFichierCompte(nomCompte, nom, prenom, adresse, client->getCompte()->getSolde(), forfait);
+	delete client;
+	clientApp.connexion(nomCompte);
+	menuSelection();
 }
 
 //Affichage du menu de connexion, puis vérification de l'existence du compte, puis on renvoie le nom du compte avec lequel on s'est connecté
@@ -571,6 +613,7 @@ int Affichage::transformationEnPositionTableau(int retour, char categorie, const
 			}
 			break;
 		default:
+			return retour;
 			break;
 		}
 	}

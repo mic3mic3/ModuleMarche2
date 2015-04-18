@@ -10,19 +10,19 @@ FabriqueClient::~FabriqueClient()
 {
 }
 
-Client* FabriqueClient::creationClient(string nom, string prenom, string adresse, float solde, char forfait)
+Client* FabriqueClient::creationClient(string nom, string prenom, string adresse, float solde, string forfait)
 {
-	if (forfait == 'A' && solde >= Acheteur::FORFAIT)
+	if (forfait == "A" && solde >= Acheteur::FORFAIT)
 	{
 		solde -= Acheteur::FORFAIT;
 		return new Acheteur(nom, prenom, adresse, new Compte(solde));
 	}
-	else if (forfait == 'V' && solde >= Vendeur::FORFAIT)
+	else if (forfait == "V" && solde >= Vendeur::FORFAIT)
 	{
 		solde -= Vendeur::FORFAIT;
 		return new Vendeur(nom, prenom, adresse, new Compte(solde));
 	}
-	else if (forfait == 'S' && solde >= Superclient::FORFAIT)
+	else if (forfait == "S" && solde >= Superclient::FORFAIT)
 	{
 		solde -= Superclient::FORFAIT;
 		return new Superclient(nom, prenom, adresse, new Compte(solde));
