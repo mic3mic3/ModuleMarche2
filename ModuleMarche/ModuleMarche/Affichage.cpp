@@ -372,7 +372,11 @@ void Affichage::menuForfaits()
 	fstream achats(clientApp.getCompte() + ".txt");
 	if (achats)
 	{
-		achats << clientApp.getCompte() << ";" << clientApp.getClient()->getNom() << ";" << clientApp.getClient()->getPrenom() << ";" << clientApp.getClient()->getAdresse() << ";" << clientApp.getClient()->getCompte()->getSolde();
+		achats << clientApp.getCompte() << ";" 
+			<< clientApp.getClient()->getNom() << ";" 
+			<< clientApp.getClient()->getPrenom() << ";" 
+			<< clientApp.getClient()->getAdresse() << ";" 
+			<< clientApp.getClient()->getCompte()->getSolde();
 		Employe* emp;
 		Superclient* sup;
 		Vendeur* vnd;
@@ -396,22 +400,41 @@ void Affichage::menuForfaits()
 		for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
 		{
 			ostringstream conversion; //Conversion avec sstream d'un int en string
-			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" << clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" << clientApp.getClient()->getArticles()[cpt]->getDate().annee;
+			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" 
+				<< clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" 
+				<< clientApp.getClient()->getArticles()[cpt]->getDate().annee;
 			string date = conversion.str();
 			Divers* div;
 			Bijou* bij;
 			Voiture* voit;
 			if (div = dynamic_cast<Divers*>(clientApp.getClient()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << "\n";
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" 
+					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+					<< date << "\n";
 			}
 			else if (bij = dynamic_cast<Bijou*>(clientApp.getClient()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << ";" << bij->getPurete() << ";" << bij->getMateriau() << "\n";
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" 
+					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+					<< date << ";" 
+					<< bij->getPurete() << ";" 
+					<< bij->getMateriau() << "\n";
 			}
 			else if (voit = dynamic_cast<Voiture*>(clientApp.getClient()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << ";" << voit->getKilometrage() << ";" << voit->getCouleur() << ";" << voit->getAnnee() << "\n";
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" 
+					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+					<< date << ";" 
+					<< voit->getKilometrage() << ";" 
+					<< voit->getCouleur() << ";" 
+					<< voit->getAnnee() << "\n";
 			}
 		}
 	}
@@ -850,7 +873,11 @@ void Affichage::menuVenteArticles()
 	fstream achats(clientApp.getCompte() + ".txt", std::ofstream::out | std::ofstream::trunc);
 	if (achats)
 	{
-		achats << clientApp.getCompte() << ";" << clientApp.getClient()->getNom() << ";" << clientApp.getClient()->getPrenom() << ";" << clientApp.getClient()->getAdresse() << ";" << clientApp.getClient()->getCompte()->getSolde();
+		achats << clientApp.getCompte() << ";" 
+			<< clientApp.getClient()->getNom() << ";" 
+			<< clientApp.getClient()->getPrenom() << ";" 
+			<< clientApp.getClient()->getAdresse() << ";" 
+			<< clientApp.getClient()->getCompte()->getSolde();
 		Employe* emp;
 		Superclient* sup;
 		Vendeur* vnd;
@@ -875,22 +902,41 @@ void Affichage::menuVenteArticles()
 		for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
 		{
 			ostringstream conversion; //Conversion avec sstream d'un int en string
-			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" << clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" << clientApp.getClient()->getArticles()[cpt]->getDate().annee;
+			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" 
+				<< clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" 
+				<< clientApp.getClient()->getArticles()[cpt]->getDate().annee;
 			string date = conversion.str();
 			Divers* div;
 			Bijou* bij;
 			Voiture* voit;
 			if (div = dynamic_cast<Divers*>(clientApp.getClient()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << "\n";
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" 
+					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+					<< date << "\n";
 			}
 			else if (bij = dynamic_cast<Bijou*>(clientApp.getClient()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << ";" << bij->getPurete() << ";" << bij->getMateriau() << "\n";
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" 
+					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+					<< date << ";" 
+					<< bij->getPurete() << ";" 
+					<< bij->getMateriau() << "\n";
 			}
 			else if (voit = dynamic_cast<Voiture*>(clientApp.getClient()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" << clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" << clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" << clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" << date << ";" << voit->getKilometrage() << ";" << voit->getCouleur() << ";" << voit->getAnnee() << "\n";
+				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" 
+					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
+					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+					<< date << ";" 
+					<< voit->getKilometrage() << ";" 
+					<< voit->getCouleur() << ";" 
+					<< voit->getAnnee() << "\n";
 			}
 		}
 	}
@@ -903,10 +949,21 @@ void Affichage::menuVenteArticles()
 		Vendeur* vnd;
 		if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
 		{
-			trans << "Client: " << vnd->getDerniereTransaction().client->getNom() << ";" << vnd->getDerniereTransaction().client->getPrenom() << ";" << vnd->getDerniereTransaction().client->getAdresse() << "\n";
-			trans << "Marche: " << vnd->getDerniereTransaction().marche->getNom() << ";" << vnd->getDerniereTransaction().marche->getAdresse() << "\n";
-			trans << "Article: " << vnd->getDerniereTransaction().article->getNom() << ";" << vnd->getDerniereTransaction().article->getPrix() << ";" << vnd->getDerniereTransaction().article->getDescription() << ";" << vnd->getDerniereTransaction().article->getEtat() << ";" << vnd->getDerniereTransaction().article->getDate().jour << "/" << vnd->getDerniereTransaction().article->getDate().mois << "/" << vnd->getDerniereTransaction().article->getDate().annee << "\n";
-			trans << "Date: " << vnd->getDerniereTransaction().date.jour << "/" << vnd->getDerniereTransaction().date.mois << "/" << vnd->getDerniereTransaction().date.annee << "\n";
+			trans << "Client: " << vnd->getDerniereTransaction().client->getNom() << ";" 
+				<< vnd->getDerniereTransaction().client->getPrenom() << ";" 
+				<< vnd->getDerniereTransaction().client->getAdresse() << "\n";
+			trans << "Marche: " << vnd->getDerniereTransaction().marche->getNom() << ";" 
+				<< vnd->getDerniereTransaction().marche->getAdresse() << "\n";
+			trans << "Article: " << vnd->getDerniereTransaction().article->getNom() << ";" 
+				<< vnd->getDerniereTransaction().article->getPrix() << ";" 
+				<< vnd->getDerniereTransaction().article->getDescription() << ";" 
+				<< vnd->getDerniereTransaction().article->getEtat() << ";" 
+				<< vnd->getDerniereTransaction().article->getDate().jour << "/" 
+				<< vnd->getDerniereTransaction().article->getDate().mois << "/" 
+				<< vnd->getDerniereTransaction().article->getDate().annee << "\n";
+			trans << "Date: " << vnd->getDerniereTransaction().date.jour << "/" 
+				<< vnd->getDerniereTransaction().date.mois << "/" 
+				<< vnd->getDerniereTransaction().date.annee << "\n";
 			trans << "-----\n";
 		}
 	}
@@ -916,26 +973,47 @@ void Affichage::menuVenteArticles()
 	ofstream marche(clientApp.getMarcheAuxPuces()->getNom() + ".txt");
 	if (marche)
 	{
-		marche << clientApp.getMarcheAuxPuces()->getNom() << ";" << clientApp.getMarcheAuxPuces()->getAdresse() << ";" << clientApp.getMarcheAuxPuces()->getRevenu() << "\n";
+		marche << clientApp.getMarcheAuxPuces()->getNom() << ";" 
+			<< clientApp.getMarcheAuxPuces()->getAdresse() << ";" 
+			<< clientApp.getMarcheAuxPuces()->getRevenu() << "\n";
 		for (size_t cpt = 0; cpt < clientApp.getMarcheAuxPuces()->getArticlesEnVente().size(); cpt++)
 		{
 			ostringstream conversion;
-			conversion << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().jour << "/" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().mois << "/" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().annee;
+			conversion << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().jour << "/" 
+				<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().mois << "/" 
+				<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDate().annee;
 			string date = conversion.str();
 			Divers* div;
 			Bijou* bij;
 			Voiture* voit;
 			if (div = dynamic_cast<Divers*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
 			{
-				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";D;" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" << date << "\n";
+				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";D;" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" 
+					<< date << "\n";
 			}
 			else if (bij = dynamic_cast<Bijou*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
 			{
-				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";B;" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" << date << ";" << bij->getPurete() << ";" << bij->getMateriau() << "\n";
+				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";B;" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" 
+					<< date << ";" 
+					<< bij->getPurete() << ";" 
+					<< bij->getMateriau() << "\n";
 			}
 			else if (voit = dynamic_cast<Voiture*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
 			{
-				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";V;" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" << date << ";" << voit->getKilometrage() << ";" << voit->getCouleur() << ";" << voit->getAnnee() << "\n";
+				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";V;" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" 
+					<< date << ";" 
+					<< voit->getKilometrage() << ";" 
+					<< voit->getCouleur() << ";" 
+					<< voit->getAnnee() << "\n";
 			}
 		}
 	}
