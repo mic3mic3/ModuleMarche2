@@ -24,7 +24,7 @@ public:
 	Client(void);
 	Client(string,string,Compte*);
 	Client(string,string,string,Compte*);
-	Client(Client*);
+	Client(Client* &);
 	virtual ~Client(void);
 
 	virtual bool validerCompte(const float) const;
@@ -33,7 +33,6 @@ public:
 	virtual string afficher() const = 0;
 	//Tous les accesseurs requis
 	vector<Article*> getArticles() const;
-	float getSolde() const;
 	string getNom() const;
 	string getPrenom() const;
 	string getAdresse() const;

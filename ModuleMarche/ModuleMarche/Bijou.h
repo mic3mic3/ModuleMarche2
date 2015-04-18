@@ -15,8 +15,8 @@ private:
 	string materiau;
 	int purete;
 public:
-	static const float prixMin;
-	static const float prixMax;
+	static const float PRIX_MIN;
+	static const float PRIX_MAX;
 
 	Bijou(void);
 	Bijou(string,float,string ,Etat*,struct Date,string,int);

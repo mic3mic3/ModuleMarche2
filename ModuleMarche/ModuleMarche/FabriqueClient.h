@@ -18,7 +18,7 @@ public:
 	~FabriqueClient();
 
 	static Client* creationClient(string, string, string, float, char);
-	static Client* modificationForfaitClient(Client*,char);
+	static Client* modificationForfaitClient(Client* &,char);
 };
 
 #endif

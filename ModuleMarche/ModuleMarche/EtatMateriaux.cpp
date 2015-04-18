@@ -1,6 +1,6 @@
 #include "EtatMateriaux.h"
 
-const string EtatMateriaux::DESCRIPTION = "Pour les materiaux";
+const string EtatMateriaux::DESCRIPTION = "Materiaux";
 const float EtatMateriaux::PRIX_VOITURE = 300;
 const float EtatMateriaux::PRIX_DIVERS = 0;
 const float EtatMateriaux::MULTIPLICATEUR_BIJOU = 0.05f;
