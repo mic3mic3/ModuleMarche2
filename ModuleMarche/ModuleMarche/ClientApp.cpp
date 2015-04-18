@@ -148,7 +148,7 @@ void ClientApp::creationMarche(const string &nom)
 	if (loEntreesMarche.size() < 1)
 	{
 		// Sans marché aux puces, l'application ne peut plus poursuivre.
-		throw ExceptionMarche(string("Une erreur est survenue lors de l'ouverture du marche aux puces.\nL'application doit fermer."), true);
+		throw ExceptionMarche(string("Une erreur est survenue lors de l'ouverture du marche aux puces."), true);
 	}
 
 	// Création du marché à partir de la première ligne du fichier contenant dans l'ordre: nom, adresse, revenu.

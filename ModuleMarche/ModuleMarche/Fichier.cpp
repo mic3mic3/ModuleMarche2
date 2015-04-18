@@ -48,7 +48,6 @@ vector<vector<string>> Fichier::getContenu(const string& psNomCompletFichier)
 	fstream loFStream(psNomCompletFichier + ".txt", ios::in);
 	if (!loFStream.is_open())
 	{
-		throw ExceptionMarche(string("Le fichier «" + psNomCompletFichier + "» n'a pas pu être ouvert"), false);
 		return loEntrees;
 	}
 
