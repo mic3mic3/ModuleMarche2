@@ -7,14 +7,20 @@ using namespace std;
 
 ExceptionMarche::ExceptionMarche(string& psMessage, bool pbFatale)
 {
-	if (message.size() == 0)
-		message = "Désolé, une erreur est survenue.";
+	// Création du message d'erreur sous le format: 
+	// «Erreur fatale: 
+	// Le marché aux puces n'a pas pu être créé.
+	// L'application doit fermer...»
+	message = "Erreur";
+	if (fatale)
+		message += " fatale";
+	message += ": ";
+	if (psMessage.size() == 0)
+		message += "Désolé, une erreur est survenue dans l'application.";
 	else
-		message = psMessage;
+		message += psMessage;
 
 	fatale = pbFatale;
-	if (pbFatale)
-		message += "L'application doit fermer...";
 }
 
 ExceptionMarche::~ExceptionMarche()
@@ -34,24 +40,14 @@ bool ExceptionMarche::getFatale() const
 
 void ExceptionMarche::Gerer() const
 {
-	// Affichage du message sous le format: 
-	// «Erreur fatale: 
-	// Le marché aux puces n'a pas pu être créé.
-	// L'application doit fermer...»
-	string lsMessageAAfficher = "Erreur";
-	if (fatale)
-		lsMessageAAfficher += " fatale";
-	lsMessageAAfficher += ": ";
-	if (message.size() == 0)
-		lsMessageAAfficher += "Désolé, une erreur s'est produite dans l'application.";
-	else
-		lsMessageAAfficher += message;
-	lsMessageAAfficher += "\n";
-	if (fatale)
-		lsMessageAAfficher += "L'application doit fermer...\n";
-	cout << lsMessageAAfficher;
+	cout << endl << endl << message << endl;
 
 	// Si l'erreur est fatale et empêche le programme de fonctionner, on quitte.
 	if (fatale)
+	{
+		cout << endl << "Fermeture de l'application..." << endl << endl << "Appuyez sur Entree pour quitter..." << endl;
+		string lsInput;
+		getline(cin, lsInput);
 		exit(EXIT_FAILURE);
+	}
 }
