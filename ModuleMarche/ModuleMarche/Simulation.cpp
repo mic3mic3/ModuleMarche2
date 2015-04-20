@@ -24,7 +24,6 @@ void Simulation::miseAJour()
 	if (threads.size() > 0)
 	WaitForMultipleObjects(threads.size(), &threads[0], true, INFINITE);
 }
-HANDLE mutex;
 DWORD WINAPI appelClient(LPVOID client)
 {
 	((ClientSim*)client)->miseAJour(mutex);
