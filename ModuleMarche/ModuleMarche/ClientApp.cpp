@@ -20,6 +20,7 @@
 #include "Superclient.h"
 #include "Employe.h"
 #include "Fichier.h"
+#include "FabriqueClient.h"
 
 using namespace std; //Pour ne jamais avoir à écrire std:: puisque j'utilise beaucoup de fonctions de std dans ce fichier
 
@@ -60,12 +61,22 @@ void ClientApp::deconnexion()
 	marcheAuxPuces = NULL;
 }
 
+Client* ClientApp::inscription(string nom,string prenom,string adresse,float solde,string forfait)
+{
+	return FabriqueClient::creationClient(nom, prenom, adresse, solde, forfait);
+}
+
 // On crée le client et le marché
 void ClientApp::connexion(const string& psNomCompte)
 {
 	compte = psNomCompte;
 	creationMarche("Centre-ville");
 	creationClient(psNomCompte);
+}
+
+Client* ClientApp::changementForfait(char forfait)
+{
+	return client = FabriqueClient::modificationForfaitClient(client,forfait);
 }
 
 //Selon le nom de compte, on va chercher les informations du client (nom, prenom, adresse, solde du compte, achats) dans un fichier

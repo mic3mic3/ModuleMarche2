@@ -36,6 +36,8 @@ public:
 	void connexion(const string&);
 	void creationClient(const string &);
 	void creationMarche(const string &);
+	Client* changementForfait(char);
+	Client* inscription(string,string,string,float,string);
 	void deconnexion();
 
 	Article* getArticleFromStructure(vector<vector<string>>&, size_t);

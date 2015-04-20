@@ -205,16 +205,22 @@ void Affichage::menuInscription()
 		getline(cin, solde);
 	} while (!validationFloat(solde));
 	string forfait;
-	Client* client;
+	bool first = true;
+	Client* client = NULL;
 	do
 	{
+		if (client == nullptr && !first)
+		{
+			cout << "Impossible de s'abonner à ce forfait." << endl;
+		}
 		cout << "Forfait (A = Acheteur -> 5$, V = Vendeur -> 20$, S = Superclient -> 25$ ou "+CS_EXIT_INPUT+" pour sortir): ";
 		getline(cin, forfait);
 		if (forfait == "exit")
 		{
 			return;
 		}
-	} while ((client = FabriqueClient::creationClient(nom, prenom, adresse, stof(solde.c_str()), forfait)) == nullptr);
+		first = false;
+	} while ((client = clientApp.inscription(nom, prenom, adresse, stof(solde.c_str()), forfait)) == nullptr);
 
 	//Puisque tout est valide, on crée le fichier avec les informations sur le compte (première ligne du fichier)
 	creationFichierCompte(nomCompte, nom, prenom, adresse, client->getCompte()->getSolde(), forfait);
@@ -377,40 +383,27 @@ void Affichage::menuForfaits()
 {
 	string choix;
 	choix = "A";
+	bool first = true;
+	Client* client = NULL;
 	do
 	{
 		system("cls");
-		if (choix != "A" && choix != "V" && choix != "S")
+		if (client == nullptr && !first)
 		{
-			cout << "Erreur dans le choix!" << endl;
+			cout << "Impossible de s'abonner à ce forfait" << endl;
 		}
 		cout << "Quel forfait voulez-vous? (" << CS_EXIT_INPUT << " pour sortir):" << endl;
-		cout << "A - Acheteur" << endl;
-		cout << "V - Vendeur" << endl;
-		cout << "S - Superclient" << endl;
+		cout << "A - Acheteur -> 5$" << endl;
+		cout << "V - Vendeur -> 20$" << endl;
+		cout << "S - Superclient -> 25$" << endl;
 		getline(cin, choix);
 		if (choix == CS_EXIT_INPUT)
 		{
 			return;
 		}
-	} while (choix != "A" && choix != "V" && choix != "S");
-
-	switch (choix[0])
-	{
-	case 'A':
-		clientApp.setClient(new Acheteur(clientApp.getClient()));
-		break;
-	case 'V':
-		clientApp.setClient(new Vendeur(clientApp.getClient()));
-		break;
-	case 'S':
-		clientApp.setClient(new Superclient(clientApp.getClient()));
-		break;
-	default:
-		throw ExceptionMarche(string("Type de forfait non gere: «" + choix + "».  Le forfait du client n'a pas pu etre change."), false);
-		break;
-	}
-	//On update le fichier après avoir changé le forfait
+		first = false;
+	} while ((client = clientApp.changementForfait(choix[0])) == nullptr);
+	
 	fstream achats(clientApp.getCompte() + ".txt");
 	if (achats)
 	{
