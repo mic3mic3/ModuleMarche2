@@ -265,13 +265,14 @@ void Affichage::menuSelection()
 	Vendeur* vnd;
 	Acheteur* ach;
 	Superclient* sup;
+	bool valide = true;
 	do
 	{
 		system("cls");
 		if (sup = dynamic_cast<Superclient*>(clientApp.getClient()))
 		{
 			lsValeurQuitter = "5";
-			if (choix != "1" && choix != "2" && choix != "3" && choix != "4")
+			if (!valide)
 			{
 				cout << "Erreur dans le choix!" << endl;
 			}
@@ -282,7 +283,7 @@ void Affichage::menuSelection()
 			cout << "4 - Changer mon forfait" << endl;
 			cout << "5 - Deconnexion" << endl;
 			getline(cin, choix);
-
+			valide = true;
 			if (choix == "1")
 			{
 				menuAchats();
@@ -299,11 +300,15 @@ void Affichage::menuSelection()
 			{
 				menuForfaits();
 			}
+			else
+			{
+				valide = false;
+			}
 		}
 		else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
 		{
 			lsValeurQuitter = "3";
-			if (choix != "1" && choix != "2")
+			if (!valide)
 			{
 				cout << "Erreur dans le choix!" << endl;
 			}
@@ -312,6 +317,7 @@ void Affichage::menuSelection()
 			cout << "2 - Voir les articles achetables" << endl;
 			cout << "3 - Deconnexion" << endl;
 			getline(cin, choix);
+			valide = true;
 			if (choix == "1")
 			{
 				menuAchats();
@@ -320,11 +326,15 @@ void Affichage::menuSelection()
 			{
 				menuCategories();
 			}
+			else
+			{
+				valide = false;
+			}
 		}
 		else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
 		{
 			lsValeurQuitter = "4";
-			if (choix != "1" && choix != "2" && choix != "3")
+			if (!valide)
 			{
 				cout << "Erreur dans le choix!" << endl;
 			}
@@ -334,6 +344,7 @@ void Affichage::menuSelection()
 			cout << "3 - Changer mon forfait" << endl;
 			cout << "4 - Deconnexion" << endl;
 			getline(cin, choix);
+			valide = true;
 			if (choix == "1")
 			{
 				menuAchats();
@@ -346,11 +357,15 @@ void Affichage::menuSelection()
 			{
 				menuForfaits();
 			}
+			else
+			{
+				valide = false;
+			}
 		}
 		else if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
 		{
 			lsValeurQuitter = "4";
-			if (choix != "1" && choix != "2" && choix != "3")
+			if (!valide)
 			{
 				cout << "Erreur dans le choix!" << endl;
 			}
@@ -360,6 +375,7 @@ void Affichage::menuSelection()
 				<< "3 - Changer mon forfait" << endl
 				<< "4 - Deconnexion" << endl;
 			getline(cin, choix);
+			valide = true;
 			if (choix == "1")
 			{
 				menuAchats();
@@ -371,6 +387,10 @@ void Affichage::menuSelection()
 			else if (choix == "3")
 			{
 				menuForfaits();
+			}
+			else
+			{
+				valide = false;
 			}
 		}
 	}while (choix != lsValeurQuitter);

@@ -17,6 +17,7 @@
     <ClInclude Include="Bijou.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="ClientApp.h" />
+    <ClInclude Include="ClientSim.h" />
     <ClInclude Include="Compte.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Divers.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="ExceptionMarche.h" />
     <ClInclude Include="Fichier.h" />
     <ClInclude Include="MarcheAuxPuces.h" />
+    <ClInclude Include="Simulation.h" />
     <ClInclude Include="Superclient.h" />
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="Vendeur.h" />
@@ -42,6 +44,7 @@
     <ClCompile Include="Bijou.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientApp.cpp" />
+    <ClCompile Include="ClientSim.cpp" />
     <ClCompile Include="Compte.cpp" />
     <ClCompile Include="Divers.cpp" />
     <ClCompile Include="Employe.cpp" />
@@ -54,6 +57,7 @@
     <ClCompile Include="ExceptionMarche.cpp" />
     <ClCompile Include="Fichier.cpp" />
     <ClCompile Include="MarcheAuxPuces.cpp" />
+    <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="Superclient.cpp" />
     <ClCompile Include="Vendeur.cpp" />
     <ClCompile Include="Voiture.cpp" />

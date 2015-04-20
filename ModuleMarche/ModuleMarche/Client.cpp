@@ -4,6 +4,7 @@
 
 Client::Client(void)
 {
+	compte = new Compte(0);
 }
 
 Client::Client(string n, string p, Compte* c)

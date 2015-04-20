@@ -35,12 +35,12 @@ Client* FabriqueClient::creationClient(string nom, string prenom, string adresse
 
 Client* FabriqueClient::modificationForfaitClient(Client* & client,char forfait)
 {
-	if (forfait == 'A' && client->getCompte()->getSolde() >= Acheteur::FORFAIT && !dynamic_cast<Acheteur*>(client))
+	if (forfait == 'A' && client->getCompte()->getSolde() >= Acheteur::FORFAIT && (!dynamic_cast<Acheteur*>(client) || dynamic_cast<Superclient*>(client)))
 	{
 		client->getCompte()->soustraireMontant(Acheteur::FORFAIT);
 		return new Acheteur(client);
 	}
-	else if (forfait == 'V' && client->getCompte()->getSolde() >= Vendeur::FORFAIT && !dynamic_cast<Vendeur*>(client))
+	else if (forfait == 'V' && client->getCompte()->getSolde() >= Vendeur::FORFAIT && (!dynamic_cast<Vendeur*>(client) || dynamic_cast<Superclient*>(client)))
 	{
 		client->getCompte()->soustraireMontant(Vendeur::FORFAIT);
 		return new Vendeur(client);

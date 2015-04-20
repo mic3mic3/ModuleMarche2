@@ -12,6 +12,7 @@ MarcheAuxPuces::MarcheAuxPuces(void)
 {
 	nom = "Non spécifié";
 	adresse = "Non spécifiée";
+	compte = new Compte(0);
 }
 
 //Le constructeur qui sera utilisé

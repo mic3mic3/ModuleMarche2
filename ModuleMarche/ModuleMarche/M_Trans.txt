@@ -23,3 +23,8 @@ Marche: Centre-ville;D
 Article: Bague;25;Une magnifique bague;00B5D380;7/4/2011
 Date: 17/4/2015
 -----
+Client: M;M;M
+Marche: Centre-ville;D
+Article: Bague;25;Une magnifique bague;0128D6C8;7/4/2011
+Date: 20/4/2015
+-----

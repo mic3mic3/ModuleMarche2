@@ -78,7 +78,12 @@ void ClientApp::connexion(const string& psNomCompte, const vector<vector<string>
 
 Client* ClientApp::changementForfait(char forfait)
 {
-	return client = FabriqueClient::modificationForfaitClient(client,forfait);
+	Client* tempCli = FabriqueClient::modificationForfaitClient(client, forfait);
+	if (tempCli != nullptr)
+	{
+		client = tempCli;
+	}
+	return tempCli;
 }
 
 //Selon le nom de compte, on va chercher les informations du client (nom, prenom, adresse, solde du compte, achats) dans un fichier
