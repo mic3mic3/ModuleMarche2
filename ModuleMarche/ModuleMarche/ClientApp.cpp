@@ -23,6 +23,8 @@
 
 using namespace std; //Pour ne jamais avoir à écrire std:: puisque j'utilise beaucoup de fonctions de std dans ce fichier
 
+const string ClientApp::CS_NOM_MARCHE_AUX_PUCES = "Centre-ville";
+
 ClientApp::ClientApp(void)
 {
 }
@@ -61,15 +63,15 @@ void ClientApp::deconnexion()
 }
 
 // On crée le client et le marché
-void ClientApp::connexion(const string& psNomCompte, vector<vector<string>>& poEntreesClient)
+void ClientApp::connexion(const string& psNomCompte, const vector<vector<string>>& poEntreesClient, const vector<vector<string>>& poEntreesMarche)
 {
 	compte = psNomCompte;
-	creationMarche("Centre-ville");
+	creationMarche(poEntreesMarche);
 	creationClient(psNomCompte, poEntreesClient);
 }
 
 //Selon le nom de compte, on va chercher les informations du client (nom, prenom, adresse, solde du compte, achats) dans un fichier
-void ClientApp::creationClient(const string &nomCompte, vector<vector<string>>& poEntreesClient)
+void ClientApp::creationClient(const string &nomCompte, const vector<vector<string>>& poEntreesClient)
 {
 	//On recherche les informations du client sur la première ligne du fichier
 	// Todo: Extract Method GetClientFromStructure
@@ -140,33 +142,32 @@ void ClientApp::creationClient(const string &nomCompte, vector<vector<string>>& 
 }
 
 //On crée le marché à partir d'un fichier
-void ClientApp::creationMarche(const string &nom)
+void ClientApp::creationMarche(const vector<vector<string>>& poEntreesMarche)
 {
-	vector<vector<string>> loEntreesMarche = Fichier::getContenu(nom);
-	if (loEntreesMarche.size() < 1)
+	if (poEntreesMarche.size() < 1)
 	{
 		// Sans marché aux puces, l'application ne peut plus poursuivre.
 		throw ExceptionMarche(string("Une erreur est survenue lors de l'ouverture du marche aux puces."), true);
 	}
 
 	// Création du marché à partir de la première ligne du fichier contenant dans l'ordre: nom, adresse, revenu.
-	string adresse = loEntreesMarche.at(1)[1];
-	string revenuStr = loEntreesMarche.at(1)[2];
+	string adresse = poEntreesMarche.at(1)[1];
+	string revenuStr = poEntreesMarche.at(1)[2];
 	float revenu = stof(revenuStr.c_str());
-	marcheAuxPuces = new MarcheAuxPuces(nom, adresse, new Compte(revenu));
+	marcheAuxPuces = new MarcheAuxPuces(CS_NOM_MARCHE_AUX_PUCES, adresse, new Compte(revenu));
 
 	//On crée les articles de ce marché à partir du reste du fichier
-	for (size_t cptLigne = 1; cptLigne < loEntreesMarche.size(); cptLigne++)
+	for (size_t cptLigne = 1; cptLigne < poEntreesMarche.size(); cptLigne++)
 	{
 		//Obtention des valeurs des propriétés d'un article
-		Article* loArticle = getArticleFromStructure(loEntreesMarche, cptLigne);
+		Article* loArticle = getArticleFromStructure(poEntreesMarche, cptLigne);
 		if (loArticle != nullptr)
 			marcheAuxPuces->ajouterArticle(loArticle);
 	}
 
 	//Maintenant, on ajoute le personnel à la liste d'employés du MarcheAuxPuces
 	// Todo: Extract method: AjouterEmployesDuFichier(Marche)
-	vector<vector<string>> loEntreesEmploye = Fichier::getContenu(nom + "_Employes");
+	vector<vector<string>> loEntreesEmploye = Fichier::getContenu(CS_NOM_MARCHE_AUX_PUCES + "_Employes");
 	for (size_t cptLigne = 0; cptLigne < loEntreesEmploye.size(); cptLigne++)
 	{
 		// Obtention des informations d'un employé.
@@ -188,7 +189,7 @@ void ClientApp::creationMarche(const string &nom)
 	}
 }
 
-Article* ClientApp::getArticleFromStructure(vector<vector<string>>& poArticleStructure, size_t piLigne)
+Article* ClientApp::getArticleFromStructure(const vector<vector<string>>& poArticleStructure, size_t piLigne)
 {
 	// On vérifie que la ligne de de l'article est valide.
 	if (poArticleStructure.size() - 1 < piLigne)
@@ -258,7 +259,7 @@ Article* ClientApp::getArticleFromStructure(vector<vector<string>>& poArticleStr
 	return loArticle;
 }
 
-Employe* ClientApp::getEmployeFromStructure(vector<vector<string>>& poEmployeStructure, size_t piLigne)
+Employe* ClientApp::getEmployeFromStructure(const vector<vector<string>>& poEmployeStructure, size_t piLigne)
 {
 	// On vérifie que la ligne de de l'employé est valide.
 	if (poEmployeStructure.size() - 1 < piLigne)

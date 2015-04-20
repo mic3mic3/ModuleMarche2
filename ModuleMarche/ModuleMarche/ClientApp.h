@@ -27,19 +27,21 @@ public:
 	ClientApp(void);
 	~ClientApp(void);
 
+	static const string CS_NOM_MARCHE_AUX_PUCES;
+
 	Client* getClient() const;
 	string getCompte() const;
 	MarcheAuxPuces* getMarcheAuxPuces() const;
 	void setClient(Client*);
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
-	void connexion(const string&, vector<vector<string>>&);
-	void creationClient(const string &, vector<vector<string>>&);
-	void creationMarche(const string &);
+	void connexion(const string&, const vector<vector<string>>&, const vector<vector<string>>&);
+	void creationClient(const string &, const vector<vector<string>>&);
+	void creationMarche(const vector<vector<string>>&);
 	void deconnexion();
 
-	Article* getArticleFromStructure(vector<vector<string>>&, size_t);
-	Employe* getEmployeFromStructure(vector<vector<string>>&, size_t);
+	Article* getArticleFromStructure(const vector<vector<string>>&, size_t);
+	Employe* getEmployeFromStructure(const vector<vector<string>>&, size_t);
 	//Client* getClientFromStructure(vector<vector<string>>&, size_t);
 };
 
