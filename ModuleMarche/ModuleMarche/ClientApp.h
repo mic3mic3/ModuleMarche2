@@ -42,6 +42,7 @@ public:
 	void creationClient(const Fichier&);
 	void creationMarche(const Fichier&, const vector<Fichier>&);
 	void deconnexion();
+	Employe* getEmployeExistant(string&);
 
 	Article* getArticleFromStructure(const Fichier&, size_t);
 	Employe* getEmployeFromStructure(const Fichier&, size_t);

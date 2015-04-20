@@ -115,18 +115,10 @@ void ClientApp::creationClient(const Fichier& poEntreesClient)
 			client = new Superclient(nom,prenom,adresse,new Compte(solde));
 			break;
 		case 'E':
-			// Todo: Extract method int GetEmployeExistant, renvoie l'employé ou null
-			bool found= false;
-			for (size_t cpt = 0;cpt < comptesEmployes.size() && found == false; cpt++)
+			client = getEmployeExistant(compte);
+			if (client == nullptr)
 			{
-				if (compte == comptesEmployes[cpt])
-				{
-					client = marcheAuxPuces->getPersonnel()[cpt];
-					found = true;
-				}
-			}
-			if (!found)
-			{
+				// L'employé n'existe pas encore, on le crée.
 				string salaireStr = poEntreesClient.getEntree(0)[6];
 				float salaire = stof(salaireStr.c_str());
 
@@ -303,6 +295,21 @@ Employe* ClientApp::getEmployeFromStructure(const Fichier& poEmployeStructure, s
 
 	Employe* loEmploye = new Employe(nomP, prenomP, adresseP, new Compte(soldeP), salaire, rabais);
 
+	return loEmploye;
+}
+
+Employe* ClientApp::getEmployeExistant(string& psNomCompteEmploye)
+{
+	Employe* loEmploye = nullptr;
+	bool lbFound = false;
+	for (size_t cpt = 0; cpt < comptesEmployes.size() && lbFound == false; cpt++)
+	{
+		if (psNomCompteEmploye != comptesEmployes[cpt])
+			continue;
+
+		lbFound = true;
+		loEmploye = marcheAuxPuces->getPersonnel()[cpt];
+	}
 	return loEmploye;
 }
 
