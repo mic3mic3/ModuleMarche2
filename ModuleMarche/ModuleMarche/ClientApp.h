@@ -33,8 +33,8 @@ public:
 	void setClient(Client*);
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
-	void connexion(const string&);
-	void creationClient(const string &);
+	void connexion(const string&, vector<vector<string>>&);
+	void creationClient(const string &, vector<vector<string>>&);
 	void creationMarche(const string &);
 	void deconnexion();
 

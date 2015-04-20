@@ -61,30 +61,28 @@ void ClientApp::deconnexion()
 }
 
 // On crée le client et le marché
-void ClientApp::connexion(const string& psNomCompte)
+void ClientApp::connexion(const string& psNomCompte, vector<vector<string>>& poEntreesClient)
 {
 	compte = psNomCompte;
 	creationMarche("Centre-ville");
-	creationClient(psNomCompte);
+	creationClient(psNomCompte, poEntreesClient);
 }
 
 //Selon le nom de compte, on va chercher les informations du client (nom, prenom, adresse, solde du compte, achats) dans un fichier
-void ClientApp::creationClient(const string &nomCompte)
+void ClientApp::creationClient(const string &nomCompte, vector<vector<string>>& poEntreesClient)
 {
 	//On recherche les informations du client sur la première ligne du fichier
 	// Todo: Extract Method GetClientFromStructure
-	vector<vector<string>> loEntreesClient = Fichier::getContenu(nomCompte);
+	string nom = poEntreesClient.at(0)[1];
 
-	string nom = loEntreesClient.at(0)[1];
+	string prenom = poEntreesClient.at(0)[2];
 
-	string prenom = loEntreesClient.at(0)[2];
+	string adresse = poEntreesClient.at(0)[3];
 
-	string adresse = loEntreesClient.at(0)[3];
-
-	string soldeStr = loEntreesClient.at(0)[4];
+	string soldeStr = poEntreesClient.at(0)[4];
 	float solde = stof(soldeStr.c_str());
 
-	string forfaitStr = loEntreesClient.at(0)[5];
+	string forfaitStr = poEntreesClient.at(0)[5];
 	char forfait = forfaitStr[0];
 
 	switch (forfait)
@@ -111,10 +109,10 @@ void ClientApp::creationClient(const string &nomCompte)
 			}
 			if (!found)
 			{
-				string salaireStr = loEntreesClient.at(0)[6];
+				string salaireStr = poEntreesClient.at(0)[6];
 				float salaire = stof(salaireStr.c_str());
 
-				string rabaisStr = loEntreesClient.at(0)[7];
+				string rabaisStr = poEntreesClient.at(0)[7];
 				float rabais = stof(rabaisStr.c_str());
 
 				client = new Employe(nom,prenom,adresse,new Compte(solde),salaire,rabais);
@@ -132,9 +130,9 @@ void ClientApp::creationClient(const string &nomCompte)
 	if (forfait != 'E')
 	{
 		string ligneAchats;
-		for (size_t cptLigne = 1; cptLigne <= loEntreesClient.size(); cptLigne++)
+		for (size_t cptLigne = 1; cptLigne <= poEntreesClient.size(); cptLigne++)
 		{
-			Article* loArticle = getArticleFromStructure(loEntreesClient, cptLigne);
+			Article* loArticle = getArticleFromStructure(poEntreesClient, cptLigne);
 			if(loArticle != nullptr)
 				client->ajouterArticle(loArticle);
 		}
