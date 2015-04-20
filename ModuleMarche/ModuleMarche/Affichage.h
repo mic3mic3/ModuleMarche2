@@ -44,6 +44,8 @@ public:
 	static int transformationEnPositionTableau(int,char,const vector<Article*> &);
 
 	static void creationFichierCompte(const string &, const string &, const string &, const string &, float, const string &);
+
+	static vector<vector<vector<string>>> getEntreesEmploye(const vector<vector<string>>&);
 };
 
 #endif
