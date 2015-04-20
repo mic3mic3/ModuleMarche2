@@ -225,7 +225,7 @@ void Affichage::menuInscription()
 	//Puisque tout est valide, on crée le fichier avec les informations sur le compte (première ligne du fichier)
 	creationFichierCompte(nomCompte, nom, prenom, adresse, client->getCompte()->getSolde(), forfait);
 	delete client;
-	clientApp.connexion(nomCompte);
+	clientApp.connexion(nomCompte, Fichier::getContenu(nomCompte), Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES));
 	menuSelection();
 }
 
@@ -252,7 +252,7 @@ void Affichage::menuConnexion()
 		}
 	} while (!Fichier::fichierExistant(nomCompte));
 
-	clientApp.connexion(nomCompte);
+	clientApp.connexion(nomCompte, Fichier::getContenu(nomCompte), Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES));
 	menuSelection();
 }
 
