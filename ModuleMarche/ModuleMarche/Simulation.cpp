@@ -1,10 +1,14 @@
 #include "Simulation.h"
 
 #include <Windows.h>
-
+#include <winnt.h>
+#include <ctime>
+#include <iostream>
+using namespace std;
 Simulation::Simulation()
 {
 	marche = new MarcheAuxPuces();
+	srand(time(NULL));
 }
 
 
@@ -17,14 +21,27 @@ void Simulation::miseAJour()
 	int chanceClient = rand() % 12 + 1;
 	if (chanceClient == 1)
 	{
-		DWORD* idThread = new DWORD();
-		ClientSim* client = new ClientSim();
-		threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
+		//DWORD* idThread = new DWORD();
+		clients.push_back(new ClientSim(clients.size()));
+		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
-	if (threads.size() > 0)
-	WaitForMultipleObjects(threads.size(), &threads[0], true, INFINITE);
+	HANDLE* t = new HANDLE[clients.size()];
+	/*for (unsigned int cpt = 0; cpt < threads.size(); cpt++)
+	{
+		WaitForSingleObject(threads[cpt], INFINITE);
+	}*/
+	for (unsigned int cpt = 0; cpt < clients.size(); cpt++)
+	{
+		DWORD* idThread = new DWORD();
+		//clients.push_back(new ClientSim());
+		t[cpt] = CreateThread(0, 0, appelClient, clients[cpt], 0, idThread);
+		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
+	}
+	WaitForMultipleObjects(clients.size(), t,true,INFINITE);
+	cout << endl << "----------" << endl;
+	delete[] t;
 }
-HANDLE mutex;
+HANDLE mutex=CreateMutex(NULL,false,NULL);
 DWORD WINAPI appelClient(LPVOID client)
 {
 	((ClientSim*)client)->miseAJour(mutex);

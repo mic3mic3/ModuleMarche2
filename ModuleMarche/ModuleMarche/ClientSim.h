@@ -9,8 +9,9 @@ class ClientSim
 {
 private:
 	Client* client;
+	int num;
 public:
-	ClientSim();
+	ClientSim(int);
 	~ClientSim();
 
 	void miseAJour(HANDLE);
