@@ -63,10 +63,10 @@ void ClientApp::deconnexion()
 }
 
 // On crée le client et le marché
-void ClientApp::connexion(const string& psNomCompte, const vector<vector<string>>& poEntreesClient, const vector<vector<string>>& poEntreesMarche)
+void ClientApp::connexion(const string& psNomCompte, const vector<vector<string>>& poEntreesClient, const vector<vector<string>>& poEntreesMarche, const vector<vector<vector<string>>>& poEntreesEmploye)
 {
 	compte = psNomCompte;
-	creationMarche(poEntreesMarche);
+	creationMarche(poEntreesMarche, poEntreesEmploye);
 	creationClient(psNomCompte, poEntreesClient);
 }
 
@@ -142,7 +142,7 @@ void ClientApp::creationClient(const string &nomCompte, const vector<vector<stri
 }
 
 //On crée le marché à partir d'un fichier
-void ClientApp::creationMarche(const vector<vector<string>>& poEntreesMarche)
+void ClientApp::creationMarche(const vector<vector<string>>& poEntreesMarche, const vector<vector<vector<string>>>& poEntreesEmploye)
 {
 	if (poEntreesMarche.size() < 1)
 	{
@@ -167,25 +167,21 @@ void ClientApp::creationMarche(const vector<vector<string>>& poEntreesMarche)
 
 	//Maintenant, on ajoute le personnel à la liste d'employés du MarcheAuxPuces
 	// Todo: Extract method: AjouterEmployesDuFichier(Marche)
-	vector<vector<string>> loEntreesEmploye = Fichier::getContenu(CS_NOM_MARCHE_AUX_PUCES + "_Employes");
-	for (size_t cptLigne = 0; cptLigne < loEntreesEmploye.size(); cptLigne++)
+	for (size_t cptLigne = 0; cptLigne < poEntreesEmploye.size(); cptLigne++)
 	{
-		// Obtention des informations d'un employé.
-		string lsNomCompteEmploye = loEntreesEmploye.at(cptLigne)[0];
-		vector<vector<string>> loEmploye = Fichier::getContenu(lsNomCompteEmploye);
-		Employe* unEmploye = getEmployeFromStructure(loEmploye, 0);
-		if (unEmploye == nullptr)
+		Employe* loEmploye = getEmployeFromStructure(poEntreesEmploye[cptLigne], 0);
+		if (loEmploye == nullptr)
 			continue;
 
 		// Obtention des achats de l'employé dans les lignes qui suivent.
-		for (size_t cpt = 1; cpt < loEmploye.size(); cpt++)
+		for (size_t cpt = 1; cpt < poEntreesEmploye[cptLigne].size(); cpt++)
 		{
-			Article* loArticle = getArticleFromStructure(loEmploye, cpt);
+			Article* loArticle = getArticleFromStructure(poEntreesEmploye[cptLigne], cpt);
 			if (loArticle != nullptr)
-				unEmploye->ajouterArticle(loArticle);
+				loEmploye->ajouterArticle(loArticle);
 		}
-		comptesEmployes.push_back(lsNomCompteEmploye);
-		marcheAuxPuces->ajouterEmploye(unEmploye);
+		comptesEmployes.push_back(poEntreesMarche.at(1)[0]);
+		marcheAuxPuces->ajouterEmploye(loEmploye);
 	}
 }
 
