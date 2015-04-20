@@ -22,7 +22,7 @@ public:
 	Simulation();
 	void miseAJour();
 	int getHeures();
-	DWORD WINAPI appelClient(LPVOID);
+	friend DWORD WINAPI appelClient(LPVOID);
 	~Simulation();
 };
 

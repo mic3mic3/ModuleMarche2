@@ -1,2 +1,2 @@
-M;M;M;M;1e+010;V
-Bague;B;25;Une magnifique bague;0097D6C8;7/4/2011;2;Diamant
+M;M;M;M;1e+010;S
+Bague;B;25;Une magnifique bague;Materiaux;7/4/2011;2;Diamant

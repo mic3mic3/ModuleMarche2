@@ -22,6 +22,7 @@
 #include "Compte.h"
 #include "Transaction.h"
 #include "FabriqueClient.h"
+#include "Simulation.h"
 
 #include "ClientApp.h"
 
@@ -1097,7 +1098,13 @@ vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 
 int main()
 {
-	Affichage::menuDemarrer();
+	//Affichage::menuDemarrer();
+
+	Simulation simu;
+	for (int cpt = 0; cpt <= 24; cpt++)
+	{
+		simu.miseAJour();
+	}
 
 	cout << "Fermeture de l'application..." << endl;
 
