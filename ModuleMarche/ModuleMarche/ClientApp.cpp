@@ -69,11 +69,11 @@ Client* ClientApp::inscription(string nom,string prenom,string adresse,float sol
 }
 
 // On crée le client et le marché
-void ClientApp::connexion(const string& psNomCompte, const vector<vector<string>>& poEntreesClient, const vector<vector<string>>& poEntreesMarche, const vector<vector<vector<string>>>& poEntreesEmploye)
+void ClientApp::connexion(const Fichier& poFichierClient, const Fichier& poFichierMarche, const vector<Fichier>& poFichiersEmploye)
 {
-	compte = psNomCompte;
-	creationMarche(poEntreesMarche, poEntreesEmploye);
-	creationClient(psNomCompte, poEntreesClient);
+	compte = poFichierClient.getEntree(0)[0];
+	creationMarche(poFichierMarche, poFichiersEmploye);
+	creationClient(poFichierClient);
 }
 
 Client* ClientApp::changementForfait(char forfait)
@@ -87,20 +87,20 @@ Client* ClientApp::changementForfait(char forfait)
 }
 
 //Selon le nom de compte, on va chercher les informations du client (nom, prenom, adresse, solde du compte, achats) dans un fichier
-void ClientApp::creationClient(const string &nomCompte, const vector<vector<string>>& poEntreesClient)
+void ClientApp::creationClient(const Fichier& poEntreesClient)
 {
 	//On recherche les informations du client sur la première ligne du fichier
 	// Todo: Extract Method GetClientFromStructure
-	string nom = poEntreesClient.at(0)[1];
+	string nom = poEntreesClient.getEntree(0)[1];
 
-	string prenom = poEntreesClient.at(0)[2];
+	string prenom = poEntreesClient.getEntree(0)[2];
 
-	string adresse = poEntreesClient.at(0)[3];
+	string adresse = poEntreesClient.getEntree(0)[3];
 
-	string soldeStr = poEntreesClient.at(0)[4];
+	string soldeStr = poEntreesClient.getEntree(0)[4];
 	float solde = stof(soldeStr.c_str());
 
-	string forfaitStr = poEntreesClient.at(0)[5];
+	string forfaitStr = poEntreesClient.getEntree(0)[5];
 	char forfait = forfaitStr[0];
 
 	switch (forfait)
@@ -127,10 +127,10 @@ void ClientApp::creationClient(const string &nomCompte, const vector<vector<stri
 			}
 			if (!found)
 			{
-				string salaireStr = poEntreesClient.at(0)[6];
+				string salaireStr = poEntreesClient.getEntree(0)[6];
 				float salaire = stof(salaireStr.c_str());
 
-				string rabaisStr = poEntreesClient.at(0)[7];
+				string rabaisStr = poEntreesClient.getEntree(0)[7];
 				float rabais = stof(rabaisStr.c_str());
 
 				client = new Employe(nom,prenom,adresse,new Compte(solde),salaire,rabais);
@@ -148,7 +148,7 @@ void ClientApp::creationClient(const string &nomCompte, const vector<vector<stri
 	if (forfait != 'E')
 	{
 		string ligneAchats;
-		for (size_t cptLigne = 1; cptLigne <= poEntreesClient.size(); cptLigne++)
+		for (size_t cptLigne = 1; cptLigne <= poEntreesClient.nombreEntrees(); cptLigne++)
 		{
 			Article* loArticle = getArticleFromStructure(poEntreesClient, cptLigne);
 			if(loArticle != nullptr)
@@ -158,71 +158,74 @@ void ClientApp::creationClient(const string &nomCompte, const vector<vector<stri
 }
 
 //On crée le marché à partir d'un fichier
-void ClientApp::creationMarche(const vector<vector<string>>& poEntreesMarche, const vector<vector<vector<string>>>& poEntreesEmploye)
+void ClientApp::creationMarche(const Fichier& poFichierMarche, const vector<Fichier>& poFichiersEmploye)
 {
-	if (poEntreesMarche.size() < 1)
+	if (poFichierMarche.nombreEntrees() < 1)
 	{
 		// Sans marché aux puces, l'application ne peut plus poursuivre.
 		throw ExceptionMarche(string("Une erreur est survenue lors de l'ouverture du marche aux puces."), true);
 	}
 
 	// Création du marché à partir de la première ligne du fichier contenant dans l'ordre: nom, adresse, revenu.
-	string adresse = poEntreesMarche.at(1)[1];
-	string revenuStr = poEntreesMarche.at(1)[2];
+	string adresse = poFichierMarche.getEntree(1)[1];
+	string revenuStr = poFichierMarche.getEntree(1)[2];
 	float revenu = stof(revenuStr.c_str());
 	marcheAuxPuces = new MarcheAuxPuces(CS_NOM_MARCHE_AUX_PUCES, adresse, new Compte(revenu));
 
 	//On crée les articles de ce marché à partir du reste du fichier
-	for (size_t cptLigne = 1; cptLigne < poEntreesMarche.size(); cptLigne++)
+	for (size_t cptLigne = 1; cptLigne < poFichierMarche.nombreEntrees(); cptLigne++)
 	{
 		//Obtention des valeurs des propriétés d'un article
-		Article* loArticle = getArticleFromStructure(poEntreesMarche, cptLigne);
+		Article* loArticle = getArticleFromStructure(poFichierMarche, cptLigne);
 		if (loArticle != nullptr)
 			marcheAuxPuces->ajouterArticle(loArticle);
 	}
 
 	//Maintenant, on ajoute le personnel à la liste d'employés du MarcheAuxPuces
 	// Todo: Extract method: AjouterEmployesDuFichier(Marche)
-	for (size_t cptLigne = 0; cptLigne < poEntreesEmploye.size(); cptLigne++)
+	for (size_t cptFichierEmploye = 0; cptFichierEmploye < poFichiersEmploye.size(); cptFichierEmploye++)
 	{
-		Employe* loEmploye = getEmployeFromStructure(poEntreesEmploye[cptLigne], 0);
+		Employe* loEmploye = getEmployeFromStructure(poFichiersEmploye[cptFichierEmploye], 0);
 		if (loEmploye == nullptr)
 			continue;
 
 		// Obtention des achats de l'employé dans les lignes qui suivent.
-		for (size_t cpt = 1; cpt < poEntreesEmploye[cptLigne].size(); cpt++)
+		for (size_t cptEntree = 1; cptEntree < poFichiersEmploye[cptFichierEmploye].nombreEntrees(); cptEntree++)
 		{
-			Article* loArticle = getArticleFromStructure(poEntreesEmploye[cptLigne], cpt);
+			Article* loArticle = getArticleFromStructure(poFichiersEmploye[cptFichierEmploye], cptEntree);
 			if (loArticle != nullptr)
 				loEmploye->ajouterArticle(loArticle);
 		}
-		comptesEmployes.push_back(poEntreesMarche.at(1)[0]);
+
+		// Ajout de l'employé au personnel du marché aux puces
+		string lsNomCompteEmploye = poFichiersEmploye[cptFichierEmploye].getEntree(0)[0];
+		comptesEmployes.push_back(lsNomCompteEmploye);
 		marcheAuxPuces->ajouterEmploye(loEmploye);
 	}
 }
 
-Article* ClientApp::getArticleFromStructure(const vector<vector<string>>& poArticleStructure, size_t piLigne)
+Article* ClientApp::getArticleFromStructure(const Fichier& poArticleStructure, size_t piLigne)
 {
 	// On vérifie que la ligne de de l'article est valide.
-	if (poArticleStructure.size() - 1 < piLigne)
+	if (poArticleStructure.nombreEntrees() - 1 < piLigne)
 		return nullptr;
 
 	// On construit l'article à partir de la ligne de la structure.
-	string nomArticle = poArticleStructure.at(piLigne)[0];
+	string nomArticle = poArticleStructure.getEntree(piLigne)[0];
 
-	string typeStr = poArticleStructure.at(piLigne)[1];
+	string typeStr = poArticleStructure.getEntree(piLigne)[1];
 	char type = NULL;
 	if (typeStr.length() > 0)
 		type = typeStr[0];
 
-	string prixStr = poArticleStructure.at(piLigne)[2];
+	string prixStr = poArticleStructure.getEntree(piLigne)[2];
 	float prix = stof(prixStr.c_str());
 
-	string description = poArticleStructure.at(piLigne)[3];
+	string description = poArticleStructure.getEntree(piLigne)[3];
 
-	string etat = poArticleStructure.at(piLigne)[4];
+	string etat = poArticleStructure.getEntree(piLigne)[4];
 
-	string dateFabricationStr = poArticleStructure.at(piLigne)[5];
+	string dateFabricationStr = poArticleStructure.getEntree(piLigne)[5];
 	struct Date dateFabrication = Date::getDateFromString(dateFabricationStr);
 	Etat* vraiEtat;
 	Article* loArticle = nullptr;
@@ -245,12 +248,12 @@ Article* ClientApp::getArticleFromStructure(const vector<vector<string>>& poArti
 			break;
 		case 'V':
 		{
-					string attribut1Str = poArticleStructure.at(piLigne)[6];
+					string attribut1Str = poArticleStructure.getEntree(piLigne)[6];
 			int attribut1 = atoi(attribut1Str.c_str());
 
-			string attribut2 = poArticleStructure.at(piLigne)[7];
+			string attribut2 = poArticleStructure.getEntree(piLigne)[7];
 
-			string attribut3Str = poArticleStructure.at(piLigne)[8];
+			string attribut3Str = poArticleStructure.getEntree(piLigne)[8];
 			int attribut3 = atoi(attribut3Str.c_str());
 
 			loArticle = new Voiture(nomArticle, prix, description, vraiEtat, dateFabrication, attribut1, attribut2, attribut3);
@@ -258,10 +261,10 @@ Article* ClientApp::getArticleFromStructure(const vector<vector<string>>& poArti
 			break;
 		case 'B':
 		{
-			string attribut1Str = poArticleStructure.at(piLigne)[6];
+			string attribut1Str = poArticleStructure.getEntree(piLigne)[6];
 			int attribut1 = atoi(attribut1Str.c_str());
 
-			string attribut2 = poArticleStructure.at(piLigne)[7];
+			string attribut2 = poArticleStructure.getEntree(piLigne)[7];
 
 			loArticle = new Bijou(nomArticle, prix, description, vraiEtat, dateFabrication, attribut2, attribut1);
 		}
@@ -271,31 +274,31 @@ Article* ClientApp::getArticleFromStructure(const vector<vector<string>>& poArti
 	return loArticle;
 }
 
-Employe* ClientApp::getEmployeFromStructure(const vector<vector<string>>& poEmployeStructure, size_t piLigne)
+Employe* ClientApp::getEmployeFromStructure(const Fichier& poEmployeStructure, size_t piLigne)
 {
 	// On vérifie que la ligne de de l'employé est valide.
-	if (poEmployeStructure.size() - 1 < piLigne)
+	if (poEmployeStructure.nombreEntrees() - 1 < piLigne)
 		return nullptr;
 
 	// On construit l'employé à partir de la ligne de la structure.
-	string nomP = poEmployeStructure.at(0)[1];
+	string nomP = poEmployeStructure.getEntree(0)[1];
 
-	string prenomP = poEmployeStructure.at(0)[2];
+	string prenomP = poEmployeStructure.getEntree(0)[2];
 
-	string adresseP = poEmployeStructure.at(0)[3];
+	string adresseP = poEmployeStructure.getEntree(0)[3];
 
-	string soldeStrP = poEmployeStructure.at(0)[4];
+	string soldeStrP = poEmployeStructure.getEntree(0)[4];
 	float soldeP = stof(soldeStrP.c_str());
 
-	string forfaitStr = poEmployeStructure.at(0)[5];
+	string forfaitStr = poEmployeStructure.getEntree(0)[5];
 	char forfait = NULL;
 	if (forfaitStr.length() > 0)
 		forfait = forfaitStr[0];
 
-	string salaireStr = poEmployeStructure.at(0)[6];
+	string salaireStr = poEmployeStructure.getEntree(0)[6];
 	float salaire = stof(salaireStr.c_str());
 
-	string rabaisStr = poEmployeStructure.at(0)[7];
+	string rabaisStr = poEmployeStructure.getEntree(0)[7];
 	float rabais = stof(rabaisStr.c_str());
 
 	Employe* loEmploye = new Employe(nomP, prenomP, adresseP, new Compte(soldeP), salaire, rabais);

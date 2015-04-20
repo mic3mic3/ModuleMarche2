@@ -12,6 +12,7 @@ using std::vector; //Pour utiliser vector sans std::
 class Article; //Pour que le compilateur sache que la classe Article existe
 class Client;
 class ClientApp;
+class Fichier;
 
 class Affichage
 {
@@ -45,7 +46,7 @@ public:
 
 	static void creationFichierCompte(const string &, const string &, const string &, const string &, float, const string &);
 
-	static vector<vector<vector<string>>> getEntreesEmploye(const vector<vector<string>>&);
+	static vector<Fichier> getEntreesEmploye(const Fichier&);
 };
 
 #endif

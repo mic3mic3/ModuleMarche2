@@ -12,6 +12,27 @@ const string Fichier::CC_LINE_SEPARATOR = "\n";
 
 Fichier::Fichier(void)
 {
+	entrees = vector<vector<string>>();
+}
+
+Fichier::Fichier(const vector<vector<string>>& poEntrees)
+{
+	entrees = poEntrees;
+}
+
+vector<string> Fichier::getEntree(size_t piIndex) const
+{
+	return entrees[piIndex];
+}
+
+vector<vector<string>> Fichier::getEntrees() const
+{
+	return entrees;
+}
+
+size_t Fichier::nombreEntrees() const
+{
+	return entrees.size();
 }
 
 Fichier::~Fichier(void)

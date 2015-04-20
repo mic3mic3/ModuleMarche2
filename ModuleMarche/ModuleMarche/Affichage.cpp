@@ -225,7 +225,11 @@ void Affichage::menuInscription()
 	//Puisque tout est valide, on crée le fichier avec les informations sur le compte (première ligne du fichier)
 	creationFichierCompte(nomCompte, nom, prenom, adresse, client->getCompte()->getSolde(), forfait);
 	delete client;
-	clientApp.connexion(nomCompte, Fichier::getContenu(nomCompte), Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES), getEntreesEmploye(Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES + "_Employes")));
+
+	Fichier loFichierClient = Fichier(Fichier::getContenu(nomCompte));
+	Fichier loFichierMarcheAuxPuces = Fichier(Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES));
+	vector<Fichier> loFichiersEmploye = getEntreesEmploye(Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES + "_Employes"));
+	clientApp.connexion(loFichierClient, loFichierMarcheAuxPuces, loFichiersEmploye);
 	menuSelection();
 }
 
@@ -252,7 +256,7 @@ void Affichage::menuConnexion()
 		}
 	} while (!Fichier::fichierExistant(nomCompte));
 
-	clientApp.connexion(nomCompte, Fichier::getContenu(nomCompte), Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES), getEntreesEmploye(Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES + "_Employes")));
+	clientApp.connexion(Fichier::getContenu(nomCompte), Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES), getEntreesEmploye(Fichier(Fichier::getContenu(ClientApp::CS_NOM_MARCHE_AUX_PUCES + "_Employes"))));
 	menuSelection();
 }
 
@@ -1079,16 +1083,16 @@ void Affichage::menuVenteArticles()
 // À partir de la liste des noms de compte des employés, on revoie toutes les données de chaque employé.
 // Comme on stocke habituellement le contenu d'un fichier dans vector<vector<string>>, et qu'ici on renvoie
 // le contenu de plusieurs fichiers, on renvoie un vecteur de cette structure.
-vector<vector<vector<string>>> Affichage::getEntreesEmploye(const vector<vector<string>>& poEntreesNomCompteEmploye)
+vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 {
-	vector<vector<vector<string>>> loEntreesEmploye = vector<vector<vector<string>>>(poEntreesNomCompteEmploye.size());
-	for (size_t cptLigne = 0; cptLigne < poEntreesNomCompteEmploye.size(); cptLigne++)
+	vector<Fichier> loEmployes = vector<Fichier>(poNomCompteEmploye.nombreEntrees());
+	for (size_t cptLigne = 0; cptLigne < poNomCompteEmploye.nombreEntrees(); cptLigne++)
 	{
 		// Obtention des informations d'un employé.
-		string lsNomCompteEmploye = poEntreesNomCompteEmploye.at(cptLigne)[0];
-		loEntreesEmploye[cptLigne] = Fichier::getContenu(lsNomCompteEmploye);
+		string lsNomCompteEmploye = poNomCompteEmploye.getEntree(cptLigne)[0];
+		loEmployes[cptLigne] = Fichier(Fichier::getContenu(lsNomCompteEmploye));
 	}
-	return loEntreesEmploye;
+	return loEmployes;
 }
 
 int main()

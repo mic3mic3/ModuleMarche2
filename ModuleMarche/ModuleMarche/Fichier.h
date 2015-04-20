@@ -10,11 +10,19 @@ using std::vector;
 ///<summary>Gestion des entrées/sorties de l'application via des fichiers.</summary>
 class Fichier
 {
+private:
+	vector<vector<string>> entrees;
 public:
 	static const char CC_VALUE_SEPARATOR;
 	static const string CC_LINE_SEPARATOR;
 
 	Fichier(void);
+	Fichier(const vector<vector<string>>&);
+
+	vector<string> getEntree(size_t) const;
+	vector<vector<string>> getEntrees() const;
+	size_t nombreEntrees() const;
+
 	~Fichier(void);
 
 
