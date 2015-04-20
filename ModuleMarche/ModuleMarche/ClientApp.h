@@ -36,6 +36,8 @@ public:
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
 	void connexion(const string&, const vector<vector<string>>&, const vector<vector<string>>&, const vector<vector<vector<string>>>&);
+	Client* changementForfait(char);
+	Client* inscription(string,string,string,float,string);
 	void creationClient(const string &, const vector<vector<string>>&);
 	void creationMarche(const vector<vector<string>>&, const vector<vector<vector<string>>>&);
 	void deconnexion();
