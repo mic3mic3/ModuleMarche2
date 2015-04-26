@@ -83,6 +83,12 @@ int Simulation::getHeures()
 
 void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 {
+	// On commande des articles au marché aux puces s'il en manque.
+	while (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
+	{
+		commanderArticlesManquants();
+	}
+
 	std::uniform_int_distribution<int> distribution(1, 24);
 	int chanceClient = distribution(Simulation::generator);
 	if (chanceClient == 1)
@@ -138,18 +144,63 @@ void Simulation::commanderArticlesManquants()
 	size_t liNombreArticlesAjout = 5;
 	for (size_t cptAjout = 1; cptAjout < liNombreArticlesAjout; cptAjout++)
 	{
-		char type;
-		string nomArticle;
-		float prix;
-		string description;
-		string etat;
-		struct Date dateFabrication;
-		int attribut1 = 0;
-		string attribut2 = "";
-		int attribut3 = 0;
+		int liPrixMinimum = 0;
+		int liPrixMaximum = 0;
 
+		char lcType = '-';
+		std::uniform_int_distribution<int> distributionType(1, 3);
+		int liRandomType = distributionType(Simulation::generator);
+		if (liRandomType == 1)
+		{
+			lcType = 'D';
+			liPrixMinimum = 1;
+			liPrixMaximum = 15000;
+		}
+		else if (liRandomType == 2)
+		{
+			lcType = 'B';
+			liPrixMinimum = 10;
+			liPrixMaximum = 3000;
+		}
+		else if (liRandomType == 3)
+		{
+			lcType = 'V';
+			liPrixMinimum = 1;
+			liPrixMaximum = 15000;
+		}
 
+		string lsNomArticle = "Article abc";
 
-		clientApp.getMarcheAuxPuces()->ajouterArticle(FabriqueArticle::creationArticle(type, nomArticle, prix, description, etat, dateFabrication, attribut1, attribut2, attribut3));
+		std::uniform_int_distribution<int> distributionPrix(liPrixMinimum, liPrixMaximum);
+		float lfPrix = distributionType(Simulation::generator);
+
+		string lsDescription = "Lorem ipsum";
+
+		string etat = "-";
+		std::uniform_int_distribution<int> distributionEtat(1, 3);
+		int liRandomEtat = distributionType(Simulation::generator);
+		if (liRandomEtat == 1)
+		{
+			etat = "Neuf";
+		}
+		else if (liRandomEtat == 2)
+		{
+			etat = "Usage";
+		}
+		else if (liRandomEtat == 3)
+		{
+			etat = "Materiaux";
+		}
+
+		struct Date loDateFabrication;
+		loDateFabrication.annee = 1900;
+		loDateFabrication.mois = 1;
+		loDateFabrication.jour = 1;
+
+		int liAttribut1 = 0;
+		string lsAttribut2 = "";
+		int liAttribut3 = 0;
+
+		clientApp.getMarcheAuxPuces()->ajouterArticle(FabriqueArticle::creationArticle(lcType, lsNomArticle, lfPrix, lsDescription, etat, loDateFabrication, liAttribut1, lsAttribut2, liAttribut3));
 	}
 }
