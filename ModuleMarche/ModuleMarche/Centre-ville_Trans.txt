@@ -88,23 +88,3 @@ Marche: Centre-ville;D
 Article: Bague;100;Une petite bague;Neuf;2/6/1999
 Date: 26/4/2015
 -----
-Client: Jean;Tremblay;1410 Blabla
-Marche: Centre-ville;D
-Article: Bague;100;Une petite bague;Neuf;2/6/1999
-Date: 26/4/2015
------
-Client: Jean;Tremblay;1410 Blabla
-Marche: Centre-ville;D
-Article: Table;100;Un meuble pour manger;Usage;8/9/1995
-Date: 26/4/2015
------
-Client: LeSuperClient;Joseph;1549 Holly
-Marche: Centre-ville;D
-Article: Table;100;Un meuble pour manger;Usage;8/9/1995
-Date: 26/4/2015
------
-Client: LeSuperClient;Joseph;1549 Holly
-Marche: Centre-ville;D
-Article: Bague;100;Une petite bague;Neuf;2/6/1999
-Date: 26/4/2015
------
