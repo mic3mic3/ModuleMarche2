@@ -47,7 +47,8 @@ void ExceptionMarche::Gerer() const
 	// Si l'erreur est fatale et empêche le programme de fonctionner, on quitte.
 	if (fatale)
 	{
-		Affichage::attendreTouche(string("\nFermeture de l'application...\n\nAppuyez sur Entree pour quitter..."));
+		cout << endl << "Fermeture de l'application" << endl << endl;
+		Affichage::attendreTouche();
 		
 		exit(EXIT_FAILURE);
 	}

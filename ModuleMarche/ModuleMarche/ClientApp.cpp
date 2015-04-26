@@ -333,3 +333,18 @@ bool ClientApp::venteArticleDuClient(int piNumeroArticle)
 	}
 	return true;
 }
+
+bool ClientApp::venteArticleAuClient(int piNumeroArticle)
+{
+	int liPositionArticle = piNumeroArticle - 1;
+	bool lbPrixValide = client->validerCompte(marcheAuxPuces->getArticlesEnVente()[liPositionArticle]->getPrix());
+	if (!lbPrixValide) //Si le client n'achète pas l'article
+		return false;
+
+	Acheteur* acht;
+	if (acht = dynamic_cast<Acheteur*>(client))
+	{
+		acht->acheter(marcheAuxPuces->getArticlesEnVente()[liPositionArticle]); //On appelle la fonction acheter de client
+	}
+	return true;
+}

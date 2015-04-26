@@ -514,7 +514,7 @@ void Affichage::menuAchats()
 	{
 		cout << "Aucun article en votre possession" << endl;
 	}
-	attendreTouche(string("Appuyez sur Entree pour revenir au menu"));
+	attendreTouche();
 }
 
 //Affichage du marché aux puces avec du solde du client et les articles à vendre du marché, puis on retourne le choix de l'article ou -1 si l'utilisateur veut sortir (a écrit exit)
@@ -666,7 +666,7 @@ bool Affichage::menuVerifAchat(bool soldeOk)
 	return choixStr == "O";
 }
 
-//Pour choisir la façon dont on trie les articles du marché à vendre
+//Afficher et acheter les articles du marché
 void Affichage::menuCategories()
 {
 	string lsChoixCategorie = "V";
@@ -690,19 +690,23 @@ void Affichage::menuCategories()
 		}
 	} while (lsChoixCategorie != "V" && lsChoixCategorie != "B" && lsChoixCategorie != "D" && lsChoixCategorie != "T");
 
-	int liNumeroArticleChoisi = Affichage::menuMarche(clientApp.getClient()->getCompte()->getSolde(), clientApp.getMarcheAuxPuces()->getArticlesEnVente(), lsChoixCategorie[0]);
-	if (liNumeroArticleChoisi == -1)
+	int liNumeroArticleChoisi = menuMarche(clientApp.getClient()->getCompte()->getSolde(), clientApp.getMarcheAuxPuces()->getArticlesEnVente(), lsChoixCategorie[0]);
+	if (liNumeroArticleChoisi == -1) // L'utilisateur a entré la vleur pour quitter CS_EXIT_INPUT (exit)
 		return;
 
 	bool prixValide = clientApp.getClient()->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]->getPrix());
 	if (!Affichage::menuVerifAchat(prixValide)) //Si le client n'achète pas l'article
 		return;
 
-	Acheteur* acht;
-	if (acht = dynamic_cast<Acheteur*>(clientApp.getClient()))
+	if (!clientApp.venteArticleAuClient(liNumeroArticleChoisi))
 	{
-		acht->acheter(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]); //On appelle la fonction acheter de client
+		cout << "Transaction annulee" << endl;
+		attendreTouche();
+		return;
 	}
+
+	cout << "Transaction completee" << endl;
+	attendreTouche();
 
 	//On ajoute l'achat au fichier du client
 	fstream achats(clientApp.getCompte() + ".txt");
@@ -920,11 +924,13 @@ void Affichage::menuVenteArticles()
 
 	if (!clientApp.venteArticleDuClient(retour))
 	{
-		cout << "Transaction annulée" << endl;
+		cout << "Transaction annulee" << endl;
+		attendreTouche();
 		return;
 	}
 
-	cout << "Transaction complétée" << endl;
+	cout << "Transaction completee" << endl;
+	attendreTouche();
 
 	//On ajoute l'achat au fichier du client
 	fstream achats(clientApp.getCompte() + ".txt", std::ofstream::out | std::ofstream::trunc);
@@ -1104,14 +1110,13 @@ int main()
 
 	cout << "Fermeture de l'application..." << endl;
 
-	Affichage::attendreTouche(string("Appuyez sur Entree pour quitter..."));
-
+	Affichage::attendreTouche();
 	return EXIT_SUCCESS;
 }
 
-void Affichage::attendreTouche(string& psMessage)
+void Affichage::attendreTouche()
 {
 	string lsInput;
-	cout << endl << psMessage;
+	cout << endl << "Appuyez sur une Entree pour continuer...";
 	getline(cin, lsInput);
 }

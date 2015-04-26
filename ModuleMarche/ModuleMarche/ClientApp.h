@@ -44,6 +44,7 @@ public:
 	void deconnexion();
 	Employe* getEmployeExistant(string&);
 	bool venteArticleDuClient(int);
+	bool venteArticleAuClient(int);
 
 	Article* getArticleFromStructure(const Fichier&, size_t);
 	Employe* getEmployeFromStructure(const Fichier&, size_t);

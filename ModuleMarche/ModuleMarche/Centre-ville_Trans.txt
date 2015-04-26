@@ -43,3 +43,8 @@ Marche: Centre-ville;D
 Article: Bague;25;Une magnifique bague;Materiaux;7/4/2011
 Date: 20/4/2015
 -----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Magnifique perle rare;150;Une magnifique bague tres ancienne;Materiaux;7/4/1925
+Date: 26/4/2015
+-----

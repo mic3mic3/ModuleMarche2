@@ -1,2 +1,3 @@
-John;Jean;Tremblay;1410 Blabla;2117.37;E;46;5
-Collier;B;25;Un beau collier;En bon etat;7/4/2011;4;Rubis
+John;Jean;Tremblay;1410 Blabla;2110.25;E;46;5
+Collier;B;25;Un beau collier;Materiaux;7/4/2011;4;Rubis
+Magnifique perle rare;B;150;Une magnifique bague tres ancienne;Materiaux;7/4/1925;2;Diamant
