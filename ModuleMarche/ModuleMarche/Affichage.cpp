@@ -921,7 +921,8 @@ void Affichage::menuVenteArticles()
 	if (!lbClientVeutVendre) //Si le client ne veut pas vendre son article
 		return;
 
-	if (!clientApp.venteArticleDuClient(retour, CI_INDEX_CLIENT_CONNECTE))
+	int liIndexArticle = retour - 1;
+	if (!clientApp.venteArticleDuClient(liIndexArticle, CI_INDEX_CLIENT_CONNECTE))
 	{
 		cout << "Transaction annulee" << endl;
 		attendreTouche();

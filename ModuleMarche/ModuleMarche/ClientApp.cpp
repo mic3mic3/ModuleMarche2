@@ -340,18 +340,17 @@ Employe* ClientApp::getEmployeExistant(string& psNomCompteEmploye)
 //}
 
 // Effectuer la vente d'un article du client
-bool ClientApp::venteArticleDuClient(int piNumeroArticle, int piIndexClient)
+bool ClientApp::venteArticleDuClient(int piIndexArticle, int piIndexClient)
 {
-	int liPositionArticle = piNumeroArticle - 1;
-	bool lbPrixValide = marcheAuxPuces->validerCompte(clients[piIndexClient]->getArticles()[liPositionArticle]->getPrixEtat());
+	bool lbPrixValide = marcheAuxPuces->validerCompte(clients[piIndexClient]->getArticles()[piIndexArticle]->getPrixEtat());
 	if (!lbPrixValide)
 		return false;
 
-	marcheAuxPuces->acheter(clients[piIndexClient]->getArticles()[liPositionArticle]); //On crée la transaction pour le marché aux puces
+	marcheAuxPuces->acheter(clients[piIndexClient]->getArticles()[piIndexArticle]); //On crée la transaction pour le marché aux puces
 	Vendeur* vnd;
 	if (vnd = dynamic_cast<Vendeur*>(clients[piIndexClient]))
 	{
-		vnd->ajouterTransaction(liPositionArticle, marcheAuxPuces, clients[piIndexClient]->getArticles()[liPositionArticle]); //On appelle la fonction acheter de client
+		vnd->ajouterTransaction(piIndexArticle, marcheAuxPuces, clients[piIndexClient]->getArticles()[piIndexArticle]); //On appelle la fonction acheter de client
 	}
 	return true;
 }
