@@ -1102,9 +1102,12 @@ int main()
 	//Affichage::menuDemarrer();
 	srand(static_cast<int>(time(0)));
 	Simulation simu;
-	for (int cpt = 0; cpt <= 24; cpt++)
+	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
 	{
-		simu.miseAJour();
+		for (int cpt = 0; cpt <= 24; cpt++)
+		{
+			simu.miseAJour();
+		}
 	}
 
 	cout << "Fermeture de l'application..." << endl;

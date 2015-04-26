@@ -94,7 +94,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 	{
 		string transactionAFaire = "";
 		Vendeur* vnd = nullptr;
-		if (dynamic_cast<Superclient*>(Simulation::clientApp.getClient(client->getNum())))
+		if (vnd = dynamic_cast<Superclient*>(Simulation::clientApp.getClient(client->getNum())))
 		{
 			std::uniform_int_distribution<int> distribution2(1, 2);
 			int transac = distribution2(Simulation::generator);
@@ -160,6 +160,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			}
 		}
 	}
+	WaitForSingleObject(mutex,INFINITE);
 	cout << endl << "Mise a jour: " << client->getNum();
 
 	//do something with mutex
