@@ -116,10 +116,12 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 		{
 			transactionAFaire = "A";
 		}
-		cout << transactionAFaire;
+		
 
 		//do something
 		WaitForSingleObject(mutex, INFINITE);
+
+		cout << transactionAFaire;
 
 		// On commande des articles au marché aux puces s'il en manque.
 		while (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
@@ -201,13 +203,13 @@ void Simulation::commanderArticlesManquants()
 		string lsNomArticle = "Article abc";
 
 		std::uniform_int_distribution<int> distributionPrix(liPrixMinimum, liPrixMaximum);
-		float lfPrix = distributionType(Simulation::generator);
+		float lfPrix = (float)distributionPrix(Simulation::generator);
 
 		string lsDescription = "Lorem ipsum";
 
 		string etat = "-";
 		std::uniform_int_distribution<int> distributionEtat(1, 3);
-		int liRandomEtat = distributionType(Simulation::generator);
+		int liRandomEtat = distributionEtat(Simulation::generator);
 		if (liRandomEtat == 1)
 		{
 			etat = "Neuf";
