@@ -33,7 +33,7 @@ public:
 	void mettreAJourPrix(const float);
 	void mettreAJourEtat(Etat*);
 
-	virtual const string& afficherDetails() const = 0;
+	virtual const string afficherDetails() const = 0;
 
 	//Tous les accesseurs requis
 	string getNom() const;

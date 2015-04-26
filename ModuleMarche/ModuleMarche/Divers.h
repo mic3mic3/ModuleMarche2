@@ -18,7 +18,7 @@ public:
 	Divers(string,float,string ,Etat*,struct Date);
 
 	float getPrixEtat() const;
-	const string& afficherDetails() const;
+	const string afficherDetails() const;
 	~Divers(void);
 };
 

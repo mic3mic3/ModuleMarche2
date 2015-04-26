@@ -22,7 +22,7 @@ public:
 	Bijou(string,float,string ,Etat*,struct Date,string,int);
 	~Bijou(void);
 
-	const string& afficherDetails() const;
+	const string afficherDetails() const;
 
 	float getPrixEtat() const;
 

@@ -36,7 +36,7 @@ int Bijou::getPurete() const
 	return purete;
 }
 
-const string& Bijou::afficherDetails() const
+const string Bijou::afficherDetails() const
 {
 	ostringstream conversion;
 	int x = 0;
