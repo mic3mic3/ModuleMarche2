@@ -7,6 +7,8 @@
 
 using namespace std;
 
+// Les exceptions sont gérées par l'interface pour afficher un feedback au client
+
 ExceptionMarche::ExceptionMarche(string& psMessage, bool pbFatale)
 {
 	// Création du message d'erreur sous le format: 
