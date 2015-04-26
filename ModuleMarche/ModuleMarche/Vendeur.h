@@ -12,7 +12,7 @@ class MarcheAuxPuces;
 class Vendeur : virtual public Client
 {
 private:
-	vector<Transaction> transactionsEffectuees; //On stocke toutes les transactions faites (les ventes)
+	vector<Transaction*> transactionsEffectuees; //On stocke toutes les transactions faites (les ventes)
 public:
 	static const float FORFAIT;
 
@@ -21,7 +21,7 @@ public:
 	Vendeur(Client*);
 
 	virtual string afficher() const;
-	struct Transaction getDerniereTransaction() const;
+	struct Transaction* getDerniereTransaction() const;
 	void ajouterTransaction(int,MarcheAuxPuces*,Article*);
 	virtual ~Vendeur(void);
 };

@@ -41,12 +41,12 @@ void Vendeur::ajouterTransaction(int pos,MarcheAuxPuces* c,Article* a)
 	date.annee = local->tm_year + 1900; //Les années commencent à 1900 (0 -> 1900)
 	
 
-	struct Transaction trans;
-	trans.client = this;
-	trans.article = a;
-	trans.marche = c;
-	trans.date = date;
-	trans.type = Transaction::CC_VENTE_PAR_CLIENT;
+	struct Transaction* trans = new Transaction();
+	trans->client = this;
+	trans->article = a;
+	trans->marche = c;
+	trans->date = date;
+	trans->type = Transaction::CC_VENTE_PAR_CLIENT;
 	transactionsEffectuees.push_back(trans); //On ajoute la Transaction dans le vecteur des transactions
 	getCompte()->ajouterMontant(a->getPrix()); //On augmente le revenu avec le prix de l'article vendu
 	enleverArticle(pos); //On appelle la fonction qui enlève l'article du vecteur des articles disponibles
@@ -58,7 +58,7 @@ string Vendeur::afficher() const
 	return a;
 }
 
-struct Transaction Vendeur::getDerniereTransaction() const
+struct Transaction* Vendeur::getDerniereTransaction() const
 {
 	return transactionsEffectuees.back();
 }
