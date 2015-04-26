@@ -23,8 +23,7 @@ void Simulation::miseAJour()
 	if (chanceClient == 1)
 	{
 		//DWORD* idThread = new DWORD();
-		clients.push_back(new ClientSim(clients.size()));
-		connexion()
+		clients.push_back(new ClientSim(clientApp.ajoutClient()));
 		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
 	HANDLE* t = new HANDLE[clients.size()];

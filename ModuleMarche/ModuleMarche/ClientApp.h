@@ -37,7 +37,7 @@ public:
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
 	void connexion(const Fichier&, const Fichier&, const vector<Fichier>&);
-	int ajoutClient();
+	int ajoutClient(string, string, string, float, string);
 	Client* changementForfait(char,int);
 	Client* inscription(string,string,string,float,string);
 	void creationClient(const Fichier&);
