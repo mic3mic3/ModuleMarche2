@@ -1102,7 +1102,7 @@ int main()
 	//Affichage::menuDemarrer();
 	srand(static_cast<int>(time(0)));
 	Simulation simu;
-	for (size_t cptAnnee = 1; cptAnnee <= 10; cptAnnee++)
+	for (size_t cptAnnee = 1; cptAnnee <= 1; cptAnnee++)
 	{
 		for (size_t cptSemaine = 1; cptSemaine <= 52; cptSemaine++)
 		{
