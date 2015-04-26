@@ -352,21 +352,20 @@ bool ClientApp::venteArticleDuClient(int piNumeroArticle, int piIndexClient)
 	return true;
 }
 
-bool ClientApp::venteArticleAuClient(int piNumeroArticle, int piIndexClient)
+bool ClientApp::venteArticleAuClient(int piIndexArticle, int piIndexClient)
 {
-	int liPositionArticle = piNumeroArticle - 1;
-	bool lbPrixValide = clients[piIndexClient]->validerCompte(marcheAuxPuces->getArticlesEnVente()[liPositionArticle]->getPrix());
+	bool lbPrixValide = clients[piIndexClient]->validerCompte(marcheAuxPuces->getArticlesEnVente()[piIndexArticle]->getPrix());
 	if (!lbPrixValide) //Si le client n'achète pas l'article
 		return false;
 
 	Acheteur* acht;
 	if (acht = dynamic_cast<Acheteur*>(clients[piIndexClient]))
 	{
-		acht->acheter(marcheAuxPuces->getArticlesEnVente()[liPositionArticle]); //On appelle la fonction acheter de client
+		acht->acheter(marcheAuxPuces->getArticlesEnVente()[piIndexArticle]); //On appelle la fonction acheter de client
 	}
 
 	//On crée la transaction pour le marché aux puces
-	marcheAuxPuces->ajouterTransaction(liPositionArticle, clients[piIndexClient], marcheAuxPuces->getArticlesEnVente()[liPositionArticle]);
+	marcheAuxPuces->ajouterTransaction(piIndexArticle, clients[piIndexClient], marcheAuxPuces->getArticlesEnVente()[piIndexArticle]);
 
 	return true;
 }

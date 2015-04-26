@@ -699,7 +699,8 @@ void Affichage::menuCategories()
 	if (!Affichage::menuVerifAchat(prixValide)) //Si le client n'achète pas l'article
 		return;
 
-	if (!clientApp.venteArticleAuClient(liNumeroArticleChoisi, CI_INDEX_CLIENT_CONNECTE))
+	int  liIndexArticle = liNumeroArticleChoisi - 1;
+	if (!clientApp.venteArticleAuClient(liIndexArticle, CI_INDEX_CLIENT_CONNECTE))
 	{
 		cout << "Transaction annulee" << endl;
 		attendreTouche();

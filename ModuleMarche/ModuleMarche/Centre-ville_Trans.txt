@@ -83,3 +83,8 @@ Marche: Centre-ville;D
 Article: Bague;100;Une horrible bague;Materiaux;9/8/2011
 Date: 26/4/2015
 -----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Bague;100;Une petite bague;Neuf;2/6/1999
+Date: 26/4/2015
+-----
