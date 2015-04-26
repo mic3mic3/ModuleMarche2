@@ -7,7 +7,6 @@
 #include "Client.h"
 #include "Compte.h"
 #include "Employe.h"
-#include "FabriqueArticle.h"
 
 const int MarcheAuxPuces::CI_QUANTITE_MINIMALE_ARTICLES = 10;
 

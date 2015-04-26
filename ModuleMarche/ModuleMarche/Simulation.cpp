@@ -10,6 +10,8 @@
 #include "Employe.h"
 #include <random>
 #include <ctime>
+#include "FabriqueArticle.h"
+#include "Date.h"
 using namespace std;
 
 ClientApp Simulation::clientApp;
@@ -22,7 +24,6 @@ Simulation::Simulation()
 	//srand(time(NULL));
 	
 }
-
 
 Simulation::~Simulation()
 {
@@ -149,6 +150,6 @@ void Simulation::commanderArticlesManquants()
 
 
 
-		//ajouterArticle(FabriqueArticle::creationArticle();
+		clientApp.getMarcheAuxPuces()->ajouterArticle(FabriqueArticle::creationArticle(type, nomArticle, prix, description, etat, dateFabrication, attribut1, attribut2, attribut3));
 	}
 }

@@ -695,7 +695,7 @@ void Affichage::menuCategories()
 	if (liNumeroArticleChoisi == -1) // L'utilisateur a entré la vleur pour quitter CS_EXIT_INPUT (exit)
 		return;
 
-	bool prixValide = getClientConnecte()->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]->getPrix());
+	bool prixValide = getClientConnecte()->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]->getPrixEtat());
 	if (!Affichage::menuVerifAchat(prixValide)) //Si le client n'achète pas l'article
 		return;
 
@@ -916,7 +916,7 @@ void Affichage::menuVenteArticles()
 
 	cout << getClientConnecte()->getArticles()[retour - 1]->afficherDetails();
 
-	bool lbPrixValide = clientApp.getMarcheAuxPuces()->validerCompte(getClientConnecte()->getArticles()[retour - 1]->getPrix());
+	bool lbPrixValide = clientApp.getMarcheAuxPuces()->validerCompte(getClientConnecte()->getArticles()[retour - 1]->getPrixEtat());
 	bool lbClientVeutVendre = menuVerifAchat(lbPrixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
 	if (!lbClientVeutVendre) //Si le client ne veut pas vendre son article
 		return;
