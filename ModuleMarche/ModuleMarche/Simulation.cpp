@@ -4,10 +4,11 @@
 #include <winnt.h>
 #include <ctime>
 #include <iostream>
+#include "ClientApp.h"
 using namespace std;
 Simulation::Simulation()
 {
-	marche = new MarcheAuxPuces();
+	clientApp = ClientApp();
 	srand(time(NULL));
 }
 
@@ -23,6 +24,7 @@ void Simulation::miseAJour()
 	{
 		//DWORD* idThread = new DWORD();
 		clients.push_back(new ClientSim(clients.size()));
+		connexion()
 		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
 	HANDLE* t = new HANDLE[clients.size()];

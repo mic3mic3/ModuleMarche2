@@ -34,9 +34,9 @@ ClientApp::~ClientApp(void)
 {
 }
 
-Client* ClientApp::getClient() const
+Client* ClientApp::getClient(int index) const
 {
-	return client;
+	return clients[index];
 }
 
 string ClientApp::getCompte() const
@@ -49,16 +49,25 @@ MarcheAuxPuces* ClientApp::getMarcheAuxPuces() const
 	return marcheAuxPuces;
 }
 
-void ClientApp::setClient(Client* poClient)
+void ClientApp::setClient(Client* poClient,int index)
 {
-	client = poClient;
+	clients[index] = poClient;
+}
+
+int ClientApp::ajoutClient()
+{
+	return clients.size() - 1;
 }
 
 //Déconnexion: On retire le marché et le client connecté de la mémoire
 void ClientApp::deconnexion()
 {
-	delete client;
-	client = NULL;
+	while (!clients.empty())
+	{
+		delete clients.back();
+		clients.back() = NULL;
+		clients.pop_back();
+	}
 	delete marcheAuxPuces;
 	marcheAuxPuces = NULL;
 }
@@ -76,12 +85,12 @@ void ClientApp::connexion(const Fichier& poFichierClient, const Fichier& poFichi
 	creationClient(poFichierClient);
 }
 
-Client* ClientApp::changementForfait(char forfait)
+Client* ClientApp::changementForfait(char forfait,int index)
 {
-	Client* tempCli = FabriqueClient::modificationForfaitClient(client, forfait);
+	Client* tempCli = FabriqueClient::modificationForfaitClient(clients[index], forfait);
 	if (tempCli != nullptr)
 	{
-		client = tempCli;
+		clients[index] = tempCli;
 	}
 	return tempCli;
 }

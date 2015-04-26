@@ -8,7 +8,6 @@
 class ClientSim
 {
 private:
-	Client* client;
 	int num;
 public:
 	ClientSim(int);

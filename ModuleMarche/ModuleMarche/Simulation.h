@@ -9,16 +9,16 @@
 
 using std::vector;
 
+class ClientApp;
 class Simulation
 {
 private:
 	vector<ClientSim*> clients;
-	MarcheAuxPuces* marche;
 	int heures;
-	vector<HANDLE> threads;
-	HANDLE mutex;
 
 public:
+	static ClientApp clientApp;
+
 	Simulation();
 	void miseAJour();
 	int getHeures();

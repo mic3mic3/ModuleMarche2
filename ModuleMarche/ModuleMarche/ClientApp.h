@@ -19,7 +19,7 @@ class Fichier;
 class ClientApp
 {
 private:
-	Client* client;
+	vector<Client*> clients;
 	MarcheAuxPuces* marcheAuxPuces;
 	//Affichage* affichage;
 	string compte;
@@ -30,14 +30,15 @@ public:
 
 	static const string CS_NOM_MARCHE_AUX_PUCES;
 
-	Client* getClient() const;
+	Client* getClient(int index) const;
 	string getCompte() const;
 	MarcheAuxPuces* getMarcheAuxPuces() const;
-	void setClient(Client*);
+	void setClient(Client*,int index);
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
 	void connexion(const Fichier&, const Fichier&, const vector<Fichier>&);
-	Client* changementForfait(char);
+	int ajoutClient();
+	Client* changementForfait(char,int);
 	Client* inscription(string,string,string,float,string);
 	void creationClient(const Fichier&);
 	void creationMarche(const Fichier&, const vector<Fichier>&);
