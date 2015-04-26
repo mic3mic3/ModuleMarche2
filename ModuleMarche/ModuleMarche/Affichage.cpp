@@ -1102,17 +1102,13 @@ int main()
 	//Affichage::menuDemarrer();
 	srand(static_cast<int>(time(0)));
 	Simulation simu;
-	for (size_t cptAnnee = 1; cptAnnee <= 1; cptAnnee++)
+	
+	// Simulation d'une semaine
+	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
 	{
-		for (size_t cptSemaine = 1; cptSemaine <= 52; cptSemaine++)
+		for (int cpt = 0; cpt <= 24; cpt++)
 		{
-			for (size_t cptJour = 1; cptJour <= 7; cptJour++)
-			{
-				for (int cpt = 0; cpt <= 24; cpt++)
-				{
-					simu.miseAJour();
-				}
-			}
+			simu.miseAJour();
 		}
 	}
 
