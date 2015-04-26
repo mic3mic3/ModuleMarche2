@@ -339,7 +339,7 @@ Employe* ClientApp::getEmployeExistant(string& psNomCompteEmploye)
 bool ClientApp::venteArticleDuClient(int piNumeroArticle, int piIndexClient)
 {
 	int liPositionArticle = piNumeroArticle - 1;
-	bool lbPrixValide = marcheAuxPuces->validerCompte(clients[piIndexClient]->getArticles()[liPositionArticle]->getPrix());
+	bool lbPrixValide = marcheAuxPuces->validerCompte(clients[piIndexClient]->getArticles()[liPositionArticle]->getPrixEtat());
 	if (!lbPrixValide)
 		return false;
 
@@ -354,7 +354,7 @@ bool ClientApp::venteArticleDuClient(int piNumeroArticle, int piIndexClient)
 
 bool ClientApp::venteArticleAuClient(int piIndexArticle, int piIndexClient)
 {
-	bool lbPrixValide = clients[piIndexClient]->validerCompte(marcheAuxPuces->getArticlesEnVente()[piIndexArticle]->getPrix());
+	bool lbPrixValide = clients[piIndexClient]->validerCompte(marcheAuxPuces->getArticlesEnVente()[piIndexArticle]->getPrixEtat());
 	if (!lbPrixValide) //Si le client n'achète pas l'article
 		return false;
 

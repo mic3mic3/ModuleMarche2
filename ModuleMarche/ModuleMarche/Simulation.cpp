@@ -127,3 +127,28 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 	//do something with mutex
 	ReleaseMutex(mutex);
 }
+
+void Simulation::commanderArticlesManquants()
+{
+	if (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
+		return;
+
+	// On doit commander davantage d'articles.
+	size_t liNombreArticlesAjout = 5;
+	for (size_t cptAjout = 1; cptAjout < liNombreArticlesAjout; cptAjout++)
+	{
+		char type;
+		string nomArticle;
+		float prix;
+		string description;
+		string etat;
+		struct Date dateFabrication;
+		int attribut1 = 0;
+		string attribut2 = "";
+		int attribut3 = 0;
+
+
+
+		//ajouterArticle(FabriqueArticle::creationArticle();
+	}
+}
