@@ -63,7 +63,7 @@ void Simulation::miseAJour()
 		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
 	WaitForMultipleObjects(clients.size(), t,true,INFINITE);
-	cout << endl << "----------" << endl;
+	//cout << endl << "----------" << endl;
 	delete[] t;
 }
 HANDLE mutex=CreateMutex(NULL,false,NULL);
@@ -121,7 +121,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 		//do something
 		WaitForSingleObject(mutex, INFINITE);
 
-		cout << transactionAFaire;
+		//cout << transactionAFaire;
 
 		// On commande des articles au marché aux puces s'il en manque.
 		while (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
@@ -161,7 +161,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 		}
 	}
 	WaitForSingleObject(mutex,INFINITE);
-	cout << endl << "Mise a jour: " << client->getNum();
+	//cout << endl << "Mise a jour: " << client->getNum();
 
 	//do something with mutex
 	ReleaseMutex(mutex);
