@@ -33,7 +33,8 @@ ClientSim::ClientSim()
 		default:
 			break;
 	}
-	float solde = (rand() % 1000000) + min;
+	std::uniform_int_distribution<int> distribution2(min, 1000000);
+	int solde = distribution2(Simulation::generator);
 	this->num = Simulation::clientApp.ajoutClient("","","",solde,forfait);
 	//client = new Acheteur();
 }
@@ -42,9 +43,20 @@ ClientSim::ClientSim()
 
 ClientSim::~ClientSim()
 {
+
 }
 
 int ClientSim::getNum()
 {
 	return num;
+}
+
+void ClientSim::achat()
+{
+
+}
+
+void ClientSim::vente()
+{
+
 }

@@ -38,6 +38,10 @@ Client* ClientApp::getClient(int index) const
 {
 	return clients[index];
 }
+void ClientApp::setMarcheAuxPuces(MarcheAuxPuces* marche)
+{
+	marcheAuxPuces = marche;
+}
 
 string ClientApp::getCompte() const
 {

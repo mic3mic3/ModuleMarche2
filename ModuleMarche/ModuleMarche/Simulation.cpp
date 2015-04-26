@@ -8,6 +8,8 @@
 #include "Vendeur.h"
 #include "Superclient.h"
 #include "Employe.h"
+#include "Compte.h"
+#include "Article.h"
 #include <random>
 #include <ctime>
 #include "FabriqueArticle.h"
@@ -17,9 +19,10 @@ using namespace std;
 ClientApp Simulation::clientApp;
 std::default_random_engine Simulation::generator;
 
-Simulation::Simulation()
+Simulation::Simulation() :MONTANT_DEPART(1000)
 {
 	clientApp = ClientApp();
+	clientApp.setMarcheAuxPuces(new MarcheAuxPuces("", "", new Compte(MONTANT_DEPART)));
 	generator = default_random_engine(time(NULL));
 	//srand(time(NULL));
 	
@@ -94,6 +97,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 	if (chanceClient == 1)
 	{
 		string transactionAFaire = "";
+		Vendeur* vnd = nullptr;
 		if (dynamic_cast<Superclient*>(Simulation::clientApp.getClient(client->getNum())))
 		{
 			std::uniform_int_distribution<int> distribution2(1, 2);
@@ -108,7 +112,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			}
 
 		}
-		else if (dynamic_cast<Vendeur*>(Simulation::clientApp.getClient(client->getNum())))
+		else if (vnd = dynamic_cast<Vendeur*>(Simulation::clientApp.getClient(client->getNum())))
 		{
 			transactionAFaire = "V";
 		}
@@ -122,11 +126,34 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 		WaitForSingleObject(mutex, INFINITE);
 		if (transactionAFaire == "A")
 		{
-			client->achat();
+			size_t cpt;
+			for (cpt = 0; cpt < clientApp.getMarcheAuxPuces()->getArticlesEnVente().size(); cpt++)
+			{
+				if (clientApp.getClient(client->getNum())->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat()))
+				{
+					break;
+				}
+			}
+			if (cpt != clientApp.getMarcheAuxPuces()->getArticlesEnVente().size())
+			{
+				clientApp.venteArticleAuClient(cpt, client->getNum());
+			}
+			//client->achat();
 		}
 		else if (transactionAFaire == "V")
 		{
-			client->vente();
+			size_t cpt;
+			for (cpt = 0; cpt < vnd->getArticles().size(); cpt++)
+			{
+				if (clientApp.getMarcheAuxPuces()->validerCompte(vnd->getArticles()[cpt]->getPrixEtat()))
+				{
+					break;
+				}
+			}//client->vente();
+			if (cpt != clientApp.getMarcheAuxPuces()->getArticlesEnVente().size())
+			{
+				clientApp.venteArticleAuClient(cpt, client->getNum());
+			}
 		}
 	}
 	cout << endl << "Mise a jour: " << client->getNum();

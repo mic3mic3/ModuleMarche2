@@ -20,6 +20,7 @@ private:
 public:
 	static ClientApp clientApp;
 	static std::default_random_engine generator;
+	const float MONTANT_DEPART;
 
 	Simulation();
 	void miseAJour();
