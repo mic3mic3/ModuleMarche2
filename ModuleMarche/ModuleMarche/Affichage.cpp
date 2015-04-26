@@ -1005,7 +1005,7 @@ void Affichage::menuVenteArticles()
 	}
 	achats.close();
 
-	//On append la transaction dans le fichier de transaction du marché aux puces
+	//On append la transaction dans le fichier de transactions du client
 	fstream trans(clientApp.getCompte() + "_Trans.txt", ios::app);
 	if (trans)
 	{
@@ -1020,7 +1020,7 @@ void Affichage::menuVenteArticles()
 			trans << "Article: " << vnd->getDerniereTransaction()->article->getNom() << ";"
 				<< vnd->getDerniereTransaction()->article->getPrix() << ";"
 				<< vnd->getDerniereTransaction()->article->getDescription() << ";"
-				<< vnd->getDerniereTransaction()->article->getEtat() << ";"
+				<< vnd->getDerniereTransaction()->article->getEtat()->getDescription() << ";"
 				<< vnd->getDerniereTransaction()->article->getDate().jour << "/"
 				<< vnd->getDerniereTransaction()->article->getDate().mois << "/"
 				<< vnd->getDerniereTransaction()->article->getDate().annee << "\n";
@@ -1098,26 +1098,26 @@ vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 	return loEmployes;
 }
 
-/*int main()
+int main()
 {
-	//Affichage::menuDemarrer();
-	srand(static_cast<int>(time(0)));
-	Simulation simu;
+	Affichage::menuDemarrer();
+	//srand(static_cast<int>(time(0)));
+	//Simulation simu;
 	
 	// Simulation d'une semaine
-	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
-	{
-		for (int cpt = 1; cpt <= 24; cpt++)
-		{
-			simu.miseAJour();
-		}
-	}
+	//for (size_t cptJour = 1; cptJour <= 7; cptJour++)
+	//{
+	//	for (int cpt = 1; cpt <= 24; cpt++)
+	//	{
+	//		simu.miseAJour();
+	//	}
+	//}
 
 	cout << "Fermeture de l'application..." << endl;
 
 	Affichage::attendreTouche();
 	return EXIT_SUCCESS;
-}*/
+}
 
 void Affichage::attendreTouche()
 {
