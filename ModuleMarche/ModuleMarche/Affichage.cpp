@@ -1011,21 +1011,21 @@ void Affichage::menuVenteArticles()
 		Vendeur* vnd;
 		if (vnd = dynamic_cast<Vendeur*>(getClientConnecte()))
 		{
-			trans << "Client: " << vnd->getDerniereTransaction().client->getNom() << ";" 
-				<< vnd->getDerniereTransaction().client->getPrenom() << ";" 
-				<< vnd->getDerniereTransaction().client->getAdresse() << "\n";
-			trans << "Marche: " << vnd->getDerniereTransaction().marche->getNom() << ";" 
-				<< vnd->getDerniereTransaction().marche->getAdresse() << "\n";
-			trans << "Article: " << vnd->getDerniereTransaction().article->getNom() << ";" 
-				<< vnd->getDerniereTransaction().article->getPrix() << ";" 
-				<< vnd->getDerniereTransaction().article->getDescription() << ";" 
-				<< vnd->getDerniereTransaction().article->getEtat() << ";" 
-				<< vnd->getDerniereTransaction().article->getDate().jour << "/" 
-				<< vnd->getDerniereTransaction().article->getDate().mois << "/" 
-				<< vnd->getDerniereTransaction().article->getDate().annee << "\n";
-			trans << "Date: " << vnd->getDerniereTransaction().date.jour << "/" 
-				<< vnd->getDerniereTransaction().date.mois << "/" 
-				<< vnd->getDerniereTransaction().date.annee << "\n";
+			trans << "Client: " << vnd->getDerniereTransaction()->client->getNom() << ";"
+				<< vnd->getDerniereTransaction()->client->getPrenom() << ";"
+				<< vnd->getDerniereTransaction()->client->getAdresse() << "\n";
+			trans << "Marche: " << vnd->getDerniereTransaction()->marche->getNom() << ";"
+				<< vnd->getDerniereTransaction()->marche->getAdresse() << "\n";
+			trans << "Article: " << vnd->getDerniereTransaction()->article->getNom() << ";"
+				<< vnd->getDerniereTransaction()->article->getPrix() << ";"
+				<< vnd->getDerniereTransaction()->article->getDescription() << ";"
+				<< vnd->getDerniereTransaction()->article->getEtat() << ";"
+				<< vnd->getDerniereTransaction()->article->getDate().jour << "/"
+				<< vnd->getDerniereTransaction()->article->getDate().mois << "/"
+				<< vnd->getDerniereTransaction()->article->getDate().annee << "\n";
+			trans << "Date: " << vnd->getDerniereTransaction()->date.jour << "/"
+				<< vnd->getDerniereTransaction()->date.mois << "/"
+				<< vnd->getDerniereTransaction()->date.annee << "\n";
 			trans << "-----\n";
 		}
 	}
