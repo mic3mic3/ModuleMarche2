@@ -13,7 +13,7 @@ void ClientSim::miseAJour(HANDLE mutex)
 {
 	//do something
 	WaitForSingleObject(mutex, INFINITE);
-	cout << endl << "Mise à jour: " << num;
+	cout << endl << "Mise a jour: " << num;
 	
 	//do something with mutex
 	ReleaseMutex(mutex);
