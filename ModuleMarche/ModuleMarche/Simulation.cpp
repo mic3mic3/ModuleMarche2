@@ -151,7 +151,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			{
 				clientApp.venteArticleAuClient(cpt, client->getNum());
 				journees[heures / 24].nbrArticlesVendus++;
-				journees[heures / 24].totalVentes += clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat()
+				journees[heures / 24].totalVentes += clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat();
 			}
 			//client->achat();
 		}
@@ -167,7 +167,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			}//client->vente();
 			if (cpt != vnd->getArticles().size())
 			{
-				clientApp.venteArticleAuClient(cpt, client->getNum());
+				clientApp.venteArticleDuClient(cpt, client->getNum());
 				journees[heures / 24].nbrArticlesAchetes++;
 				journees[heures / 24].totalAchats += vnd->getArticles()[cpt]->getPrixEtat();
 			}
@@ -248,4 +248,30 @@ void Simulation::commanderArticlesManquants()
 
 		clientApp.getMarcheAuxPuces()->ajouterArticle(FabriqueArticle::creationArticle(lcType, lsNomArticle, lfPrix, lsDescription, etat, loDateFabrication, liAttribut1, lsAttribut2, liAttribut3));
 	}
+}
+
+void Simulation::ecrireSimulation()
+{
+	cout << "ecrire";
+}
+
+int main()
+{
+	//Affichage::menuDemarrer();
+	srand(static_cast<int>(time(0)));
+	Simulation simu;
+
+	// Simulation d'une semaine
+	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
+	{
+		for (int cpt = 1; cpt <= 24; cpt++)
+		{
+			simu.miseAJour();
+		}
+	}
+
+	simu.ecrireSimulation();
+
+	cout << "Fermeture de l'application..." << endl;
+	return EXIT_SUCCESS;
 }

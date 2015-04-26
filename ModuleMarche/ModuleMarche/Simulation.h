@@ -30,6 +30,7 @@ public:
 	void simulerClient(HANDLE,ClientSim*);
 	friend DWORD WINAPI appelClient(LPVOID);
 	void commanderArticlesManquants();
+	void ecrireSimulation();
 	~Simulation();
 };
 

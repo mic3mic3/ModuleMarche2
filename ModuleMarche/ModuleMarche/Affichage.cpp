@@ -1097,7 +1097,7 @@ vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 	return loEmployes;
 }
 
-int main()
+/*int main()
 {
 	//Affichage::menuDemarrer();
 	srand(static_cast<int>(time(0)));
@@ -1106,7 +1106,7 @@ int main()
 	// Simulation d'une semaine
 	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
 	{
-		for (int cpt = 0; cpt <= 24; cpt++)
+		for (int cpt = 1; cpt <= 24; cpt++)
 		{
 			simu.miseAJour();
 		}
@@ -1116,7 +1116,7 @@ int main()
 
 	Affichage::attendreTouche();
 	return EXIT_SUCCESS;
-}
+}*/
 
 void Affichage::attendreTouche()
 {
