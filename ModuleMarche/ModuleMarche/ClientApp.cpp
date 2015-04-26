@@ -316,3 +316,20 @@ Employe* ClientApp::getEmployeExistant(string& psNomCompteEmploye)
 //Client* ClientApp::getClientFromStructure(vector<vector<string>>& poClientStructure, size_t piLigne)
 //{
 //}
+
+// Effectuer la vente d'un article du client
+bool ClientApp::venteArticleDuClient(int piNumeroArticle)
+{
+	int liPositionArticle = piNumeroArticle - 1;
+	bool lbPrixValide = marcheAuxPuces->validerCompte(client->getArticles()[liPositionArticle]->getPrix());
+	if (!lbPrixValide)
+		return false;
+
+	marcheAuxPuces->acheter(client->getArticles()[liPositionArticle]); //On crée la transaction pour le marché aux puces
+	Vendeur* vnd;
+	if (vnd = dynamic_cast<Vendeur*>(client))
+	{
+		vnd->ajouterTransaction(liPositionArticle, marcheAuxPuces, client->getArticles()[liPositionArticle]); //On appelle la fonction acheter de client
+	}
+	return true;
+}

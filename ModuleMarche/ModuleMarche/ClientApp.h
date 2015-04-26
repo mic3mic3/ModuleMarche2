@@ -43,6 +43,7 @@ public:
 	void creationMarche(const Fichier&, const vector<Fichier>&);
 	void deconnexion();
 	Employe* getEmployeExistant(string&);
+	bool venteArticleDuClient(int);
 
 	Article* getArticleFromStructure(const Fichier&, size_t);
 	Employe* getEmployeFromStructure(const Fichier&, size_t);

@@ -913,22 +913,20 @@ void Affichage::menuVenteArticles()
 		retour = validationChoixArticle(choix, clientApp.getClient()->getArticles().size());
 	} while (retour == 0);
 
-	clientApp.getClient()->getArticles()[retour - 1]->afficherDetails();
+	cout << clientApp.getClient()->getArticles()[retour - 1]->afficherDetails();
 
-	if (retour == -1)
-		return;
-	bool prixValide = clientApp.getMarcheAuxPuces()->validerCompte(clientApp.getClient()->getArticles()[retour - 1]->getPrix());
-	bool vendu = menuVerifAchat(prixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
-
-	if (!vendu) //Si le client n'achète pas l'article, on arrête ici
+	bool lbPrixValide = clientApp.getMarcheAuxPuces()->validerCompte(clientApp.getClient()->getArticles()[retour - 1]->getPrix());
+	bool lbClientVeutVendre = menuVerifAchat(lbPrixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
+	if (!lbClientVeutVendre) //Si le client ne veut pas vendre son article
 		return;
 
-	clientApp.getMarcheAuxPuces()->acheter(clientApp.getClient()->getArticles()[retour - 1]); //On crée la transaction pour le marché aux puces
-	Vendeur* vnd;
-	if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+	if (!clientApp.venteArticleDuClient(retour))
 	{
-		vnd->ajouterTransaction(retour - 1, clientApp.getMarcheAuxPuces(), clientApp.getClient()->getArticles()[retour - 1]); //On appelle la fonction acheter de client
+		cout << "Transaction annulée" << endl;
+		return;
 	}
+
+	cout << "Transaction complétée" << endl;
 
 	//On ajoute l'achat au fichier du client
 	fstream achats(clientApp.getCompte() + ".txt", std::ofstream::out | std::ofstream::trunc);
