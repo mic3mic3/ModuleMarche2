@@ -7,6 +7,9 @@
 #include "Client.h"
 #include "Compte.h"
 #include "Employe.h"
+#include "FabriqueArticle.h"
+
+const int MarcheAuxPuces::CI_QUANTITE_MINIMALE_ARTICLES = 10;
 
 MarcheAuxPuces::MarcheAuxPuces(void)
 {
@@ -129,4 +132,10 @@ void MarcheAuxPuces::acheter(Article* a)
 {
 	compte->soustraireMontant(a->getPrix());	
 	ajouterArticle(a);
+}
+
+// Renvoie «true» si le marché aux puces possède suffisamment d'articles en vente.
+bool MarcheAuxPuces::quantiteArticlesSuffisante()
+{
+	return articlesEnVente.size() >= CI_QUANTITE_MINIMALE_ARTICLES;
 }

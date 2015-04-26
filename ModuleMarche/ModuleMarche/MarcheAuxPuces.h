@@ -25,6 +25,8 @@ private:
 	vector<Article*> articlesEnVente; //On stocke tous les articles disponibles du MarcheAuxPuces
 	vector<Transaction> transactionsEffectuees; //On stocke toutes les transactions faites (les ventes)
 public:
+	const static int CI_QUANTITE_MINIMALE_ARTICLES;
+
 	MarcheAuxPuces(void);
 	MarcheAuxPuces(string,string,Compte*);
 	~MarcheAuxPuces(void);
@@ -43,6 +45,7 @@ public:
 	struct Transaction getDerniereTransaction() const; //Utilisée pour écrire la dernière transaction faite dans un fichier après chaque transaction
 	const vector<Article*> getArticlesEnVente();
 	const vector<Employe*> & getPersonnel();
+	bool quantiteArticlesSuffisante();
 };
 
 #endif
