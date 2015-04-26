@@ -7,6 +7,7 @@
 #include "ClientSim.h"
 #include "MarcheAuxPuces.h"
 #include <random>
+#include "Journee.h"
 
 using std::vector;
 
@@ -21,6 +22,7 @@ public:
 	static ClientApp clientApp;
 	static std::default_random_engine generator;
 	const float MONTANT_DEPART;
+	vector<Journee> journees;
 
 	Simulation();
 	void miseAJour();

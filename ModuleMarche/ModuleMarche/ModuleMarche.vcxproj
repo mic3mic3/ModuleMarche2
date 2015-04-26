@@ -30,6 +30,7 @@
     <ClInclude Include="FabriqueClient.h" />
     <ClInclude Include="ExceptionMarche.h" />
     <ClInclude Include="Fichier.h" />
+    <ClInclude Include="Journee.h" />
     <ClInclude Include="MarcheAuxPuces.h" />
     <ClInclude Include="Simulation.h" />
     <ClInclude Include="Superclient.h" />

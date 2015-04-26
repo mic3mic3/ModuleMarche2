@@ -51,5 +51,6 @@
     <ClInclude Include="Voiture.h" />
     <ClInclude Include="Simulation.h" />
     <ClInclude Include="ClientSim.h" />
+    <ClInclude Include="Journee.h" />
   </ItemGroup>
 </Project>

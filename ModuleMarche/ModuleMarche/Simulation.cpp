@@ -38,7 +38,7 @@ struct ThreadParameters
 };
 void Simulation::miseAJour()
 {
-	
+
 	std::uniform_int_distribution<int> distribution(1, 12);
 	int chanceClient = distribution(generator);
 	if (chanceClient == 1)
@@ -65,6 +65,7 @@ void Simulation::miseAJour()
 	WaitForMultipleObjects(clients.size(), t,true,INFINITE);
 	//cout << endl << "----------" << endl;
 	delete[] t;
+	heures++;
 }
 HANDLE mutex=CreateMutex(NULL,false,NULL);
 DWORD WINAPI appelClient(LPVOID params)
