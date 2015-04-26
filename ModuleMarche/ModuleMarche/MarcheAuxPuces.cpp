@@ -97,6 +97,7 @@ void MarcheAuxPuces::ajouterTransaction(int pos,Client* c,Article* a)
 	trans.article = a;
 	trans.marche = this;
 	trans.date = date;
+	trans.type = Transaction::CC_ACHAT_PAR_CLIENT;
 	transactionsEffectuees.push_back(trans); //On ajoute la Transaction dans le vecteur des transactions
 	float lfPourcentagePrix = 1.0;
 	if (Employe* emp = dynamic_cast<Employe*>(c))
