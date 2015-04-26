@@ -40,21 +40,21 @@ int Voiture::getAnnee() const
 	return annee;
 }
 
-void Voiture::afficherDetails() const
+const string& Voiture::afficherDetails() const
 {
 	ostringstream conversion;
 	int x = 0;
 	conversion << getDate().jour << "/" << getDate().mois << "/" << getDate().annee; 
 	string date = conversion.str();
-	cout << "Nom: " << getNom() << endl
-		<< "Categorie: Voiture" << endl
-		<< "Prix: " << getPrix() << endl
-		<< "Description: " << getDescription() << endl
-		<< "Etat: " << getEtat()->getDescription() << endl
-		<< "Date: " << date << endl
-		<< "Kilometrage: " << kilometrage << endl
-		<< "Couleur: " << couleur << endl
-		<< "Annee: " << annee << endl;
+	return + "Nom: " + getNom() + "\n"
+		+ "Categorie: Voiture" + "\n"
+		+ "Prix: " + to_string(getPrix()) + "\n"
+		+ "Description: " + getDescription() + "\n"
+		+ "Etat: " + getEtat()->getDescription() + "\n"
+		+ "Date: " + date + "\n"
+		+ "Kilometrage: " + to_string(kilometrage) + "\n"
+		+ "Couleur: " + couleur + "\n"
+		+ "Annee: " + to_string(annee) + "\n";
 	
 }
 

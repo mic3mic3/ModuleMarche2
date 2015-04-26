@@ -20,18 +20,18 @@ Divers::~Divers(void)
 {
 }
 
-void Divers::afficherDetails() const
+const string& Divers::afficherDetails() const
 {
 	ostringstream conversion;
 	int x = 0;
 	conversion << getDate().jour << "/" << getDate().mois << "/" << getDate().annee; 
 	string date = conversion.str();
-	cout << "Nom: " << getNom() << endl
-		<< "Categorie: Divers" << endl
-		<< "Prix: " << getPrix() << endl
-		<< "Description: " << getDescription() << endl
-		<< "Etat: " << getEtat()->getDescription() << endl
-		<< "Date: " << date << endl;
+	return + "Nom: " + getNom() + "\n"
+		+ "Categorie: Divers" + "\n"
+		+ "Prix: " + to_string(getPrix()) + "\n"
+		+ "Description: " + getDescription() + "\n"
+		+ "Etat: " + getEtat()->getDescription() + "\n"
+		+ "Date: " + date + "\n";
 	
 }
 

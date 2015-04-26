@@ -21,7 +21,7 @@ public:
 	Voiture(string,float,string ,Etat*,struct Date,int,string,int);
 	~Voiture(void);
 
-	void afficherDetails() const;
+	const string& afficherDetails() const;
 
 	float getPrixEtat() const;
 	int getKilometrage() const;

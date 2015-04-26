@@ -36,19 +36,19 @@ int Bijou::getPurete() const
 	return purete;
 }
 
-void Bijou::afficherDetails() const
+const string& Bijou::afficherDetails() const
 {
 	ostringstream conversion;
 	int x = 0;
 	conversion << getDate().jour << "/" << getDate().mois << "/" << getDate().annee; 
 	string date = conversion.str();
-	cout << "Nom: " << getNom() << endl
-		<< "Categorie: Bijou" << endl
-		<< "Prix: " << getPrix() << endl
-		<< "Description: " << getDescription() << endl
-		<< "Etat: " << getEtat()->getDescription() << endl
-		<< "Date: " << date << endl
-		<< "Materiau: " << materiau << endl
-		<< "Purete: " << purete << endl;
+	return "Nom: " + getNom() + "\n"
+		+ "Categorie: Bijou" + "\n"
+		+ "Prix: " + to_string(getPrix()) + "\n"
+		+ "Description: " + getDescription() + "\n"
+		+ "Etat: " + getEtat()->getDescription() + "\n"
+		+ "Date: " + date + "\n"
+		+ "Materiau: " + materiau + "\n"
+		+ "Purete: " + to_string(purete) + "\n";
 	
 }
