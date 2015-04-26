@@ -6,11 +6,14 @@
 #include "Acheteur.h"
 #include "Vendeur.h"
 #include "Superclient.h"
+#include "Employe.h"
+#include <ctime>
 
 using namespace std;
 ClientSim::ClientSim()
 {
-	int forfaitRand = rand() % 3 + 1;
+	std::uniform_int_distribution<int> distribution(1, 3);
+	int forfaitRand = distribution(Simulation::generator);
 	string forfait;
 	float min;
 	switch (forfaitRand)
@@ -35,21 +38,13 @@ ClientSim::ClientSim()
 	//client = new Acheteur();
 }
 
-void ClientSim::miseAJour(HANDLE mutex)
-{
-	int chanceClient = rand() % 24 + 1;
-	if (chanceClient == 1)
-	{
 
-	}
-	//do something
-	WaitForSingleObject(mutex, INFINITE);
-	cout << endl << "Mise a jour: " << num;
-	
-	//do something with mutex
-	ReleaseMutex(mutex);
-}
 
 ClientSim::~ClientSim()
 {
+}
+
+int ClientSim::getNum()
+{
+	return num;
 }

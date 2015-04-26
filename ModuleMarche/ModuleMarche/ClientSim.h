@@ -13,7 +13,9 @@ public:
 	ClientSim();
 	~ClientSim();
 
-	void miseAJour(HANDLE);
+	int getNum();
+	void achat();
+	void vente();
 };
 
 #endif

@@ -1099,13 +1099,13 @@ vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 
 int main()
 {
-	Affichage::menuDemarrer();
-
-	//Simulation simu;
-	//for (int cpt = 0; cpt <= 24; cpt++)
-	//{
-	//	simu.miseAJour();
-	//}
+	//Affichage::menuDemarrer();
+	srand(static_cast<int>(time(0)));
+	Simulation simu;
+	for (int cpt = 0; cpt <= 24; cpt++)
+	{
+		simu.miseAJour();
+	}
 
 	cout << "Fermeture de l'application..." << endl;
 

@@ -6,6 +6,7 @@
 
 #include "ClientSim.h"
 #include "MarcheAuxPuces.h"
+#include <random>
 
 using std::vector;
 
@@ -18,10 +19,12 @@ private:
 
 public:
 	static ClientApp clientApp;
+	static std::default_random_engine generator;
 
 	Simulation();
 	void miseAJour();
 	int getHeures();
+	void simulerClient(HANDLE,ClientSim*);
 	friend DWORD WINAPI appelClient(LPVOID);
 	~Simulation();
 };
