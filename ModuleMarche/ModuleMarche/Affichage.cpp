@@ -29,6 +29,7 @@
 using namespace std; //Pour ne jamais avoir à écrire std:: puisque j'utilise beaucoup de fonctions de std dans ce fichier
 
 const string Affichage::CS_EXIT_INPUT = "exit";
+const int Affichage::CI_INDEX_CLIENT_CONNECTE = 0; // Utiliser dans le vecteur de clients de ClientApp.  Le client à l'indice 0 est le client connecté dans l'affichage.
 ClientApp Affichage::clientApp = ClientApp();
 
 Affichage::Affichage(void)
@@ -274,7 +275,7 @@ void Affichage::menuSelection()
 	do
 	{
 		system("cls");
-		if (sup = dynamic_cast<Superclient*>(clientApp.getClient()))
+		if (sup = dynamic_cast<Superclient*>(getClientConnecte()))
 		{
 			lsValeurQuitter = "5";
 			if (!valide)
@@ -310,7 +311,7 @@ void Affichage::menuSelection()
 				valide = false;
 			}
 		}
-		else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
+		else if (emp = dynamic_cast<Employe*>(getClientConnecte()))
 		{
 			lsValeurQuitter = "3";
 			if (!valide)
@@ -336,7 +337,7 @@ void Affichage::menuSelection()
 				valide = false;
 			}
 		}
-		else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
+		else if (ach = dynamic_cast<Acheteur*>(getClientConnecte()))
 		{
 			lsValeurQuitter = "4";
 			if (!valide)
@@ -367,7 +368,7 @@ void Affichage::menuSelection()
 				valide = false;
 			}
 		}
-		else if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+		else if (vnd = dynamic_cast<Vendeur*>(getClientConnecte()))
 		{
 			lsValeurQuitter = "4";
 			if (!valide)
@@ -427,70 +428,70 @@ void Affichage::menuForfaits()
 			return;
 		}
 		first = false;
-	} while ((client = clientApp.changementForfait(choix[0])) == nullptr);
+	} while ((client = clientApp.changementForfait(choix[0], CI_INDEX_CLIENT_CONNECTE)) == nullptr);
 	
 	fstream achats(clientApp.getCompte() + ".txt");
 	if (achats)
 	{
 		achats << clientApp.getCompte() << ";" 
-			<< clientApp.getClient()->getNom() << ";" 
-			<< clientApp.getClient()->getPrenom() << ";" 
-			<< clientApp.getClient()->getAdresse() << ";" 
-			<< clientApp.getClient()->getCompte()->getSolde();
+			<< getClientConnecte()->getNom() << ";"
+			<< getClientConnecte()->getPrenom() << ";"
+			<< getClientConnecte()->getAdresse() << ";"
+			<< getClientConnecte()->getCompte()->getSolde();
 		Employe* emp;
 		Superclient* sup;
 		Vendeur* vnd;
 		Acheteur* ach;
-		if (sup = dynamic_cast<Superclient*>(clientApp.getClient()))
+		if (sup = dynamic_cast<Superclient*>(getClientConnecte()))
 		{
 			achats << ";S\n";
 		}
-		else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
+		else if (emp = dynamic_cast<Employe*>(getClientConnecte()))
 		{
 			achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";
 		}
-		else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
+		else if (ach = dynamic_cast<Acheteur*>(getClientConnecte()))
 		{
 			achats << ";A\n";
 		}
-		else if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+		else if (vnd = dynamic_cast<Vendeur*>(getClientConnecte()))
 		{
 			achats << ";V\n";
 		}
-		for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
+		for (size_t cpt = 0; cpt < getClientConnecte()->getArticles().size(); cpt++)
 		{
 			ostringstream conversion; //Conversion avec sstream d'un int en string
-			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" 
-				<< clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" 
-				<< clientApp.getClient()->getArticles()[cpt]->getDate().annee;
+			conversion << getClientConnecte()->getArticles()[cpt]->getDate().jour << "/"
+				<< getClientConnecte()->getArticles()[cpt]->getDate().mois << "/"
+				<< getClientConnecte()->getArticles()[cpt]->getDate().annee;
 			string date = conversion.str();
 			Divers* div;
 			Bijou* bij;
 			Voiture* voit;
-			if (div = dynamic_cast<Divers*>(clientApp.getClient()->getArticles()[cpt]))
+			if (div = dynamic_cast<Divers*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";D;"
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";"
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";"
+					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";"
 					<< date << "\n";
 			}
-			else if (bij = dynamic_cast<Bijou*>(clientApp.getClient()->getArticles()[cpt]))
+			else if (bij = dynamic_cast<Bijou*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";B;" 
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";" 
 					<< date << ";" 
 					<< bij->getPurete() << ";" 
 					<< bij->getMateriau() << "\n";
 			}
-			else if (voit = dynamic_cast<Voiture*>(clientApp.getClient()->getArticles()[cpt]))
+			else if (voit = dynamic_cast<Voiture*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";V;" 
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";" 
 					<< date << ";" 
 					<< voit->getKilometrage() << ";" 
 					<< voit->getCouleur() << ";" 
@@ -506,11 +507,11 @@ void Affichage::menuAchats()
 	system("cls");
 	cout << "Mes achats" << endl << endl;
 	cout << setw(15) << left << "Article" << setw(12) << left << "Prix" << setw(25) << left << "Description" << setw(17) << left << "Etat" << setw(10) << left << "Date" << endl << endl;
-	for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
+	for (size_t cpt = 0; cpt < getClientConnecte()->getArticles().size(); cpt++)
 	{
-		cout << clientApp.getClient()->getArticles()[cpt];
+		cout << getClientConnecte()->getArticles()[cpt];
 	}
-	if (clientApp.getClient()->getArticles().size() == 0)
+	if (getClientConnecte()->getArticles().size() == 0)
 	{
 		cout << "Aucun article en votre possession" << endl;
 	}
@@ -690,15 +691,15 @@ void Affichage::menuCategories()
 		}
 	} while (lsChoixCategorie != "V" && lsChoixCategorie != "B" && lsChoixCategorie != "D" && lsChoixCategorie != "T");
 
-	int liNumeroArticleChoisi = menuMarche(clientApp.getClient()->getCompte()->getSolde(), clientApp.getMarcheAuxPuces()->getArticlesEnVente(), lsChoixCategorie[0]);
+	int liNumeroArticleChoisi = menuMarche(getClientConnecte()->getCompte()->getSolde(), clientApp.getMarcheAuxPuces()->getArticlesEnVente(), lsChoixCategorie[0]);
 	if (liNumeroArticleChoisi == -1) // L'utilisateur a entré la vleur pour quitter CS_EXIT_INPUT (exit)
 		return;
 
-	bool prixValide = clientApp.getClient()->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]->getPrix());
+	bool prixValide = getClientConnecte()->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]->getPrix());
 	if (!Affichage::menuVerifAchat(prixValide)) //Si le client n'achète pas l'article
 		return;
 
-	if (!clientApp.venteArticleAuClient(liNumeroArticleChoisi))
+	if (!clientApp.venteArticleAuClient(liNumeroArticleChoisi, CI_INDEX_CLIENT_CONNECTE))
 	{
 		cout << "Transaction annulee" << endl;
 		attendreTouche();
@@ -713,65 +714,65 @@ void Affichage::menuCategories()
 	if (achats)
 	{
 		achats << clientApp.getCompte() << ";" 
-			<< clientApp.getClient()->getNom() << ";" 
-			<< clientApp.getClient()->getPrenom() << ";" 
-			<< clientApp.getClient()->getAdresse() << ";" 
-			<< clientApp.getClient()->getCompte()->getSolde();
+			<< getClientConnecte()->getNom() << ";" 
+			<< getClientConnecte()->getPrenom() << ";" 
+			<< getClientConnecte()->getAdresse() << ";" 
+			<< getClientConnecte()->getCompte()->getSolde();
 		Employe* emp;
 		Superclient* sup;
 		Vendeur* vnd;
 		Acheteur* ach;
-		if (sup = dynamic_cast<Superclient*>(clientApp.getClient()))
+		if (sup = dynamic_cast<Superclient*>(getClientConnecte()))
 		{
 			achats << ";S\n";
 		}
-		else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
+		else if (emp = dynamic_cast<Employe*>(getClientConnecte()))
 		{
 			achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";
 		}
-		else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
+		else if (ach = dynamic_cast<Acheteur*>(getClientConnecte()))
 		{
 			achats << ";A\n";
 		}
-		else if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+		else if (vnd = dynamic_cast<Vendeur*>(getClientConnecte()))
 		{
 			achats << ";V\n";
 		}
 
-		for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
+		for (size_t cpt = 0; cpt < getClientConnecte()->getArticles().size(); cpt++)
 		{
 			ostringstream conversion; //Conversion avec sstream d'un int en string
-			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" 
-				<< clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" 
-				<< clientApp.getClient()->getArticles()[cpt]->getDate().annee;
+			conversion << getClientConnecte()->getArticles()[cpt]->getDate().jour << "/"
+				<< getClientConnecte()->getArticles()[cpt]->getDate().mois << "/"
+				<< getClientConnecte()->getArticles()[cpt]->getDate().annee;
 			string date = conversion.str();
 			Divers* div;
 			Bijou* bij;
 			Voiture* voit;
-			if (div = dynamic_cast<Divers*>(clientApp.getClient()->getArticles()[cpt]))
+			if (div = dynamic_cast<Divers*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat()->getDescription() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";D;" 
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat()->getDescription() << ";" 
 					<< date << "\n";
 			}
-			else if (bij = dynamic_cast<Bijou*>(clientApp.getClient()->getArticles()[cpt]))
+			else if (bij = dynamic_cast<Bijou*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat()->getDescription() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";B;" 
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat()->getDescription() << ";" 
 					<< date << ";" 
 					<< bij->getPurete() << ";" 
 					<< bij->getMateriau() << "\n";
 			}
-			else if (voit = dynamic_cast<Voiture*>(clientApp.getClient()->getArticles()[cpt]))
+			else if (voit = dynamic_cast<Voiture*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat()->getDescription() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";V;" 
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat()->getDescription() << ";" 
 					<< date << ";" 
 					<< voit->getKilometrage() << ";" 
 					<< voit->getCouleur() << ";" 
@@ -782,7 +783,7 @@ void Affichage::menuCategories()
 	achats.close();
 
 	//On crée la transaction pour le marché aux puces
-	clientApp.getMarcheAuxPuces()->ajouterTransaction(liNumeroArticleChoisi - 1, clientApp.getClient(), clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]);
+	clientApp.getMarcheAuxPuces()->ajouterTransaction(liNumeroArticleChoisi - 1, getClientConnecte(), clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]);
 
 	//On append la transaction dans le fichier de transaction du marché aux puces
 	fstream trans(clientApp.getMarcheAuxPuces()->getNom() + "_Trans.txt", ios::app);
@@ -893,16 +894,16 @@ void Affichage::menuVenteArticles()
 		cout << "Marche Aux Puces (Mode Vente)" << "\tSon solde: " << fixed << setprecision(2) << clientApp.getMarcheAuxPuces()->getRevenu() << endl << endl;
 		cout << setw(4) << left << "    " << setw(13) << left << "Article" << setw(10) << left << "Prix" << setw(25) << left << "Description" << setw(17) << left << "Etat" << setw(10) << left << "Date" << endl << endl;
 		
-		if (clientApp.getClient()->getArticles().size() == 0)
+		if (getClientConnecte()->getArticles().size() == 0)
 		{
 			cout << "Aucun article a vendre" << endl;
 		}
 		else
 		{
 			// Affichage des articles
-			for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
+			for (size_t cpt = 0; cpt < getClientConnecte()->getArticles().size(); cpt++)
 			{
-				cout << setw(4) << left << (cpt + 1) << clientApp.getClient()->getArticles()[cpt];
+				cout << setw(4) << left << (cpt + 1) << getClientConnecte()->getArticles()[cpt];
 			}
 		}
 
@@ -912,17 +913,17 @@ void Affichage::menuVenteArticles()
 		if (choix == CS_EXIT_INPUT)
 			return;
 
-		retour = validationChoixArticle(choix, clientApp.getClient()->getArticles().size());
+		retour = validationChoixArticle(choix, getClientConnecte()->getArticles().size());
 	} while (retour == 0);
 
-	cout << clientApp.getClient()->getArticles()[retour - 1]->afficherDetails();
+	cout << getClientConnecte()->getArticles()[retour - 1]->afficherDetails();
 
-	bool lbPrixValide = clientApp.getMarcheAuxPuces()->validerCompte(clientApp.getClient()->getArticles()[retour - 1]->getPrix());
+	bool lbPrixValide = clientApp.getMarcheAuxPuces()->validerCompte(getClientConnecte()->getArticles()[retour - 1]->getPrix());
 	bool lbClientVeutVendre = menuVerifAchat(lbPrixValide); //On renvoit un message selon la possibilité de l'achat de l'article après la vérification du solde du client
 	if (!lbClientVeutVendre) //Si le client ne veut pas vendre son article
 		return;
 
-	if (!clientApp.venteArticleDuClient(retour))
+	if (!clientApp.venteArticleDuClient(retour, CI_INDEX_CLIENT_CONNECTE))
 	{
 		cout << "Transaction annulee" << endl;
 		attendreTouche();
@@ -937,65 +938,65 @@ void Affichage::menuVenteArticles()
 	if (achats)
 	{
 		achats << clientApp.getCompte() << ";" 
-			<< clientApp.getClient()->getNom() << ";" 
-			<< clientApp.getClient()->getPrenom() << ";" 
-			<< clientApp.getClient()->getAdresse() << ";" 
-			<< clientApp.getClient()->getCompte()->getSolde();
+			<< getClientConnecte()->getNom() << ";" 
+			<< getClientConnecte()->getPrenom() << ";" 
+			<< getClientConnecte()->getAdresse() << ";" 
+			<< getClientConnecte()->getCompte()->getSolde();
 		Employe* emp;
 		Superclient* sup;
 		Vendeur* vnd;
 		Acheteur* ach;
-		if (sup = dynamic_cast<Superclient*>(clientApp.getClient()))
+		if (sup = dynamic_cast<Superclient*>(getClientConnecte()))
 		{
 			achats << ";S\n";
 		}
-		else if (emp = dynamic_cast<Employe*>(clientApp.getClient()))
+		else if (emp = dynamic_cast<Employe*>(getClientConnecte()))
 		{
 			achats << ";E;" << emp->getSalaire() << ";" << emp->getRabais() << "\n";
 		}
-		else if (ach = dynamic_cast<Acheteur*>(clientApp.getClient()))
+		else if (ach = dynamic_cast<Acheteur*>(getClientConnecte()))
 		{
 			achats << ";A\n";
 		}
-		else if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+		else if (vnd = dynamic_cast<Vendeur*>(getClientConnecte()))
 		{
 			achats << ";V\n";
 		}
 
-		for (size_t cpt = 0; cpt < clientApp.getClient()->getArticles().size(); cpt++)
+		for (size_t cpt = 0; cpt < getClientConnecte()->getArticles().size(); cpt++)
 		{
 			ostringstream conversion; //Conversion avec sstream d'un int en string
-			conversion << clientApp.getClient()->getArticles()[cpt]->getDate().jour << "/" 
-				<< clientApp.getClient()->getArticles()[cpt]->getDate().mois << "/" 
-				<< clientApp.getClient()->getArticles()[cpt]->getDate().annee;
+			conversion << getClientConnecte()->getArticles()[cpt]->getDate().jour << "/" 
+				<< getClientConnecte()->getArticles()[cpt]->getDate().mois << "/" 
+				<< getClientConnecte()->getArticles()[cpt]->getDate().annee;
 			string date = conversion.str();
 			Divers* div;
 			Bijou* bij;
 			Voiture* voit;
-			if (div = dynamic_cast<Divers*>(clientApp.getClient()->getArticles()[cpt]))
+			if (div = dynamic_cast<Divers*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";D;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";D;" 
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";" 
 					<< date << "\n";
 			}
-			else if (bij = dynamic_cast<Bijou*>(clientApp.getClient()->getArticles()[cpt]))
+			else if (bij = dynamic_cast<Bijou*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";B;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";B;" 
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";" 
 					<< date << ";" 
 					<< bij->getPurete() << ";" 
 					<< bij->getMateriau() << "\n";
 			}
-			else if (voit = dynamic_cast<Voiture*>(clientApp.getClient()->getArticles()[cpt]))
+			else if (voit = dynamic_cast<Voiture*>(getClientConnecte()->getArticles()[cpt]))
 			{
-				achats << clientApp.getClient()->getArticles()[cpt]->getNom() << ";V;" 
-					<< clientApp.getClient()->getArticles()[cpt]->getPrix() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getDescription() << ";" 
-					<< clientApp.getClient()->getArticles()[cpt]->getEtat() << ";" 
+				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";V;" 
+					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";" 
 					<< date << ";" 
 					<< voit->getKilometrage() << ";" 
 					<< voit->getCouleur() << ";" 
@@ -1010,7 +1011,7 @@ void Affichage::menuVenteArticles()
 	if (trans)
 	{
 		Vendeur* vnd;
-		if (vnd = dynamic_cast<Vendeur*>(clientApp.getClient()))
+		if (vnd = dynamic_cast<Vendeur*>(getClientConnecte()))
 		{
 			trans << "Client: " << vnd->getDerniereTransaction().client->getNom() << ";" 
 				<< vnd->getDerniereTransaction().client->getPrenom() << ";" 
@@ -1119,4 +1120,9 @@ void Affichage::attendreTouche()
 	string lsInput;
 	cout << endl << "Appuyez sur une Entree pour continuer...";
 	getline(cin, lsInput);
+}
+
+Client* Affichage::getClientConnecte()
+{
+	return clientApp.getClient(CI_INDEX_CLIENT_CONNECTE);
 }

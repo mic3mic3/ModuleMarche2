@@ -112,20 +112,21 @@ void ClientApp::creationClient(const Fichier& poEntreesClient)
 	string forfaitStr = poEntreesClient.getEntree(0)[5];
 	char forfait = forfaitStr[0];
 
+	Client* loClient = nullptr;
 	switch (forfait)
 	{
 		case 'A':
-			client = new Acheteur(nom,prenom,adresse,new Compte(solde));
+			loClient = new Acheteur(nom, prenom, adresse, new Compte(solde));
 			break;
 		case 'V':
-			client = new Vendeur(nom,prenom,adresse,new Compte(solde));
+			loClient = new Vendeur(nom, prenom, adresse, new Compte(solde));
 			break;
 		case 'S':
-			client = new Superclient(nom,prenom,adresse,new Compte(solde));
+			loClient = new Superclient(nom, prenom, adresse, new Compte(solde));
 			break;
 		case 'E':
-			client = getEmployeExistant(compte);
-			if (client == nullptr)
+			loClient = getEmployeExistant(compte);
+			if (!loClient)
 			{
 				// L'employé n'existe pas encore, on le crée.
 				string salaireStr = poEntreesClient.getEntree(0)[6];
@@ -134,13 +135,13 @@ void ClientApp::creationClient(const Fichier& poEntreesClient)
 				string rabaisStr = poEntreesClient.getEntree(0)[7];
 				float rabais = stof(rabaisStr.c_str());
 
-				client = new Employe(nom,prenom,adresse,new Compte(solde),salaire,rabais);
-			}
-				
+				loClient = new Employe(nom, prenom, adresse, new Compte(solde), salaire, rabais);
+			}				
+			break;
+		default:
 			break;
 	}
-
-	if (client == nullptr)
+	if (!loClient)
 	{
 		throw ExceptionMarche(string("Le client n'a pas pu être ouvert."), false);
 	}
@@ -153,9 +154,11 @@ void ClientApp::creationClient(const Fichier& poEntreesClient)
 		{
 			Article* loArticle = getArticleFromStructure(poEntreesClient, cptLigne);
 			if(loArticle != nullptr)
-				client->ajouterArticle(loArticle);
+				loClient->ajouterArticle(loArticle);
 		}
 	}
+
+	clients.push_back(loClient);
 }
 
 //On crée le marché à partir d'un fichier
@@ -327,31 +330,31 @@ Employe* ClientApp::getEmployeExistant(string& psNomCompteEmploye)
 //}
 
 // Effectuer la vente d'un article du client
-bool ClientApp::venteArticleDuClient(int piNumeroArticle)
+bool ClientApp::venteArticleDuClient(int piNumeroArticle, int piIndexClient)
 {
 	int liPositionArticle = piNumeroArticle - 1;
-	bool lbPrixValide = marcheAuxPuces->validerCompte(client->getArticles()[liPositionArticle]->getPrix());
+	bool lbPrixValide = marcheAuxPuces->validerCompte(clients[piIndexClient]->getArticles()[liPositionArticle]->getPrix());
 	if (!lbPrixValide)
 		return false;
 
-	marcheAuxPuces->acheter(client->getArticles()[liPositionArticle]); //On crée la transaction pour le marché aux puces
+	marcheAuxPuces->acheter(clients[piIndexClient]->getArticles()[liPositionArticle]); //On crée la transaction pour le marché aux puces
 	Vendeur* vnd;
-	if (vnd = dynamic_cast<Vendeur*>(client))
+	if (vnd = dynamic_cast<Vendeur*>(clients[piIndexClient]))
 	{
-		vnd->ajouterTransaction(liPositionArticle, marcheAuxPuces, client->getArticles()[liPositionArticle]); //On appelle la fonction acheter de client
+		vnd->ajouterTransaction(liPositionArticle, marcheAuxPuces, clients[piIndexClient]->getArticles()[liPositionArticle]); //On appelle la fonction acheter de client
 	}
 	return true;
 }
 
-bool ClientApp::venteArticleAuClient(int piNumeroArticle)
+bool ClientApp::venteArticleAuClient(int piNumeroArticle, int piIndexClient)
 {
 	int liPositionArticle = piNumeroArticle - 1;
-	bool lbPrixValide = client->validerCompte(marcheAuxPuces->getArticlesEnVente()[liPositionArticle]->getPrix());
+	bool lbPrixValide = clients[piIndexClient]->validerCompte(marcheAuxPuces->getArticlesEnVente()[liPositionArticle]->getPrix());
 	if (!lbPrixValide) //Si le client n'achète pas l'article
 		return false;
 
 	Acheteur* acht;
-	if (acht = dynamic_cast<Acheteur*>(client))
+	if (acht = dynamic_cast<Acheteur*>(clients[piIndexClient]))
 	{
 		acht->acheter(marcheAuxPuces->getArticlesEnVente()[liPositionArticle]); //On appelle la fonction acheter de client
 	}

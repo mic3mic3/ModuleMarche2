@@ -18,6 +18,7 @@ class Affichage
 {
 public:
 	static const string CS_EXIT_INPUT;
+	static const int CI_INDEX_CLIENT_CONNECTE;
 	static ClientApp clientApp;
 
 	Affichage(void);
@@ -25,6 +26,7 @@ public:
 
 
 	//Méthodes d'affichage
+	static Client* getClientConnecte();
 	static void menuDemarrer();
 	static void menuInscription();
 	static void menuConnexion();
