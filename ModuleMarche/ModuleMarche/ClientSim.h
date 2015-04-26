@@ -10,7 +10,7 @@ class ClientSim
 private:
 	int num;
 public:
-	ClientSim(int);
+	ClientSim();
 	~ClientSim();
 
 	void miseAJour(HANDLE);

@@ -12,7 +12,7 @@ ClientSim::ClientSim()
 {
 	int forfaitRand = rand() % 3 + 1;
 	string forfait;
-	int min;
+	float min;
 	switch (forfaitRand)
 	{
 		case 1:
@@ -30,7 +30,7 @@ ClientSim::ClientSim()
 		default:
 			break;
 	}
-	float solde = rand() % 1000000 + min;
+	float solde = (rand() % 1000000) + min;
 	this->num = Simulation::clientApp.ajoutClient("","","",solde,forfait);
 	//client = new Acheteur();
 }
@@ -53,5 +53,3 @@ void ClientSim::miseAJour(HANDLE mutex)
 ClientSim::~ClientSim()
 {
 }
-
-ClientSim::parametresClient()
