@@ -177,8 +177,8 @@ void ClientApp::creationMarche(const Fichier& poFichierMarche, const vector<Fich
 	}
 
 	// Création du marché à partir de la première ligne du fichier contenant dans l'ordre: nom, adresse, revenu.
-	string adresse = poFichierMarche.getEntree(1)[1];
-	string revenuStr = poFichierMarche.getEntree(1)[2];
+	string adresse = poFichierMarche.getEntree(0)[1];
+	string revenuStr = poFichierMarche.getEntree(0)[2];
 	float revenu = stof(revenuStr.c_str());
 	marcheAuxPuces = new MarcheAuxPuces(CS_NOM_MARCHE_AUX_PUCES, adresse, new Compte(revenu));
 
@@ -364,5 +364,9 @@ bool ClientApp::venteArticleAuClient(int piNumeroArticle, int piIndexClient)
 	{
 		acht->acheter(marcheAuxPuces->getArticlesEnVente()[liPositionArticle]); //On appelle la fonction acheter de client
 	}
+
+	//On crée la transaction pour le marché aux puces
+	marcheAuxPuces->ajouterTransaction(liPositionArticle, clients[piIndexClient], marcheAuxPuces->getArticlesEnVente()[liPositionArticle]);
+
 	return true;
 }

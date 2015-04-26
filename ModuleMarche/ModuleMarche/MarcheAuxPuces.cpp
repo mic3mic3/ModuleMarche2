@@ -89,7 +89,6 @@ void MarcheAuxPuces::ajouterTransaction(int pos,Client* c,Article* a)
 	date.jour = local->tm_mday;
 	date.mois = local->tm_mon + 1;		// Les mois sont de 0 à 11
 	date.annee = local->tm_year + 1900; //Les années commencent à 1900 (0 -> 1900)
-	
 
 	struct Transaction trans;
 	trans.client = c;
@@ -97,16 +96,12 @@ void MarcheAuxPuces::ajouterTransaction(int pos,Client* c,Article* a)
 	trans.marche = this;
 	trans.date = date;
 	transactionsEffectuees.push_back(trans); //On ajoute la Transaction dans le vecteur des transactions
-	Employe* emp;
-	if (emp = dynamic_cast<Employe*>(c))
+	float lfPourcentagePrix = 1.0;
+	if (Employe* emp = dynamic_cast<Employe*>(c))
 	{
-		float pourcentage = (100-emp->getRabais())/100;
-		compte->ajouterMontant(a->getPrix()*pourcentage); //On augmente le revenu avec le prix de l'article vendu
+		lfPourcentagePrix = (100 - emp->getRabais()) / 100;
 	}
-	else
-	{
-		compte->ajouterMontant(a->getPrix()); //On augmente le revenu avec le prix de l'article vendu
-	}
+	compte->ajouterMontant(a->getPrixEtat() * lfPourcentagePrix); //On augmente le revenu avec le prix de l'article vendu
 	enleverArticle(pos); //On appelle la fonction qui enlève l'article du vecteur des articles disponibles
 }
 

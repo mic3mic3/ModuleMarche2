@@ -473,7 +473,7 @@ void Affichage::menuForfaits()
 				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";D;"
 					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";"
 					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";"
-					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";"
+					<< getClientConnecte()->getArticles()[cpt]->getEtat()->getDescription() << ";"
 					<< date << "\n";
 			}
 			else if (bij = dynamic_cast<Bijou*>(getClientConnecte()->getArticles()[cpt]))
@@ -481,7 +481,7 @@ void Affichage::menuForfaits()
 				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";B;" 
 					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
 					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
-					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat()->getDescription() << ";"
 					<< date << ";" 
 					<< bij->getPurete() << ";" 
 					<< bij->getMateriau() << "\n";
@@ -491,7 +491,7 @@ void Affichage::menuForfaits()
 				achats << getClientConnecte()->getArticles()[cpt]->getNom() << ";V;" 
 					<< getClientConnecte()->getArticles()[cpt]->getPrix() << ";" 
 					<< getClientConnecte()->getArticles()[cpt]->getDescription() << ";" 
-					<< getClientConnecte()->getArticles()[cpt]->getEtat() << ";" 
+					<< getClientConnecte()->getArticles()[cpt]->getEtat()->getDescription() << ";"
 					<< date << ";" 
 					<< voit->getKilometrage() << ";" 
 					<< voit->getCouleur() << ";" 
@@ -782,9 +782,6 @@ void Affichage::menuCategories()
 	}
 	achats.close();
 
-	//On crée la transaction pour le marché aux puces
-	clientApp.getMarcheAuxPuces()->ajouterTransaction(liNumeroArticleChoisi - 1, getClientConnecte(), clientApp.getMarcheAuxPuces()->getArticlesEnVente()[liNumeroArticleChoisi - 1]);
-
 	//On append la transaction dans le fichier de transaction du marché aux puces
 	fstream trans(clientApp.getMarcheAuxPuces()->getNom() + "_Trans.txt", ios::app);
 	if (trans)
@@ -833,7 +830,7 @@ void Affichage::menuCategories()
 				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";D;" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";"
-					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";"
 					<< date << "\n";
 			}
 			else if (bij = dynamic_cast<Bijou*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
@@ -841,7 +838,7 @@ void Affichage::menuCategories()
 				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";B;" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" 
-					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";"
 					<< date << ";" 
 					<< bij->getPurete() << ";" 
 					<< bij->getMateriau() << "\n";
@@ -851,7 +848,7 @@ void Affichage::menuCategories()
 				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";V;" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" 
-					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";"
 					<< date << ";" 
 					<< voit->getKilometrage() << ";" 
 					<< voit->getCouleur() << ";" 

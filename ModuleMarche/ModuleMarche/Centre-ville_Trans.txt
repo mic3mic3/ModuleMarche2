@@ -48,3 +48,38 @@ Marche: Centre-ville;D
 Article: Magnifique perle rare;150;Une magnifique bague tres ancienne;Materiaux;7/4/1925
 Date: 26/4/2015
 -----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Volkswagen;100;Jetta - Das Auto;Neuf;23/12/857
+Date: 26/4/2015
+-----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Chevrolet;100;Une voiture laide;Materiaux;23/12/857
+Date: 26/4/2015
+-----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Mazda;100;Une jolie voiture;Usage;23/12/857
+Date: 26/4/2015
+-----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Volkswagen;100;Jetta - Das Auto;Neuf;23/12/857
+Date: 26/4/2015
+-----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Chaise;100;Un meuble pour s'asseoir;Materiaux;8/9/1995
+Date: 26/4/2015
+-----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Table;100;Un meuble pour manger;Usage;8/9/1995
+Date: 26/4/2015
+-----
+Client: Jean;Tremblay;1410 Blabla
+Marche: Centre-ville;D
+Article: Bague;100;Une horrible bague;Materiaux;9/8/2011
+Date: 26/4/2015
+-----

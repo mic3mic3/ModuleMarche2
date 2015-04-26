@@ -1,3 +1,5 @@
-John;Jean;Tremblay;1410 Blabla;2110.25;E;46;5
-Collier;B;25;Un beau collier;Materiaux;7/4/2011;4;Rubis
-Magnifique perle rare;B;150;Une magnifique bague tres ancienne;Materiaux;7/4/1925;2;Diamant
+John;Jean;Tremblay;1410 Blabla;99995.3;E;46;5
+Volkswagen;V;100;Jetta - Das Auto;Neuf;23/12/857;5000;Grise;2012
+Chaise;D;100;Un meuble pour s'asseoir;Materiaux;8/9/1995
+Table;D;100;Un meuble pour manger;Usage;8/9/1995
+Bague;B;100;Une horrible bague;Materiaux;9/8/2011;2;Diamant
