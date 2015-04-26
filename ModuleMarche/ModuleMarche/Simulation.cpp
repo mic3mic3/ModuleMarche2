@@ -38,7 +38,15 @@ struct ThreadParameters
 };
 void Simulation::miseAJour()
 {
-
+	if (heures % 24 == 0)
+	{
+		Journee jour = Journee();
+		jour.nbrArticlesAchetes = 0;
+		jour.nbrArticlesVendus = 0;
+		jour.totalAchats = 0;
+		jour.totalVentes = 0;
+		journees.push_back(jour);
+	}
 	std::uniform_int_distribution<int> distribution(1, 12);
 	int chanceClient = distribution(generator);
 	if (chanceClient == 1)
@@ -142,6 +150,8 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			if (cpt != clientApp.getMarcheAuxPuces()->getArticlesEnVente().size())
 			{
 				clientApp.venteArticleAuClient(cpt, client->getNum());
+				journees[heures / 24].nbrArticlesVendus++;
+				journees[heures / 24].totalVentes += clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat()
 			}
 			//client->achat();
 		}
@@ -155,9 +165,11 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 					break;
 				}
 			}//client->vente();
-			if (cpt != clientApp.getMarcheAuxPuces()->getArticlesEnVente().size())
+			if (cpt != vnd->getArticles().size())
 			{
 				clientApp.venteArticleAuClient(cpt, client->getNum());
+				journees[heures / 24].nbrArticlesAchetes++;
+				journees[heures / 24].totalAchats += vnd->getArticles()[cpt]->getPrixEtat();
 			}
 		}
 	}
