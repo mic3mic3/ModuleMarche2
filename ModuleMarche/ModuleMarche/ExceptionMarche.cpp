@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include "Affichage.h"
+
 using namespace std;
 
 ExceptionMarche::ExceptionMarche(string& psMessage, bool pbFatale)
@@ -45,9 +47,8 @@ void ExceptionMarche::Gerer() const
 	// Si l'erreur est fatale et empêche le programme de fonctionner, on quitte.
 	if (fatale)
 	{
-		cout << endl << "Fermeture de l'application..." << endl << endl << "Appuyez sur Entree pour quitter..." << endl;
-		string lsInput;
-		getline(cin, lsInput);
+		Affichage::attendreTouche(string("\nFermeture de l'application...\n\nAppuyez sur Entree pour quitter..."));
+		
 		exit(EXIT_FAILURE);
 	}
 }

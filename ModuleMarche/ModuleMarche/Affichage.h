@@ -47,6 +47,7 @@ public:
 	static void creationFichierCompte(const string &, const string &, const string &, const string &, float, const string &);
 
 	static vector<Fichier> getEntreesEmploye(const Fichier&);
+	static void attendreTouche(string&);
 };
 
 #endif

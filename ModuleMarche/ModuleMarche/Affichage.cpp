@@ -514,9 +514,7 @@ void Affichage::menuAchats()
 	{
 		cout << "Aucun article en votre possession" << endl;
 	}
-	string lsInput;
-	cout << endl << "Appuyez sur Entree pour revenir au menu";
-	getline(cin, lsInput);
+	attendreTouche(string("Appuyez sur Entree pour revenir au menu"));
 }
 
 //Affichage du marché aux puces avec du solde du client et les articles à vendre du marché, puis on retourne le choix de l'article ou -1 si l'utilisateur veut sortir (a écrit exit)
@@ -1096,19 +1094,24 @@ vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 
 int main()
 {
-	//Affichage::menuDemarrer();
+	Affichage::menuDemarrer();
 
-	Simulation simu;
-	for (int cpt = 0; cpt <= 24; cpt++)
-	{
-		simu.miseAJour();
-	}
+	//Simulation simu;
+	//for (int cpt = 0; cpt <= 24; cpt++)
+	//{
+	//	simu.miseAJour();
+	//}
 
 	cout << "Fermeture de l'application..." << endl;
 
-	string lsInput;
-	cout << endl << "Appuyez sur Entree pour quitter...";
-	getline(cin, lsInput);
+	Affichage::attendreTouche(string("Appuyez sur Entree pour quitter..."));
 
 	return EXIT_SUCCESS;
+}
+
+void Affichage::attendreTouche(string& psMessage)
+{
+	string lsInput;
+	cout << endl << psMessage;
+	getline(cin, lsInput);
 }

@@ -1,0 +1,5 @@
+Client: Albert;Albert;111
+Marche: Centre-ville;D
+Article: Magnifique perle rare;150;Une magnifique bague tres ancienne;00E71448;7/4/1925
+Date: 26/4/2015
+-----

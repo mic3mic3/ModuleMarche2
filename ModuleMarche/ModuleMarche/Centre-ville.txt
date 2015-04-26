@@ -1,6 +1,7 @@
-Centre-ville;D;190.5
-Chaise;D;190.5;Un meuble pour s'asseoir;0045D188;8/9/1995
-Mazda;V;300.5;Une jolie voiture;00460E88;23/12/857;40000;Bleue;2005
-Chevrolet;V;300.5;Une voiture laide;0045F308;23/12/857;40000;Grise;2005
-Table;D;190.5;Un meuble pour manger;0045F140;8/9/1995
-Bague;B;25;Une magnifique bague;0045EC40;7/4/2011;2;Diamant
+Centre-ville;D;40.5
+Chaise;D;190.5;Un meuble pour s'asseoir;Materiaux;8/9/1995
+Mazda;V;300.5;Une jolie voiture;Materiaux;23/12/857;40000;Bleue;2005
+Chevrolet;V;300.5;Une voiture laide;Materiaux;23/12/857;40000;Grise;2005
+Table;D;190.5;Un meuble pour manger;Materiaux;8/9/1995
+Bague;B;25;Une magnifique bague;Materiaux;7/4/2011;2;Diamant
+Magnifique perle rare;B;150;Une magnifique bague tres ancienne;Materiaux;7/4/1925;2;Diamant
