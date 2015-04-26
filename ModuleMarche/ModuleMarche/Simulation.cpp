@@ -86,11 +86,7 @@ int Simulation::getHeures()
 
 void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 {
-	// On commande des articles au marché aux puces s'il en manque.
-	while (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
-	{
-		commanderArticlesManquants();
-	}
+	
 
 	std::uniform_int_distribution<int> distribution(1, 24);
 	int chanceClient = distribution(Simulation::generator);
@@ -124,6 +120,12 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 
 		//do something
 		WaitForSingleObject(mutex, INFINITE);
+
+		// On commande des articles au marché aux puces s'il en manque.
+		while (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
+		{
+			commanderArticlesManquants();
+		}
 		if (transactionAFaire == "A")
 		{
 			size_t cpt;
@@ -164,7 +166,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 
 void Simulation::commanderArticlesManquants()
 {
-	if (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
+	if (clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
 		return;
 
 	// On doit commander davantage d'articles.
@@ -192,8 +194,8 @@ void Simulation::commanderArticlesManquants()
 		else if (liRandomType == 3)
 		{
 			lcType = 'V';
-			liPrixMinimum = 1;
-			liPrixMaximum = 15000;
+			liPrixMinimum = 15000;
+			liPrixMaximum = 100000;
 		}
 
 		string lsNomArticle = "Article abc";
