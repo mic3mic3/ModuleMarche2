@@ -587,7 +587,7 @@ int Affichage::menuMarche(float solde, const vector<Article*> &listeArticles, ch
 	} while (retour == 0);
 
 	retour = transformationEnPositionTableau(retour, categorie, listeArticles);
-	listeArticles[retour - 1]->afficherDetails();
+	cout << listeArticles[retour - 1]->afficherDetails();
 
 	return retour;
 }
@@ -1098,20 +1098,20 @@ vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 	return loEmployes;
 }
 
-//int main()
-//{
-//	Affichage::menuDemarrer();
-//
-//	cout << "Fermeture de l'application..." << endl;
-//
-//	Affichage::attendreTouche();
-//	return EXIT_SUCCESS;
-//}
+int main()
+{
+	Affichage::menuDemarrer();
+
+	cout << "Fermeture de l'application..." << endl;
+
+	Affichage::attendreTouche();
+	return EXIT_SUCCESS;
+}
 
 void Affichage::attendreTouche()
 {
 	string lsInput;
-	cout << endl << "Appuyez sur une Entree pour continuer...";
+	cout << endl << "Appuyez sur Entree pour continuer...";
 	getline(cin, lsInput);
 }
 

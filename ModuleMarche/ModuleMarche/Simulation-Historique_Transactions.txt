@@ -1,374 +1,512 @@
 Historique des transactions
 -----
 Type de transaction: A
-Client: NomSim5;PrenomSim;AdresseSim
+Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;19758.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim5;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;31688.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;1227.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;26975.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;533.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;9292.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;738.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;320.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim5;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;64508.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;6787.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim5;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;14325.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;1047.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;67720.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;199.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;74538.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim7;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;14200.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;3099.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim7;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;10681.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;2110.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;6816.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: NomSim6;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;5615.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;1278.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;2196.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;2786.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;2684.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;860.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
 -----
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
+Type de transaction: V
+Client: NomSim5;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;1616.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;11664.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;13237.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;2222.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim8;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;85682.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim8;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;24281.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;1528.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
+Type de transaction: V
 Client: NomSim6;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;11480.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;1278.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;2864.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;95.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;1282.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: V
-Client: NomSim9;PrenomSim;AdresseSim
+Client: NomSim5;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;184.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;468.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;34613.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;44424.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;878.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;2053.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: V
-Client: NomSim9;PrenomSim;AdresseSim
+Client: NomSim6;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;52444.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;610.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;2140.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;11664.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;446.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;2044.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim5;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;10079.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;184.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;1278.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;468.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
 Client: NomSim7;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;57133.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim11;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;54080.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;9564.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: Employe abc;prenom abc;111 rue adresse
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;12114.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;4326.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;610.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim6;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;60714.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;10079.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;702.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;2829.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
 Client: NomSim7;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;8984.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;1505.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim8;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;99444.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;60714.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: V
 Client: NomSim9;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;1071.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;19851.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
+Type de transaction: V
+Client: NomSim7;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;1071.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;42477.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: V
 Client: NomSim10;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;6056.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;1239.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
-Client: NomSim6;PrenomSim;AdresseSim
+Client: NomSim10;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;46519.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;32582.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
-Type de transaction: A
-Client: NomSim8;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;48110.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
+Type de transaction: V
 Client: NomSim5;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;32058.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;657.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;83594.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;575.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;72506.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;785.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: A
 Client: NomSim8;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;85658.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;10232.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim7;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;60875.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim11;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;13765.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim8;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;52444.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim6;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;52743.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim7;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;82449.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;8536.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim8;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;13528.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: V
-Client: NomSim11;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;54080.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: Employe abc;prenom abc;111 rue adresse
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;239.00$;DescriptionArticle;Materiaux;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: V
-Client: NomSim11;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;13765.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
------
-Type de transaction: A
-Client: NomSim14;PrenomSim;AdresseSim
-Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;6056.00$;DescriptionArticle;Usage;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;22791.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
 -----
 Type de transaction: V
 Client: NomSim9;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
-Article: ArticleSim;1486.00$;DescriptionArticle;Neuf;1/1/1900
-Date: 26/4/2015
+Article: ArticleSim;326.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;785.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim6;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;99339.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim8;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;7694.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim8;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;56097.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;326.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim9;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;780.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim9;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;10400.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim13;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;12175.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim14;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;81252.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim9;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;62138.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;1239.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim7;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;47422.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim12;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;9564.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;1505.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;780.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim13;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;44623.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;979.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim5;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;1033.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim14;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;1643.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim7;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;11500.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim8;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;5850.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim14;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;12648.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;2671.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim17;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;19851.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim8;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;42477.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim10;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;2063.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;1033.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;1643.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;12648.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim9;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;99339.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim7;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;82570.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim13;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;12175.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim9;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;10400.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim10;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;81252.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim6;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;47422.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim18;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;14254.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim7;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;1663.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;2063.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;83244.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;2984.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim10;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;90751.00$;DescriptionArticle;Neuf;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: V
+Client: NomSim5;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;1223.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim12;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;11500.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim18;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;13716.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim17;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;23883.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: Employe abc;prenom abc;111 rue adresse
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;81946.00$;DescriptionArticle;Materiaux;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim9;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;9992.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
+-----
+Type de transaction: A
+Client: NomSim10;PrenomSim;AdresseSim
+Marche: MarchéSimulation;AdresseMarché
+Article: ArticleSim;82570.00$;DescriptionArticle;Usage;1/1/1900
+Date: 27/4/2015
 -----
