@@ -115,6 +115,20 @@ bool Fichier::setContenu(string& psNomCompletFichier, vector<vector<string>>& po
 	return true;
 }
 
+bool Fichier::setContenuRaw(string& psNomCompletFichier, const string& poEntrees)
+{
+	fstream loFStream(psNomCompletFichier, std::ofstream::out | std::ofstream::trunc);
+	if (!loFStream.is_open())
+	{
+		throw ExceptionMarche(string("Le fichier «" + psNomCompletFichier + "» n'a pas pu être ouvert"), false);
+		return false;
+	}
+
+	loFStream << poEntrees;
+	loFStream.close();
+	return true;
+}
+
 ///<summary>Retourne «true» si le compte existe, false sinon.</summary>
 /// <param name='psNomCompletFichier'>Chemin et nom du fichier, ne pas indiquer l'extension (.txt seulement pour l'instant)</param>
 bool Fichier::fichierExistant(string& psNomCompletFichier)

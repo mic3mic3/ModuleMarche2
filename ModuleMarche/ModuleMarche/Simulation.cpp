@@ -14,7 +14,8 @@
 #include <ctime>
 #include "FabriqueArticle.h"
 #include "Date.h"
-#include "Vendeur.h"
+#include "Fichier.h"
+
 using namespace std;
 
 ClientApp Simulation::clientApp;
@@ -151,9 +152,9 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			}
 			if (cpt != clientApp.getMarcheAuxPuces()->getArticlesEnVente().size())
 			{
+				journees[heures / 24].totalVentes += clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat();
 				clientApp.venteArticleAuClient(cpt, client->getNum());
 				journees[heures / 24].nbrArticlesVendus++;
-				journees[heures / 24].totalVentes += clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat();
 			}
 			//client->achat();
 		}
@@ -171,9 +172,9 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			}//client->vente();
 			if (cpt != vnd->getArticles().size())
 			{
+				journees[heures / 24].totalAchats += vnd->getArticles()[cpt]->getPrixEtat();
 				clientApp.venteArticleDuClient(cpt, client->getNum());
 				journees[heures / 24].nbrArticlesAchetes++;
-				journees[heures / 24].totalAchats += vnd->getArticles()[cpt]->getPrixEtat();
 			}
 		}
 	}
@@ -212,7 +213,43 @@ void Simulation::ajouterArticleManquantVendeur(Vendeur* poVendeur)
 
 void Simulation::ecrireSimulation()
 {
-	cout << "ecrire";
+	string journeesAEcrire = "";
+	int totalArticlesAchetes = 0;
+	int totalArticlesVendus = 0;
+	float grandTotalAchats = 0;
+	float grandTotalVentes = 0;
+	float totalGains;
+	for (size_t cpt = 0; cpt < journees.size(); cpt++)
+	{
+		totalArticlesAchetes += journees[cpt].nbrArticlesAchetes;
+		totalArticlesVendus += journees[cpt].nbrArticlesVendus;
+		grandTotalAchats += journees[cpt].totalAchats;
+		grandTotalVentes += journees[cpt].totalVentes;
+	}
+	totalGains = grandTotalVentes-grandTotalAchats;
+	journeesAEcrire += "Données globales\n";
+	journeesAEcrire += "Montant de départ: " + to_string(MONTANT_DEPART) + "\n";
+	journeesAEcrire += "Durée: " + to_string(journees.size()) + "jours et " + to_string(heures % 24) + " heures";
+	journeesAEcrire += "Total des articles achetés: " + to_string(totalArticlesAchetes) + "\n";
+	journeesAEcrire += "Total des articles vendus: " + to_string(totalArticlesVendus) + "\n";
+	journeesAEcrire += "Grand total des achats: " + to_string(grandTotalAchats) + "\n";
+	journeesAEcrire += "Grand total des ventes: " + to_string(grandTotalVentes) + "\n";
+	journeesAEcrire += "Total des gains: " + to_string(totalGains) + "\n";
+	journeesAEcrire += "---------\n";
+	for (size_t cpt = 0; cpt < journees.size(); cpt++)
+	{
+		journeesAEcrire += "Journée " + to_string(cpt + 1) + "\n";
+		journeesAEcrire += "Nombre d'articles achetés: " + to_string(journees[cpt].nbrArticlesAchetes) + "\n";
+		journeesAEcrire += "Nombre d'articles vendus: " + to_string(journees[cpt].nbrArticlesVendus) + "\n";
+		journeesAEcrire += "Total des achats: " + to_string(journees[cpt].totalAchats) + "$\n";
+		journeesAEcrire += "Total des ventes: " + to_string(journees[cpt].totalVentes) + "$\n";
+		journeesAEcrire += "Total des gains de la journée: " + to_string(journees[cpt].totalVentes-journees[cpt].totalAchats) + "$\n";
+		journeesAEcrire += "Solde actuel: " + to_string(clientApp.getMarcheAuxPuces()->getRevenu()) + "\n";
+		journeesAEcrire += "---------\n";
+	}
+	Fichier::setContenuRaw(string("Journees.txt"), journeesAEcrire);
+
+	string historique = "";
 }
 
 //int main()

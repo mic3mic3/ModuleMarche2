@@ -12,6 +12,7 @@ struct Journee
 	int nbrArticlesAchetes;
 	float totalVentes;
 	float totalAchats;
+	float solde;
 };
 
 #endif
