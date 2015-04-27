@@ -4,7 +4,6 @@
 #include <vector>
 #include <Windows.h>
 
-#include "ClientSim.h"
 #include "MarcheAuxPuces.h"
 #include <random>
 #include "Journee.h"
@@ -16,7 +15,6 @@ class ClientApp;
 class Simulation
 {
 private:
-	vector<ClientSim*> clients;
 	int heures;
 
 public:
@@ -29,13 +27,14 @@ public:
 	Simulation();
 	void miseAJour();
 	int getHeures();
-	void simulerClient(HANDLE,ClientSim*);
+	void simulerClient(HANDLE,int);
 	friend DWORD WINAPI appelClient(LPVOID);
 	void commanderArticlesManquantsMarche();
 	void ajouterArticleManquantVendeur(Vendeur*);
 	void ecrireSimulation();
 	Article* genererNouvelArticleAleatoire();
 	void ajouterNouvelEmployeAleatoire();
+	void ajoutClient();
 	~Simulation();
 };
 

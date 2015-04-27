@@ -372,3 +372,8 @@ bool ClientApp::venteArticleAuClient(int piIndexArticle, int piIndexClient)
 
 	return true;
 }
+
+vector<Client*>& ClientApp::getAllClients()
+{
+	return clients;
+}

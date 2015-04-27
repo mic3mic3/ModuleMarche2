@@ -35,6 +35,7 @@ public:
 	MarcheAuxPuces* getMarcheAuxPuces() const;
 	void setClient(Client*,int index);
 	void setMarcheAuxPuces(MarcheAuxPuces*);
+	vector<Client*>& getAllClients();
 
 	//Différentes fonctions qui appellent des fonctions d'Affichage pour ensuite faire des manipulations sur les inputs de l'utilisateur retourné par les fonctions d'Affichage
 	void connexion(const Fichier&, const Fichier&, const vector<Fichier>&);

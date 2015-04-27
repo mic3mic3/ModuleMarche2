@@ -26,9 +26,8 @@ std::default_random_engine Simulation::generator;
 Simulation::Simulation() :MONTANT_DEPART(1000)
 {
 	clientApp = ClientApp();
-	clientApp.setMarcheAuxPuces(new MarcheAuxPuces("", "", new Compte(MONTANT_DEPART)));
-	generator = default_random_engine(time(NULL));
-	//srand(time(NULL));
+	clientApp.setMarcheAuxPuces(new MarcheAuxPuces("MarchéSimulation", "AdresseMarché", new Compte(MONTANT_DEPART)));
+	generator = default_random_engine((unsigned int)time(NULL));
 
 	// Génération d'employés aléatoires
 	for (size_t cptEmploye = 1; cptEmploye <= 5; cptEmploye++)
@@ -39,15 +38,12 @@ Simulation::Simulation() :MONTANT_DEPART(1000)
 
 Simulation::~Simulation()
 {
-	for (size_t cptClient = 0; cptClient < clients.size(); cptClient++)
-	{
-		delete clients[cptClient];
-	}
+	
 }
 struct ThreadParameters
 {
 	Simulation* sim;
-	ClientSim* client;
+	int noClient;
 };
 void Simulation::miseAJour()
 {
@@ -65,25 +61,25 @@ void Simulation::miseAJour()
 	if (chanceClient == 1)
 	{
 		//DWORD* idThread = new DWORD();
-		clients.push_back(new ClientSim());
+		ajoutClient();
 		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
-	HANDLE* t = new HANDLE[clients.size()];
+	HANDLE* t = new HANDLE[clientApp.getAllClients().size()];
 	/*for (unsigned int cpt = 0; cpt < threads.size(); cpt++)
 	{
 		WaitForSingleObject(threads[cpt], INFINITE);
 	}*/
-	for (unsigned int cpt = 0; cpt < clients.size(); cpt++)
+	for (unsigned int cpt = 0; cpt < clientApp.getAllClients().size(); cpt++)
 	{
 		DWORD* idThread = new DWORD();
 		//clients.push_back(new ClientSim());
 		ThreadParameters* param = new ThreadParameters();
 		param->sim = this;
-		param->client = clients[cpt];
+		param->noClient = cpt;
 		t[cpt] = CreateThread(0, 0, appelClient, param, 0, idThread);
 		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
-	WaitForMultipleObjects(clients.size(), t,true,INFINITE);
+	WaitForMultipleObjects(clientApp.getAllClients().size(), t, true, INFINITE);
 	journees[heures / 24].solde = clientApp.getMarcheAuxPuces()->getRevenu();
 	//cout << endl << "----------" << endl;
 	delete[] t;
@@ -93,7 +89,7 @@ HANDLE mutex=CreateMutex(NULL,false,NULL);
 DWORD WINAPI appelClient(LPVOID params)
 {
 	ThreadParameters* param = (ThreadParameters*)params;
-	param->sim->simulerClient(mutex,param->client);
+	param->sim->simulerClient(mutex,param->noClient);
 	return 0;
 }
 /*DWORD WINAPI Simulation::appelClient(LPVOID client)
@@ -107,7 +103,7 @@ int Simulation::getHeures()
 	return heures;
 }
 
-void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
+void Simulation::simulerClient(HANDLE mutex,int client)
 {
 	std::uniform_int_distribution<int> distribution(1, 24);
 	int chanceClient = distribution(Simulation::generator);
@@ -115,7 +111,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 	{
 		string transactionAFaire = "";
 		Vendeur* vnd = nullptr;
-		if (vnd = dynamic_cast<Superclient*>(Simulation::clientApp.getClient(client->getNum())))
+		if (vnd = dynamic_cast<Superclient*>(Simulation::clientApp.getClient(client)))
 		{
 			std::uniform_int_distribution<int> distribution2(1, 2);
 			int transac = distribution2(Simulation::generator);
@@ -129,11 +125,11 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			}
 
 		}
-		else if (vnd = dynamic_cast<Vendeur*>(Simulation::clientApp.getClient(client->getNum())))
+		else if (vnd = dynamic_cast<Vendeur*>(Simulation::clientApp.getClient(client)))
 		{
 			transactionAFaire = "V";
 		}
-		else if (dynamic_cast<Acheteur*>(Simulation::clientApp.getClient(client->getNum())))
+		else if (dynamic_cast<Acheteur*>(Simulation::clientApp.getClient(client)))
 		{
 			transactionAFaire = "A";
 		}
@@ -153,7 +149,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			size_t cpt;
 			for (cpt = 0; cpt < clientApp.getMarcheAuxPuces()->getArticlesEnVente().size(); cpt++)
 			{
-				if (clientApp.getClient(client->getNum())->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat()))
+				if (clientApp.getClient(client)->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat()))
 				{
 					break;
 				}
@@ -161,7 +157,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			if (cpt != clientApp.getMarcheAuxPuces()->getArticlesEnVente().size())
 			{
 				journees[heures / 24].totalVentes += clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat();
-				clientApp.venteArticleAuClient(cpt, client->getNum());
+				clientApp.venteArticleAuClient(cpt, client);
 				historiqueTransactions.push_back(clientApp.getMarcheAuxPuces()->getDerniereTransaction());
 				journees[heures / 24].nbrArticlesVendus++;
 			}
@@ -182,7 +178,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			if (cpt != vnd->getArticles().size())
 			{
 				journees[heures / 24].totalAchats += vnd->getArticles()[cpt]->getPrixEtat();
-				clientApp.venteArticleDuClient(cpt, client->getNum());
+				clientApp.venteArticleDuClient(cpt, client);
 				historiqueTransactions.push_back(vnd->getDerniereTransaction());
 				journees[heures / 24].nbrArticlesAchetes++;
 			}
@@ -241,23 +237,23 @@ void Simulation::ecrireSimulation()
 	}
 	totalGains = grandTotalVentes-grandTotalAchats;
 	journeesAEcrire += "Données globales\n";
-	journeesAEcrire += "Montant de départ: " + to_string(MONTANT_DEPART) + "\n";
+	journeesAEcrire += "Montant de départ: " + to_string(MONTANT_DEPART) + "$\n";
 	journeesAEcrire += "Durée: " + to_string(journees.size()) + " jours et " + to_string(heures % 24) + " heures\n";
 	journeesAEcrire += "Total des articles achetés: " + to_string(totalArticlesAchetes) + "\n";
 	journeesAEcrire += "Total des articles vendus: " + to_string(totalArticlesVendus) + "\n";
-	journeesAEcrire += "Grand total des achats: " + to_string(grandTotalAchats) + "\n";
-	journeesAEcrire += "Grand total des ventes: " + to_string(grandTotalVentes) + "\n";
-	journeesAEcrire += "Total des gains: " + to_string(totalGains) + "\n";
+	journeesAEcrire += "Grand total des achats: " + to_string(grandTotalAchats) + "$\n";
+	journeesAEcrire += "Grand total des ventes: " + to_string(grandTotalVentes) + "$\n";
+	journeesAEcrire += "Total des gains: " + to_string(totalGains) + "$\n";
 	journeesAEcrire += "---------\n";
 	for (size_t cpt = 0; cpt < journees.size(); cpt++)
 	{
 		journeesAEcrire += "Journée " + to_string(cpt + 1) + "\n";
-		journeesAEcrire += "Nombre d'articles achetés: " + to_string(journees[cpt].nbrArticlesAchetes) + "\n";
-		journeesAEcrire += "Nombre d'articles vendus: " + to_string(journees[cpt].nbrArticlesVendus) + "\n";
-		journeesAEcrire += "Total des achats: " + to_string(journees[cpt].totalAchats) + "$\n";
-		journeesAEcrire += "Total des ventes: " + to_string(journees[cpt].totalVentes) + "$\n";
+		journeesAEcrire += "Nombre d'articles achetés par le marché: " + to_string(journees[cpt].nbrArticlesAchetes) + "\n";
+		journeesAEcrire += "Nombre d'articles vendus par le marché: " + to_string(journees[cpt].nbrArticlesVendus) + "\n";
+		journeesAEcrire += "Total des achats du marché: " + to_string(journees[cpt].totalAchats) + "$\n";
+		journeesAEcrire += "Total des ventes du marché: " + to_string(journees[cpt].totalVentes) + "$\n";
 		journeesAEcrire += "Total des gains de la journée: " + to_string(journees[cpt].totalVentes-journees[cpt].totalAchats) + "$\n";
-		journeesAEcrire += "Solde actuel: " + to_string(journees[cpt].solde) + "\n";
+		journeesAEcrire += "Solde actuel: " + to_string(journees[cpt].solde) + "$\n";
 		journeesAEcrire += "---------\n";
 	}
 	Fichier::setContenuRaw(string("Simulation-Journées.txt"), journeesAEcrire);
@@ -265,7 +261,7 @@ void Simulation::ecrireSimulation()
 	string historique = "Historique des transactions\n-----\n";
 	for (size_t cpt = 0; cpt < historiqueTransactions.size(); cpt++)
 	{
-		historique += "Type de transaction: " + to_string(historiqueTransactions[cpt]->type) + "\n";
+		historique += "Type de transaction: " + string(1,historiqueTransactions[cpt]->type) + "\n";
 		historique += "Client: " + historiqueTransactions[cpt]->client->getNom() + ";"
 			+ historiqueTransactions[cpt]->client->getPrenom() + ";"
 			+ historiqueTransactions[cpt]->client->getAdresse() + "\n";
@@ -313,12 +309,12 @@ Article* Simulation::genererNouvelArticleAleatoire()
 		liPrixMaximum = 100000;
 	}
 
-	string lsNomArticle = "Article abc";
+	string lsNomArticle = "ArticleSim";
 
 	std::uniform_int_distribution<int> distributionPrix(liPrixMinimum, liPrixMaximum);
 	float lfPrix = (float)distributionPrix(Simulation::generator);
 
-	string lsDescription = "Lorem ipsum";
+	string lsDescription = "DescriptionArticle";
 
 	string etat = "-";
 	std::uniform_int_distribution<int> distributionEtat(1, 3);
@@ -357,6 +353,34 @@ void Simulation::ajouterNouvelEmployeAleatoire()
 	string forfait = "E";
 
 	clientApp.ajoutClient(nom, prenom, adresse, solde, forfait);
+}
+
+void Simulation::ajoutClient()
+{
+	std::uniform_int_distribution<int> distribution(1, 3);
+	int forfaitRand = distribution(Simulation::generator);
+	string forfait;
+	float min;
+	switch (forfaitRand)
+	{
+	case 1:
+		forfait = 'A';
+		min = Acheteur::FORFAIT;
+		break;
+	case 2:
+		forfait = 'V';
+		min = Vendeur::FORFAIT;
+		break;
+	case 3:
+		forfait = 'S';
+		min = Superclient::FORFAIT;
+		break;
+	default:
+		break;
+	}
+	std::uniform_int_distribution<int> distribution2((int)min, 1000000);
+	float solde = (float)distribution2(Simulation::generator);
+	clientApp.ajoutClient("NomSim"+to_string(clientApp.getAllClients().size()), "PrenomSim", "AdresseSim", solde, forfait);
 }
 
 int main()

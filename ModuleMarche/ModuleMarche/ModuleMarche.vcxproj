@@ -17,7 +17,6 @@
     <ClInclude Include="Bijou.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="ClientApp.h" />
-    <ClInclude Include="ClientSim.h" />
     <ClInclude Include="Compte.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Divers.h" />
@@ -45,7 +44,6 @@
     <ClCompile Include="Bijou.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientApp.cpp" />
-    <ClCompile Include="ClientSim.cpp" />
     <ClCompile Include="Compte.cpp" />
     <ClCompile Include="Divers.cpp" />
     <ClCompile Include="Employe.cpp" />
