@@ -11,6 +11,7 @@
 
 using std::vector;
 
+class Vendeur;
 class ClientApp;
 class Simulation
 {
@@ -29,8 +30,10 @@ public:
 	int getHeures();
 	void simulerClient(HANDLE,ClientSim*);
 	friend DWORD WINAPI appelClient(LPVOID);
-	void commanderArticlesManquants();
+	void commanderArticlesManquantsMarche();
+	void ajouterArticleManquantVendeur(Vendeur*);
 	void ecrireSimulation();
+	Article* genererNouvelArticleAleatoire();
 	~Simulation();
 };
 

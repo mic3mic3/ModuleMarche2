@@ -14,6 +14,7 @@
 #include <ctime>
 #include "FabriqueArticle.h"
 #include "Date.h"
+#include "Vendeur.h"
 using namespace std;
 
 ClientApp Simulation::clientApp;
@@ -99,8 +100,6 @@ int Simulation::getHeures()
 
 void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 {
-	
-
 	std::uniform_int_distribution<int> distribution(1, 24);
 	int chanceClient = distribution(Simulation::generator);
 	if (chanceClient == 1)
@@ -125,11 +124,10 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 		{
 			transactionAFaire = "V";
 		}
-		else if ((dynamic_cast<Acheteur*>(Simulation::clientApp.getClient(client->getNum()))))
+		else if (dynamic_cast<Acheteur*>(Simulation::clientApp.getClient(client->getNum())))
 		{
 			transactionAFaire = "A";
 		}
-		
 
 		//do something
 		WaitForSingleObject(mutex, INFINITE);
@@ -139,7 +137,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 		// On commande des articles au marché aux puces s'il en manque.
 		while (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
 		{
-			commanderArticlesManquants();
+			commanderArticlesManquantsMarche();
 		}
 		if (transactionAFaire == "A")
 		{
@@ -161,6 +159,8 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 		}
 		else if (transactionAFaire == "V")
 		{
+			ajouterArticleManquantVendeur(vnd);
+
 			size_t cpt;
 			for (cpt = 0; cpt < vnd->getArticles().size(); cpt++)
 			{
@@ -184,7 +184,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 	ReleaseMutex(mutex);
 }
 
-void Simulation::commanderArticlesManquants()
+void Simulation::commanderArticlesManquantsMarche()
 {
 	if (clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
 		return;
@@ -193,64 +193,20 @@ void Simulation::commanderArticlesManquants()
 	size_t liNombreArticlesAjout = 5;
 	for (size_t cptAjout = 1; cptAjout < liNombreArticlesAjout; cptAjout++)
 	{
-		int liPrixMinimum = 0;
-		int liPrixMaximum = 0;
+		clientApp.getMarcheAuxPuces()->ajouterArticle(genererNouvelArticleAleatoire());
+	}
+}
 
-		char lcType = '-';
-		std::uniform_int_distribution<int> distributionType(1, 3);
-		int liRandomType = distributionType(Simulation::generator);
-		if (liRandomType == 1)
-		{
-			lcType = 'D';
-			liPrixMinimum = 1;
-			liPrixMaximum = 15000;
-		}
-		else if (liRandomType == 2)
-		{
-			lcType = 'B';
-			liPrixMinimum = 10;
-			liPrixMaximum = 3000;
-		}
-		else if (liRandomType == 3)
-		{
-			lcType = 'V';
-			liPrixMinimum = 15000;
-			liPrixMaximum = 100000;
-		}
+void Simulation::ajouterArticleManquantVendeur(Vendeur* poVendeur)
+{
+	if (poVendeur->getArticles().size() > 0)
+		return;
 
-		string lsNomArticle = "Article abc";
-
-		std::uniform_int_distribution<int> distributionPrix(liPrixMinimum, liPrixMaximum);
-		float lfPrix = (float)distributionPrix(Simulation::generator);
-
-		string lsDescription = "Lorem ipsum";
-
-		string etat = "-";
-		std::uniform_int_distribution<int> distributionEtat(1, 3);
-		int liRandomEtat = distributionEtat(Simulation::generator);
-		if (liRandomEtat == 1)
-		{
-			etat = "Neuf";
-		}
-		else if (liRandomEtat == 2)
-		{
-			etat = "Usage";
-		}
-		else if (liRandomEtat == 3)
-		{
-			etat = "Materiaux";
-		}
-
-		struct Date loDateFabrication;
-		loDateFabrication.annee = 1900;
-		loDateFabrication.mois = 1;
-		loDateFabrication.jour = 1;
-
-		int liAttribut1 = 0;
-		string lsAttribut2 = "";
-		int liAttribut3 = 0;
-
-		clientApp.getMarcheAuxPuces()->ajouterArticle(FabriqueArticle::creationArticle(lcType, lsNomArticle, lfPrix, lsDescription, etat, loDateFabrication, liAttribut1, lsAttribut2, liAttribut3));
+	// On doit commander davantage d'articles.
+	size_t liNombreArticlesAjout = 5;
+	for (size_t cptAjout = 1; cptAjout < liNombreArticlesAjout; cptAjout++)
+	{
+		poVendeur->ajouterArticle(genererNouvelArticleAleatoire());
 	}
 }
 
@@ -279,3 +235,65 @@ void Simulation::ecrireSimulation()
 //	cout << "Fermeture de l'application..." << endl;
 //	return EXIT_SUCCESS;
 //}
+
+Article* Simulation::genererNouvelArticleAleatoire()
+{
+	int liPrixMinimum = 0;
+	int liPrixMaximum = 0;
+
+	char lcType = '-';
+	std::uniform_int_distribution<int> distributionType(1, 3);
+	int liRandomType = distributionType(Simulation::generator);
+	if (liRandomType == 1)
+	{
+		lcType = 'D';
+		liPrixMinimum = 1;
+		liPrixMaximum = 15000;
+	}
+	else if (liRandomType == 2)
+	{
+		lcType = 'B';
+		liPrixMinimum = 10;
+		liPrixMaximum = 3000;
+	}
+	else if (liRandomType == 3)
+	{
+		lcType = 'V';
+		liPrixMinimum = 15000;
+		liPrixMaximum = 100000;
+	}
+
+	string lsNomArticle = "Article abc";
+
+	std::uniform_int_distribution<int> distributionPrix(liPrixMinimum, liPrixMaximum);
+	float lfPrix = (float)distributionPrix(Simulation::generator);
+
+	string lsDescription = "Lorem ipsum";
+
+	string etat = "-";
+	std::uniform_int_distribution<int> distributionEtat(1, 3);
+	int liRandomEtat = distributionEtat(Simulation::generator);
+	if (liRandomEtat == 1)
+	{
+		etat = "Neuf";
+	}
+	else if (liRandomEtat == 2)
+	{
+		etat = "Usage";
+	}
+	else if (liRandomEtat == 3)
+	{
+		etat = "Materiaux";
+	}
+
+	struct Date loDateFabrication;
+	loDateFabrication.annee = 1900;
+	loDateFabrication.mois = 1;
+	loDateFabrication.jour = 1;
+
+	int liAttribut1 = 0;
+	string lsAttribut2 = "";
+	int liAttribut3 = 0;
+
+	return FabriqueArticle::creationArticle(lcType, lsNomArticle, lfPrix, lsDescription, etat, loDateFabrication, liAttribut1, lsAttribut2, liAttribut3);
+}
