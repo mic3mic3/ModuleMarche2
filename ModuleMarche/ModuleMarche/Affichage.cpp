@@ -213,7 +213,7 @@ void Affichage::menuInscription()
 	{
 		if (client == nullptr && !first)
 		{
-			cout << "Impossible de s'abonner à ce forfait." << endl;
+			cout << "Impossible de s'abonner a ce forfait." << endl;
 		}
 		cout << "Forfait (A = Acheteur -> 5$, V = Vendeur -> 20$, S = Superclient -> 25$ ou "+CS_EXIT_INPUT+" pour sortir): ";
 		getline(cin, forfait);
@@ -416,7 +416,7 @@ void Affichage::menuForfaits()
 		system("cls");
 		if (client == nullptr && !first)
 		{
-			cout << "Impossible de s'abonner à ce forfait" << endl;
+			cout << "Impossible de s'abonner a ce forfait" << endl;
 		}
 		cout << "Quel forfait voulez-vous? (" << CS_EXIT_INPUT << " pour sortir):" << endl;
 		cout << "A - Acheteur -> 5$" << endl;

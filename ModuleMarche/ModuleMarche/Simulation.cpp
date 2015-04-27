@@ -30,6 +30,10 @@ Simulation::Simulation() :MONTANT_DEPART(1000)
 
 Simulation::~Simulation()
 {
+	for (size_t cptClient = 0; cptClient < clients.size(); cptClient++)
+	{
+		delete clients[cptClient];
+	}
 }
 struct ThreadParameters
 {
