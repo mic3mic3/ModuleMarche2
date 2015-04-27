@@ -29,6 +29,7 @@ public:
 	~ClientApp(void);
 
 	static const string CS_NOM_MARCHE_AUX_PUCES;
+	static string getMontantFormate(float);
 
 	Client* getClient(int index) const;
 	string getCompte() const;

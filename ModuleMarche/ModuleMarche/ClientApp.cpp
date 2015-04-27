@@ -380,3 +380,9 @@ bool ClientApp::venteArticleAuClient(int piIndexArticle, int piIndexClient)
 
 	return true;
 }
+
+string ClientApp::getMontantFormate(float pfMontant)
+{
+	string lsMontant = to_string(pfMontant);
+	return lsMontant.substr(0, lsMontant.length() - 4) + "$";
+}
