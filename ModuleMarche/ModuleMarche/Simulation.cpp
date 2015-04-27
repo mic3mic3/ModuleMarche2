@@ -10,10 +10,7 @@
 #include "Employe.h"
 #include "Compte.h"
 #include "Article.h"
-#include <random>
 #include <ctime>
-#include "FabriqueArticle.h"
-#include "FabriqueClient.h"
 #include "Date.h"
 #include "Fichier.h"
 #include "Transaction.h"

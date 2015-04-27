@@ -27,7 +27,7 @@ public:
 	Simulation();
 	~Simulation();
 
-	// Gestion la simulation
+	// Mise à jour de la simulation
 	void miseAJour();
 	int getHeures();
 	void ecrireSimulation();
@@ -36,7 +36,7 @@ public:
 	void simulerClient(HANDLE,int);
 	friend DWORD WINAPI appelClient(LPVOID);
 
-	// Fonctionnement du faux marché simulé
+	// Gestion du faux marché simulé
 	Article* genererNouvelArticleAleatoire();
 	void ajouterNouvelEmployeAleatoire();
 	void ajoutClient();

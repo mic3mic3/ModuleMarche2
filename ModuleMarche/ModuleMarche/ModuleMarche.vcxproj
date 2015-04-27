@@ -29,6 +29,7 @@
     <ClInclude Include="FabriqueClient.h" />
     <ClInclude Include="ExceptionMarche.h" />
     <ClInclude Include="Fichier.h" />
+    <ClInclude Include="GestionSimulation.h" />
     <ClInclude Include="Journee.h" />
     <ClInclude Include="MarcheAuxPuces.h" />
     <ClInclude Include="Simulation.h" />
@@ -55,6 +56,7 @@
     <ClCompile Include="FabriqueClient.cpp" />
     <ClCompile Include="ExceptionMarche.cpp" />
     <ClCompile Include="Fichier.cpp" />
+    <ClCompile Include="GestionSimulation.cpp" />
     <ClCompile Include="MarcheAuxPuces.cpp" />
     <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="Superclient.cpp" />

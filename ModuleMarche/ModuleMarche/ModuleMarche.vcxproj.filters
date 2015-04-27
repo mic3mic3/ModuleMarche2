@@ -23,6 +23,7 @@
     <ClCompile Include="Vendeur.cpp" />
     <ClCompile Include="Voiture.cpp" />
     <ClCompile Include="Simulation.cpp" />
+    <ClCompile Include="GestionSimulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Acheteur.h" />
@@ -50,5 +51,6 @@
     <ClInclude Include="Voiture.h" />
     <ClInclude Include="Simulation.h" />
     <ClInclude Include="Journee.h" />
+    <ClInclude Include="GestionSimulation.h" />
   </ItemGroup>
 </Project>
