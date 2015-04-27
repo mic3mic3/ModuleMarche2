@@ -58,6 +58,7 @@ void ClientApp::setClient(Client* poClient,int index)
 	clients[index] = poClient;
 }
 
+//Ajout d'un client lorsqu'on utilise plusieurs clients à la fois (la simulation par exemple), dans l'Affichage, on appelle inscription()
 int ClientApp::ajoutClient(string nom, string prenom, string adresse, float solde, string forfait)
 {
 	Client* cliTemp = nullptr;
@@ -385,6 +386,8 @@ vector<Client*>& ClientApp::getAllClients()
 {
 	return clients;
 }
+
+//Garder seulement deux décimales après le transfert d'un float en string
 string ClientApp::getMontantFormate(float pfMontant)
 {
 	string lsMontant = to_string(pfMontant);

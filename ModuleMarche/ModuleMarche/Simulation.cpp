@@ -17,13 +17,12 @@
 
 using namespace std;
 
-ClientApp Simulation::clientApp;
 std::default_random_engine Simulation::generator;
 
 Simulation::Simulation() :MONTANT_DEPART(1000)
 {
-	clientApp = ClientApp();
-	clientApp.setMarcheAuxPuces(new MarcheAuxPuces("MarchéSimulation", "AdresseMarché", new Compte(MONTANT_DEPART)));
+	clientApp = new ClientApp();
+	clientApp->setMarcheAuxPuces(new MarcheAuxPuces("MarchéSimulation", "AdresseMarché", new Compte(MONTANT_DEPART)));
 	generator = default_random_engine((unsigned int)time(NULL));
 
 	// Génération d'employés aléatoires
@@ -35,9 +34,9 @@ Simulation::Simulation() :MONTANT_DEPART(1000)
 
 Simulation::~Simulation()
 {
-	
+	delete clientApp;
 }
-struct ThreadParameters
+struct ThreadParameters //Pour passer plusieurs paramètres dans les Thread
 {
 	Simulation* sim;
 	int noClient;
@@ -57,16 +56,11 @@ void Simulation::miseAJour()
 	int chanceClient = distribution(generator);
 	if (chanceClient == 1)
 	{
-		//DWORD* idThread = new DWORD();
 		ajoutClient();
-		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
-	HANDLE* t = new HANDLE[clientApp.getAllClients().size()];
-	/*for (unsigned int cpt = 0; cpt < threads.size(); cpt++)
-	{
-		WaitForSingleObject(threads[cpt], INFINITE);
-	}*/
-	for (unsigned int cpt = 0; cpt < clientApp.getAllClients().size(); cpt++)
+	HANDLE* t = new HANDLE[clientApp->getAllClients().size()];
+
+	for (unsigned int cpt = 0; cpt < clientApp->getAllClients().size(); cpt++)
 	{
 		DWORD* idThread = new DWORD();
 		//clients.push_back(new ClientSim());
@@ -74,11 +68,9 @@ void Simulation::miseAJour()
 		param->sim = this;
 		param->noClient = cpt;
 		t[cpt] = CreateThread(0, 0, appelClient, param, 0, idThread);
-		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
-	WaitForMultipleObjects(clientApp.getAllClients().size(), t, true, INFINITE);
-	journees[heures / 24].solde = clientApp.getMarcheAuxPuces()->getRevenu();
-	//cout << endl << "----------" << endl;
+	WaitForMultipleObjects(clientApp->getAllClients().size(), t, true, INFINITE);
+	journees[heures / 24].solde = clientApp->getMarcheAuxPuces()->getRevenu();
 	delete[] t;
 	heures++;
 }
@@ -89,11 +81,6 @@ DWORD WINAPI appelClient(LPVOID params)
 	param->sim->simulerClient(mutex,param->noClient);
 	return 0;
 }
-/*DWORD WINAPI Simulation::appelClient(LPVOID client)
-{
-	((ClientSim*)client)->miseAJour(mutex);
-	return 0;
-}*/
 
 int Simulation::getHeures()
 {
@@ -108,7 +95,7 @@ void Simulation::simulerClient(HANDLE mutex,int client)
 	{
 		string transactionAFaire = "";
 		Vendeur* vnd = nullptr;
-		if (vnd = dynamic_cast<Superclient*>(Simulation::clientApp.getClient(client)))
+		if (vnd = dynamic_cast<Superclient*>(Simulation::clientApp->getClient(client)))
 		{
 			std::uniform_int_distribution<int> distribution2(1, 2);
 			int transac = distribution2(Simulation::generator);
@@ -122,40 +109,38 @@ void Simulation::simulerClient(HANDLE mutex,int client)
 			}
 
 		}
-		else if (vnd = dynamic_cast<Vendeur*>(Simulation::clientApp.getClient(client)))
+		else if (vnd = dynamic_cast<Vendeur*>(Simulation::clientApp->getClient(client)))
 		{
 			transactionAFaire = "V";
 		}
-		else if (dynamic_cast<Acheteur*>(Simulation::clientApp.getClient(client)))
+		else if (dynamic_cast<Acheteur*>(Simulation::clientApp->getClient(client)))
 		{
 			transactionAFaire = "A";
 		}
 
-		//do something
 		WaitForSingleObject(mutex, INFINITE);
 
-		//cout << transactionAFaire;
 
 		// On commande des articles au marché aux puces s'il en manque.
-		while (!clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
+		while (!clientApp->getMarcheAuxPuces()->quantiteArticlesSuffisante())
 		{
 			commanderArticlesManquantsMarche();
 		}
 		if (transactionAFaire == "A")
 		{
 			size_t cpt;
-			for (cpt = 0; cpt < clientApp.getMarcheAuxPuces()->getArticlesEnVente().size(); cpt++)
+			for (cpt = 0; cpt < clientApp->getMarcheAuxPuces()->getArticlesEnVente().size(); cpt++)
 			{
-				if (clientApp.getClient(client)->validerCompte(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat()))
+				if (clientApp->getClient(client)->validerCompte(clientApp->getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat()))
 				{
 					break;
 				}
 			}
-			if (cpt != clientApp.getMarcheAuxPuces()->getArticlesEnVente().size())
+			if (cpt != clientApp->getMarcheAuxPuces()->getArticlesEnVente().size())
 			{
-				journees[heures / 24].totalVentes += clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat();
-				clientApp.venteArticleAuClient(cpt, client);
-				historiqueTransactions.push_back(clientApp.getMarcheAuxPuces()->getDerniereTransaction());
+				journees[heures / 24].totalVentes += clientApp->getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat();
+				clientApp->venteArticleAuClient(cpt, client);
+				historiqueTransactions.push_back(clientApp->getMarcheAuxPuces()->getDerniereTransaction());
 				journees[heures / 24].nbrArticlesVendus++;
 			}
 			//client->achat();
@@ -167,7 +152,7 @@ void Simulation::simulerClient(HANDLE mutex,int client)
 			size_t cpt;
 			for (cpt = 0; cpt < vnd->getArticles().size(); cpt++)
 			{
-				if (clientApp.getMarcheAuxPuces()->validerCompte(vnd->getArticles()[cpt]->getPrixEtat()))
+				if (clientApp->getMarcheAuxPuces()->validerCompte(vnd->getArticles()[cpt]->getPrixEtat()))
 				{
 					break;
 				}
@@ -175,7 +160,7 @@ void Simulation::simulerClient(HANDLE mutex,int client)
 			if (cpt != vnd->getArticles().size())
 			{
 				journees[heures / 24].totalAchats += vnd->getArticles()[cpt]->getPrixEtat();
-				clientApp.venteArticleDuClient(cpt, client);
+				clientApp->venteArticleDuClient(cpt, client);
 				historiqueTransactions.push_back(vnd->getDerniereTransaction());
 				journees[heures / 24].nbrArticlesAchetes++;
 			}
@@ -183,24 +168,19 @@ void Simulation::simulerClient(HANDLE mutex,int client)
 		
 
 	}
-	//WaitForSingleObject(mutex,INFINITE);
-	
-	//cout << endl << "Mise a jour: " << client->getNum();
-
-	//do something with mutex
 	ReleaseMutex(mutex);
 }
 
 void Simulation::commanderArticlesManquantsMarche()
 {
-	if (clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
+	if (clientApp->getMarcheAuxPuces()->quantiteArticlesSuffisante())
 		return;
 
 	// On doit commander davantage d'articles.
 	size_t liNombreArticlesAjout = 5;
 	for (size_t cptAjout = 1; cptAjout < liNombreArticlesAjout; cptAjout++)
 	{
-		clientApp.getMarcheAuxPuces()->ajouterArticle(genererNouvelArticleAleatoire());
+		clientApp->getMarcheAuxPuces()->ajouterArticle(genererNouvelArticleAleatoire());
 	}
 }
 
@@ -216,9 +196,10 @@ void Simulation::ajouterArticleManquantVendeur(Vendeur* poVendeur)
 		poVendeur->ajouterArticle(genererNouvelArticleAleatoire());
 	}
 }
-
+//On écrit les données dans des fichiers
 void Simulation::ecrireSimulation()
 {
+	//On écrit premièrement le fichier des journées
 	string journeesAEcrire = "";
 	int totalArticlesAchetes = 0;
 	int totalArticlesVendus = 0;
@@ -255,6 +236,7 @@ void Simulation::ecrireSimulation()
 	}
 	Fichier::setContenuRaw(string("Simulation-Journées.txt"), journeesAEcrire);
 
+	//On écrit le fichier des historiques
 	string historique = "Historique des transactions\n-----\n";
 	for (size_t cpt = 0; cpt < historiqueTransactions.size(); cpt++)
 	{
@@ -349,7 +331,7 @@ void Simulation::ajouterNouvelEmployeAleatoire()
 	float solde = 5000;
 	string forfait = "E";
 
-	clientApp.ajoutClient(nom, prenom, adresse, solde, forfait);
+	clientApp->ajoutClient(nom, prenom, adresse, solde, forfait);
 }
 
 void Simulation::ajoutClient()
@@ -377,7 +359,7 @@ void Simulation::ajoutClient()
 	}
 	std::uniform_int_distribution<int> distribution2((int)min, 1000000);
 	float solde = (float)distribution2(Simulation::generator);
-	clientApp.ajoutClient("NomSim"+to_string(clientApp.getAllClients().size()), "PrenomSim", "AdresseSim", solde, forfait);
+	clientApp->ajoutClient("NomSim"+to_string(clientApp->getAllClients().size()), "PrenomSim", "AdresseSim", solde, forfait);
 }
 
 int main()
