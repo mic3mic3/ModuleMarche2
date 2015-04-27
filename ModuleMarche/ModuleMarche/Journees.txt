@@ -1,0 +1,64 @@
+Données globales
+Montant de départ: 1000.000000
+Durée: 7jours et 0 heuresTotal des articles achetés: 4
+Total des articles vendus: 33
+Grand total des achats: 20951.150391
+Grand total des ventes: 511040.750000
+Total des gains: 490089.593750
+---------
+Journée 1
+Nombre d'articles achetés: 0
+Nombre d'articles vendus: 1
+Total des achats: 0.000000$
+Total des ventes: 27538.000000$
+Total des gains de la journée: 27538.000000$
+Solde actuel: 488749.718750
+---------
+Journée 2
+Nombre d'articles achetés: 0
+Nombre d'articles vendus: 0
+Total des achats: 0.000000$
+Total des ventes: 0.000000$
+Total des gains de la journée: 0.000000$
+Solde actuel: 488749.718750
+---------
+Journée 3
+Nombre d'articles achetés: 0
+Nombre d'articles vendus: 6
+Total des achats: 0.000000$
+Total des ventes: 79544.148438$
+Total des gains de la journée: 79544.148438$
+Solde actuel: 488749.718750
+---------
+Journée 4
+Nombre d'articles achetés: 1
+Nombre d'articles vendus: 6
+Total des achats: 10414.000000$
+Total des ventes: 40803.449219$
+Total des gains de la journée: 30389.449219$
+Solde actuel: 488749.718750
+---------
+Journée 5
+Nombre d'articles achetés: 0
+Nombre d'articles vendus: 4
+Total des achats: 0.000000$
+Total des ventes: 132884.000000$
+Total des gains de la journée: 132884.000000$
+Solde actuel: 488749.718750
+---------
+Journée 6
+Nombre d'articles achetés: 1
+Nombre d'articles vendus: 9
+Total des achats: 23.400000$
+Total des ventes: 126083.453125$
+Total des gains de la journée: 126060.054688$
+Solde actuel: 488749.718750
+---------
+Journée 7
+Nombre d'articles achetés: 2
+Nombre d'articles vendus: 7
+Total des achats: 10513.750000$
+Total des ventes: 104187.703125$
+Total des gains de la journée: 93673.953125$
+Solde actuel: 488749.718750
+---------

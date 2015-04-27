@@ -29,6 +29,7 @@ public:
 	static string getContenuFormatePourPourEcriture(vector<vector<string>>&);
 	static vector<vector<string>> getContenu(const string&);
 	static bool setContenu(string&, vector<vector<string>>&);
+	static bool setContenuRaw(string&, const string&);
 	static bool fichierExistant(string&);
 };
 
