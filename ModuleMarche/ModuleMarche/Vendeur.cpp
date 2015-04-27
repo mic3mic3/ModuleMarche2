@@ -48,7 +48,7 @@ void Vendeur::ajouterTransaction(int pos,MarcheAuxPuces* c,Article* a)
 	trans->date = date;
 	trans->type = Transaction::CC_VENTE_PAR_CLIENT;
 	transactionsEffectuees.push_back(trans); //On ajoute la Transaction dans le vecteur des transactions
-	getCompte()->ajouterMontant(a->getPrix()); //On augmente le revenu avec le prix de l'article vendu
+	getCompte()->ajouterMontant(a->getPrixEtat()); //On augmente le revenu avec le prix de l'article vendu
 	enleverArticle(pos); //On appelle la fonction qui enlève l'article du vecteur des articles disponibles
 }
 

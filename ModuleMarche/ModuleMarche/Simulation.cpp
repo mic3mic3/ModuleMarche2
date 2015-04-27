@@ -15,6 +15,7 @@
 #include "FabriqueArticle.h"
 #include "Date.h"
 #include "Fichier.h"
+#include "Transaction.h"
 
 using namespace std;
 
@@ -77,6 +78,7 @@ void Simulation::miseAJour()
 		//threads.push_back(CreateThread(0, 0, appelClient, client, 0, idThread));
 	}
 	WaitForMultipleObjects(clients.size(), t,true,INFINITE);
+	journees[heures / 24].solde = clientApp.getMarcheAuxPuces()->getRevenu();
 	//cout << endl << "----------" << endl;
 	delete[] t;
 	heures++;
@@ -157,6 +159,7 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			{
 				journees[heures / 24].totalVentes += clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat();
 				clientApp.venteArticleAuClient(cpt, client->getNum());
+				historiqueTransactions.push_back(clientApp.getMarcheAuxPuces()->getDerniereTransaction());
 				journees[heures / 24].nbrArticlesVendus++;
 			}
 			//client->achat();
@@ -175,11 +178,15 @@ void Simulation::simulerClient(HANDLE mutex,ClientSim* client)
 			{
 				journees[heures / 24].totalAchats += vnd->getArticles()[cpt]->getPrixEtat();
 				clientApp.venteArticleDuClient(cpt, client->getNum());
+				historiqueTransactions.push_back(vnd->getDerniereTransaction());
 				journees[heures / 24].nbrArticlesAchetes++;
 			}
 		}
+		
+
 	}
-	WaitForSingleObject(mutex,INFINITE);
+	//WaitForSingleObject(mutex,INFINITE);
+	
 	//cout << endl << "Mise a jour: " << client->getNum();
 
 	//do something with mutex
@@ -274,7 +281,7 @@ void Simulation::ecrireSimulation()
 	totalGains = grandTotalVentes-grandTotalAchats;
 	journeesAEcrire += "Données globales\n";
 	journeesAEcrire += "Montant de départ: " + to_string(MONTANT_DEPART) + "\n";
-	journeesAEcrire += "Durée: " + to_string(journees.size()) + "jours et " + to_string(heures % 24) + " heures";
+	journeesAEcrire += "Durée: " + to_string(journees.size()) + " jours et " + to_string(heures % 24) + " heures\n";
 	journeesAEcrire += "Total des articles achetés: " + to_string(totalArticlesAchetes) + "\n";
 	journeesAEcrire += "Total des articles vendus: " + to_string(totalArticlesVendus) + "\n";
 	journeesAEcrire += "Grand total des achats: " + to_string(grandTotalAchats) + "\n";
@@ -289,31 +296,51 @@ void Simulation::ecrireSimulation()
 		journeesAEcrire += "Total des achats: " + to_string(journees[cpt].totalAchats) + "$\n";
 		journeesAEcrire += "Total des ventes: " + to_string(journees[cpt].totalVentes) + "$\n";
 		journeesAEcrire += "Total des gains de la journée: " + to_string(journees[cpt].totalVentes-journees[cpt].totalAchats) + "$\n";
-		journeesAEcrire += "Solde actuel: " + to_string(clientApp.getMarcheAuxPuces()->getRevenu()) + "\n";
+		journeesAEcrire += "Solde actuel: " + to_string(journees[cpt].solde) + "\n";
 		journeesAEcrire += "---------\n";
 	}
-	Fichier::setContenuRaw(string("Journees.txt"), journeesAEcrire);
+	Fichier::setContenuRaw(string("Simulation-Journées.txt"), journeesAEcrire);
 
-	string historique = "";
+	string historique = "Historique des transactions\n-----\n";
+	for (size_t cpt = 0; cpt < historiqueTransactions.size(); cpt++)
+	{
+		historique += "Type de transaction: " + to_string(historiqueTransactions[cpt]->type) + "\n";
+		historique += "Client: " + historiqueTransactions[cpt]->client->getNom() + ";"
+			+ historiqueTransactions[cpt]->client->getPrenom() + ";"
+			+ historiqueTransactions[cpt]->client->getAdresse() + "\n";
+		historique += "Marche: " + historiqueTransactions[cpt]->marche->getNom() + ";"
+			+ historiqueTransactions[cpt]->marche->getAdresse() + "\n";
+		historique += "Article: " + historiqueTransactions[cpt]->article->getNom() + ";"
+			+ to_string(historiqueTransactions[cpt]->article->getPrix()) + ";"
+			+ historiqueTransactions[cpt]->article->getDescription() + ";"
+			+ historiqueTransactions[cpt]->article->getEtat()->getDescription() + ";"
+			+ to_string(historiqueTransactions[cpt]->article->getDate().jour) + "/"
+			+ to_string(historiqueTransactions[cpt]->article->getDate().mois) + "/"
+			+ to_string(historiqueTransactions[cpt]->article->getDate().annee) + "\n";
+		historique += "Date: " + to_string(historiqueTransactions[cpt]->date.jour) + "/"
+			+ to_string(historiqueTransactions[cpt]->date.mois) + "/"
+			+ to_string(historiqueTransactions[cpt]->date.annee) + "\n";
+		historique += "-----\n";
+	}
+	Fichier::setContenuRaw(string("Simulation-Historique_Transactions.txt"), historique);
 }
 
-//int main()
-//{
-//	//Affichage::menuDemarrer();
-//	srand(static_cast<int>(time(0)));
-//	Simulation simu;
-//
-//	// Simulation d'une semaine
-//	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
-//	{
-//		for (int cpt = 1; cpt <= 24; cpt++)
-//		{
-//			simu.miseAJour();
-//		}
-//	}
-//
-//	simu.ecrireSimulation();
-//
-//	cout << "Fermeture de l'application..." << endl;
-//	return EXIT_SUCCESS;
-//}
+int main()
+{
+	//Affichage::menuDemarrer();
+	Simulation simu;
+
+	// Simulation d'une semaine
+	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
+	{
+		for (int cpt = 1; cpt <= 24; cpt++)
+		{
+			simu.miseAJour();
+		}
+	}
+
+	simu.ecrireSimulation();
+
+	cout << "Fermeture de l'application..." << endl;
+	return EXIT_SUCCESS;
+}

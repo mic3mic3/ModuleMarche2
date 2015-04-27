@@ -23,6 +23,7 @@ public:
 	static std::default_random_engine generator;
 	const float MONTANT_DEPART;
 	vector<Journee> journees;
+	vector<Transaction*> historiqueTransactions;
 
 	Simulation();
 	void miseAJour();

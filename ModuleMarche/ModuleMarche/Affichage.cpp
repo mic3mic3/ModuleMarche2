@@ -788,23 +788,23 @@ void Affichage::menuCategories()
 	if (trans)
 	{
 		trans << "Client: " 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().client->getNom() << ";" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().client->getPrenom() << ";" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().client->getAdresse() << "\n";
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->client->getNom() << ";" 
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->client->getPrenom() << ";"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->client->getAdresse() << "\n";
 		trans << "Marche: " 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().marche->getNom() << ";" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().marche->getAdresse() << "\n";
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->marche->getNom() << ";"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->marche->getAdresse() << "\n";
 		trans << "Article: " 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().article->getNom() << ";" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().article->getPrix() << ";" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().article->getDescription() << ";" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().article->getEtat()->getDescription() << ";" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().article->getDate().jour << "/" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().article->getDate().mois << "/" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().article->getDate().annee << "\n";
-		trans << "Date: " << clientApp.getMarcheAuxPuces()->getDerniereTransaction().date.jour << "/" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().date.mois << "/" 
-			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction().date.annee << "\n";
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->article->getNom() << ";"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->article->getPrix() << ";"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->article->getDescription() << ";"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->article->getEtat()->getDescription() << ";"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->article->getDate().jour << "/"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->article->getDate().mois << "/"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->article->getDate().annee << "\n";
+		trans << "Date: " << clientApp.getMarcheAuxPuces()->getDerniereTransaction()->date.jour << "/"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->date.mois << "/"
+			<< clientApp.getMarcheAuxPuces()->getDerniereTransaction()->date.annee << "\n";
 		trans << "-----\n";
 	}
 	trans.close();
@@ -1098,26 +1098,26 @@ vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 	return loEmployes;
 }
 
-int main()
-{
-	Affichage::menuDemarrer();
-	//srand(static_cast<int>(time(0)));
-	//Simulation simu;
-	
-	// Simulation d'une semaine
-	//for (size_t cptJour = 1; cptJour <= 7; cptJour++)
-	//{
-	//	for (int cpt = 1; cpt <= 24; cpt++)
-	//	{
-	//		simu.miseAJour();
-	//	}
-	//}
-
-	cout << "Fermeture de l'application..." << endl;
-
-	Affichage::attendreTouche();
-	return EXIT_SUCCESS;
-}
+//int main()
+//{
+//	Affichage::menuDemarrer();
+//	//srand(static_cast<int>(time(0)));
+//	//Simulation simu;
+//	
+//	// Simulation d'une semaine
+//	//for (size_t cptJour = 1; cptJour <= 7; cptJour++)
+//	//{
+//	//	for (int cpt = 1; cpt <= 24; cpt++)
+//	//	{
+//	//		simu.miseAJour();
+//	//	}
+//	//}
+//
+//	cout << "Fermeture de l'application..." << endl;
+//
+//	Affichage::attendreTouche();
+//	return EXIT_SUCCESS;
+//}
 
 void Affichage::attendreTouche()
 {

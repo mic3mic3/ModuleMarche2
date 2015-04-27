@@ -39,9 +39,9 @@ MarcheAuxPuces::~MarcheAuxPuces(void)
 	//On ne fait que remettre les pointeurs à NULL puis les sortir du vecteur
 	while(!transactionsEffectuees.empty())
 	{
-		transactionsEffectuees.back().article = NULL;
-		transactionsEffectuees.back().client = NULL;
-		transactionsEffectuees.back().marche = NULL;
+		transactionsEffectuees.back()->article = NULL;
+		transactionsEffectuees.back()->client = NULL;
+		transactionsEffectuees.back()->marche = NULL;
 		transactionsEffectuees.pop_back();
 	}
 	delete compte;
@@ -92,12 +92,12 @@ void MarcheAuxPuces::ajouterTransaction(int pos,Client* c,Article* a)
 	date.mois = local->tm_mon + 1;		// Les mois sont de 0 à 11
 	date.annee = local->tm_year + 1900; //Les années commencent à 1900 (0 -> 1900)
 
-	struct Transaction trans;
-	trans.client = c;
-	trans.article = a;
-	trans.marche = this;
-	trans.date = date;
-	trans.type = Transaction::CC_ACHAT_PAR_CLIENT;
+	struct Transaction* trans = new Transaction();
+	trans->client = c;
+	trans->article = a;
+	trans->marche = this;
+	trans->date = date;
+	trans->type = Transaction::CC_ACHAT_PAR_CLIENT;
 	transactionsEffectuees.push_back(trans); //On ajoute la Transaction dans le vecteur des transactions
 	float lfPourcentagePrix = 1.0;
 	if (Employe* emp = dynamic_cast<Employe*>(c))
@@ -123,14 +123,14 @@ float MarcheAuxPuces::getRevenu() const
 	return compte->getSolde();
 }
 
-struct Transaction MarcheAuxPuces::getDerniereTransaction() const
+struct Transaction* MarcheAuxPuces::getDerniereTransaction() const
 {
 	return transactionsEffectuees.back();
 }
 
 void MarcheAuxPuces::acheter(Article* a)
 {
-	compte->soustraireMontant(a->getPrix());	
+	compte->soustraireMontant(a->getPrixEtat());	
 	ajouterArticle(a);
 }
 
