@@ -1,65 +1,65 @@
 Données globales
 Montant de départ: 1000.00$
 Durée: 7 jours et 0 heures
-Total des articles achetés par le marché: 15
+Total des articles achetés par le marché: 7
 Total des articles vendus par le marché: 55
-Grand total des achats: 159980.00$
-Grand total des ventes: 479411.68$
-Total des gains: 319431.68$
+Grand total des achats: 117983.25$
+Grand total des ventes: 768379.62$
+Total des gains: 650396.37$
 ---------
 Journée 1
-Nombre d'articles achetés par le marché: 2
-Nombre d'articles vendus par le marché: 9
-Total des achats du marché: 17247.00$
-Total des ventes du marché: 58685.50$
-Total des gains de la journée: 41438.50$
-Solde actuel: 42433.21$
+Nombre d'articles achetés par le marché: 0
+Nombre d'articles vendus par le marché: 8
+Total des achats du marché: 0.00$
+Total des ventes du marché: 89157.50$
+Total des gains de la journée: 89157.50$
+Solde actuel: 90155.20$
 ---------
 Journée 2
 Nombre d'articles achetés par le marché: 0
-Nombre d'articles vendus par le marché: 11
+Nombre d'articles vendus par le marché: 4
 Total des achats du marché: 0.00$
-Total des ventes du marché: 44148.99$
-Total des gains de la journée: 44148.99$
-Solde actuel: 86581.82$
+Total des ventes du marché: 7995.95$
+Total des gains de la journée: 7995.95$
+Solde actuel: 98150.73$
 ---------
 Journée 3
 Nombre d'articles achetés par le marché: 0
-Nombre d'articles vendus par le marché: 4
+Nombre d'articles vendus par le marché: 11
 Total des achats du marché: 0.00$
-Total des ventes du marché: 1213.00$
-Total des gains de la journée: 1213.00$
-Solde actuel: 87794.22$
+Total des ventes du marché: 30876.09$
+Total des gains de la journée: 30876.09$
+Solde actuel: 129023.10$
 ---------
 Journée 4
 Nombre d'articles achetés par le marché: 0
-Nombre d'articles vendus par le marché: 6
+Nombre d'articles vendus par le marché: 5
 Total des achats du marché: 0.00$
-Total des ventes du marché: 20932.59$
-Total des gains de la journée: 20932.59$
-Solde actuel: 108726.48$
+Total des ventes du marché: 118663.00$
+Total des gains de la journée: 118663.00$
+Solde actuel: 247684.60$
 ---------
 Journée 5
-Nombre d'articles achetés par le marché: 4
+Nombre d'articles achetés par le marché: 2
 Nombre d'articles vendus par le marché: 7
-Total des achats du marché: 51424.00$
-Total des ventes du marché: 179122.40$
-Total des gains de la journée: 127698.40$
-Solde actuel: 236424.43$
+Total des achats du marché: 52453.19$
+Total des ventes du marché: 112409.50$
+Total des gains de la journée: 59956.30$
+Solde actuel: 307640.31$
 ---------
 Journée 6
-Nombre d'articles achetés par le marché: 4
-Nombre d'articles vendus par le marché: 6
-Total des achats du marché: 4802.50$
-Total des ventes du marché: 40616.19$
-Total des gains de la journée: 35813.69$
-Solde actuel: 272236.81$
+Nombre d'articles achetés par le marché: 2
+Nombre d'articles vendus par le marché: 10
+Total des achats du marché: 3081.55$
+Total des ventes du marché: 163699.54$
+Total des gains de la journée: 160618.00$
+Solde actuel: 468257.68$
 ---------
 Journée 7
-Nombre d'articles achetés par le marché: 5
-Nombre d'articles vendus par le marché: 12
-Total des achats du marché: 86506.50$
-Total des ventes du marché: 134693.00$
-Total des gains de la journée: 48186.50$
-Solde actuel: 320421.93$
+Nombre d'articles achetés par le marché: 3
+Nombre d'articles vendus par le marché: 10
+Total des achats du marché: 62448.50$
+Total des ventes du marché: 245578.00$
+Total des gains de la journée: 183129.50$
+Solde actuel: 651387.18$
 ---------

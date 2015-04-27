@@ -2,11 +2,10 @@
 #define GESTION_SIMULATION_H
 
 #include <vector>
-#include <Windows.h>
-#include <random>
 
 // Cette classe gère le contenu d'un simulation (nombre d'employé, nombre d'articles, etc.)
 class ClientApp;
+class Vendeur;
 class Article;
 class GestionSimulation
 {
@@ -14,8 +13,7 @@ private:
 	ClientApp* clientApp;
 
 public:
-	static std::default_random_engine generator;
-
+	GestionSimulation();
 	GestionSimulation(ClientApp*);
 	~GestionSimulation();
 

@@ -1,4 +1,4 @@
-#include "Simulation.h"
+#include "GestionSimulation.h"
 
 #include <Windows.h>
 #include <winnt.h>
@@ -14,11 +14,9 @@
 #include "FabriqueClient.h"
 #include "Date.h"
 #include "Transaction.h"
-#include "GestionSimulation.h"
-using namespace std;
+#include "Simulation.h"
 
-ClientApp Simulation::clientApp;
-std::default_random_engine Simulation::generator;
+using namespace std;
 
 // On passe en paramètre le clientApp de la simulation.  Ainsi, on va gérer dans cette classe le contenu et le bon
 // fonctionnement, comme par exemple le nombre d'articles restant, la création des employés, etc.
@@ -27,25 +25,30 @@ GestionSimulation::GestionSimulation(ClientApp* poClientApp)
 	clientApp = poClientApp;
 }
 
-Simulation::~Simulation()
+GestionSimulation::GestionSimulation()
+{
+
+}
+
+GestionSimulation::~GestionSimulation()
 {
 	// Attention, ne pas détruire le clientApp ici, ça se fait dans Simulation
 }
 
-void Simulation::commanderArticlesManquantsMarche()
+void GestionSimulation::commanderArticlesManquantsMarche()
 {
-	if (clientApp.getMarcheAuxPuces()->quantiteArticlesSuffisante())
+	if (clientApp->getMarcheAuxPuces()->quantiteArticlesSuffisante())
 		return;
 
 	// On doit commander davantage d'articles.
 	size_t liNombreArticlesAjout = 5;
 	for (size_t cptAjout = 1; cptAjout < liNombreArticlesAjout; cptAjout++)
 	{
-		clientApp.getMarcheAuxPuces()->ajouterArticle(genererNouvelArticleAleatoire());
+		clientApp->getMarcheAuxPuces()->ajouterArticle(genererNouvelArticleAleatoire());
 	}
 }
 
-void Simulation::ajouterArticleManquantVendeur(Vendeur* poVendeur)
+void GestionSimulation::ajouterArticleManquantVendeur(Vendeur* poVendeur)
 {
 	if (poVendeur->getArticles().size() > 0)
 		return;
@@ -58,7 +61,7 @@ void Simulation::ajouterArticleManquantVendeur(Vendeur* poVendeur)
 	}
 }
 
-Article* Simulation::genererNouvelArticleAleatoire()
+Article* GestionSimulation::genererNouvelArticleAleatoire()
 {
 	int liPrixMinimum = 0;
 	int liPrixMaximum = 0;
@@ -120,7 +123,7 @@ Article* Simulation::genererNouvelArticleAleatoire()
 	return FabriqueArticle::creationArticle(lcType, lsNomArticle, lfPrix, lsDescription, etat, loDateFabrication, liAttribut1, lsAttribut2, liAttribut3);
 }
 
-void Simulation::ajouterNouvelEmployeAleatoire()
+void GestionSimulation::ajouterNouvelEmployeAleatoire()
 {
 	string nom = "Employe abc";
 	string prenom = "prenom abc";
@@ -128,10 +131,10 @@ void Simulation::ajouterNouvelEmployeAleatoire()
 	float solde = 5000;
 	string forfait = "E";
 
-	clientApp.ajoutClient(nom, prenom, adresse, solde, forfait);
+	clientApp->ajoutClient(nom, prenom, adresse, solde, forfait);
 }
 
-void Simulation::ajoutClient()
+void GestionSimulation::ajoutClient()
 {
 	std::uniform_int_distribution<int> distribution(1, 3);
 	int forfaitRand = distribution(Simulation::generator);
@@ -156,5 +159,5 @@ void Simulation::ajoutClient()
 	}
 	std::uniform_int_distribution<int> distribution2((int)min, 1000000);
 	float solde = (float)distribution2(Simulation::generator);
-	clientApp.ajoutClient("NomSim" + to_string(clientApp.getAllClients().size()), "PrenomSim", "AdresseSim", solde, forfait);
+	clientApp->ajoutClient("NomSim" + to_string(clientApp->getAllClients().size()), "PrenomSim", "AdresseSim", solde, forfait);
 }

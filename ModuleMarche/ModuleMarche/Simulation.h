@@ -7,17 +7,18 @@
 #include "MarcheAuxPuces.h"
 #include <random>
 #include "Journee.h"
+#include "GestionSimulation.h"
 
 using std::vector;
 
 class Vendeur;
 class ClientApp;
-class SimulationGestion;
+//class GestionSimulation;
 class Simulation
 {
 private:
 	int heures;
-	SimulationGestion simulationGestion;
+	GestionSimulation gestionSimulation;
 	ClientApp* clientApp;
 
 public:
@@ -37,13 +38,6 @@ public:
 	// Threads des clients
 	void simulerClient(HANDLE,int);
 	friend DWORD WINAPI appelClient(LPVOID);
-
-	// Gestion du faux marché simulé
-	Article* genererNouvelArticleAleatoire();
-	void ajouterNouvelEmployeAleatoire();
-	void ajoutClient();
-	void commanderArticlesManquantsMarche();
-	void ajouterArticleManquantVendeur(Vendeur*);
 };
 
 #endif

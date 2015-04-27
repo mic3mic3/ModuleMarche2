@@ -14,6 +14,7 @@
 #include "Date.h"
 #include "Fichier.h"
 #include "Transaction.h"
+#include "GestionSimulation.h"
 
 using namespace std;
 
@@ -22,13 +23,14 @@ std::default_random_engine Simulation::generator;
 Simulation::Simulation() :MONTANT_DEPART(1000)
 {
 	clientApp = new ClientApp();
+	gestionSimulation = GestionSimulation(clientApp);
 	clientApp->setMarcheAuxPuces(new MarcheAuxPuces("MarchéSimulation", "AdresseMarché", new Compte(MONTANT_DEPART)));
 	generator = default_random_engine((unsigned int)time(NULL));
 
 	// Génération d'employés aléatoires
 	for (size_t cptEmploye = 1; cptEmploye <= 5; cptEmploye++)
 	{
-		ajouterNouvelEmployeAleatoire();
+		gestionSimulation.ajouterNouvelEmployeAleatoire();
 	}
 }
 
@@ -56,7 +58,7 @@ void Simulation::miseAJour()
 	int chanceClient = distribution(generator);
 	if (chanceClient == 1)
 	{
-		ajoutClient();
+		gestionSimulation.ajoutClient();
 	}
 	HANDLE* t = new HANDLE[clientApp->getAllClients().size()];
 
@@ -124,7 +126,7 @@ void Simulation::simulerClient(HANDLE mutex,int client)
 		// On commande des articles au marché aux puces s'il en manque.
 		while (!clientApp->getMarcheAuxPuces()->quantiteArticlesSuffisante())
 		{
-			commanderArticlesManquantsMarche();
+			gestionSimulation.commanderArticlesManquantsMarche();
 		}
 		if (transactionAFaire == "A")
 		{
@@ -147,7 +149,7 @@ void Simulation::simulerClient(HANDLE mutex,int client)
 		}
 		else if (transactionAFaire == "V")
 		{
-			ajouterArticleManquantVendeur(vnd);
+			gestionSimulation.ajouterArticleManquantVendeur(vnd);
 
 			size_t cpt;
 			for (cpt = 0; cpt < vnd->getArticles().size(); cpt++)
@@ -165,37 +167,10 @@ void Simulation::simulerClient(HANDLE mutex,int client)
 				journees[heures / 24].nbrArticlesAchetes++;
 			}
 		}
-		
-
 	}
 	ReleaseMutex(mutex);
 }
 
-void Simulation::commanderArticlesManquantsMarche()
-{
-	if (clientApp->getMarcheAuxPuces()->quantiteArticlesSuffisante())
-		return;
-
-	// On doit commander davantage d'articles.
-	size_t liNombreArticlesAjout = 5;
-	for (size_t cptAjout = 1; cptAjout < liNombreArticlesAjout; cptAjout++)
-	{
-		clientApp->getMarcheAuxPuces()->ajouterArticle(genererNouvelArticleAleatoire());
-	}
-}
-
-void Simulation::ajouterArticleManquantVendeur(Vendeur* poVendeur)
-{
-	if (poVendeur->getArticles().size() > 0)
-		return;
-
-	// On doit commander davantage d'articles.
-	size_t liNombreArticlesAjout = 5;
-	for (size_t cptAjout = 1; cptAjout < liNombreArticlesAjout; cptAjout++)
-	{
-		poVendeur->ajouterArticle(genererNouvelArticleAleatoire());
-	}
-}
 //On écrit les données dans des fichiers
 void Simulation::ecrireSimulation()
 {
@@ -259,107 +234,6 @@ void Simulation::ecrireSimulation()
 		historique += "-----\n";
 	}
 	Fichier::setContenuRaw(string("Simulation-Historique_Transactions.txt"), historique);
-}
-
-Article* Simulation::genererNouvelArticleAleatoire()
-{
-	int liPrixMinimum = 0;
-	int liPrixMaximum = 0;
-
-	char lcType = '-';
-	std::uniform_int_distribution<int> distributionType(1, 3);
-	int liRandomType = distributionType(Simulation::generator);
-	if (liRandomType == 1)
-	{
-		lcType = 'D';
-		liPrixMinimum = 1;
-		liPrixMaximum = 15000;
-	}
-	else if (liRandomType == 2)
-	{
-		lcType = 'B';
-		liPrixMinimum = 10;
-		liPrixMaximum = 3000;
-	}
-	else if (liRandomType == 3)
-	{
-		lcType = 'V';
-		liPrixMinimum = 15000;
-		liPrixMaximum = 100000;
-	}
-
-	string lsNomArticle = "ArticleSim";
-
-	std::uniform_int_distribution<int> distributionPrix(liPrixMinimum, liPrixMaximum);
-	float lfPrix = (float)distributionPrix(Simulation::generator);
-
-	string lsDescription = "DescriptionArticle";
-
-	string etat = "-";
-	std::uniform_int_distribution<int> distributionEtat(1, 3);
-	int liRandomEtat = distributionEtat(Simulation::generator);
-	if (liRandomEtat == 1)
-	{
-		etat = "Neuf";
-	}
-	else if (liRandomEtat == 2)
-	{
-		etat = "Usage";
-	}
-	else if (liRandomEtat == 3)
-	{
-		etat = "Materiaux";
-	}
-
-	struct Date loDateFabrication;
-	loDateFabrication.annee = 1900;
-	loDateFabrication.mois = 1;
-	loDateFabrication.jour = 1;
-
-	int liAttribut1 = 0;
-	string lsAttribut2 = "";
-	int liAttribut3 = 0;
-
-	return FabriqueArticle::creationArticle(lcType, lsNomArticle, lfPrix, lsDescription, etat, loDateFabrication, liAttribut1, lsAttribut2, liAttribut3);
-}
-
-void Simulation::ajouterNouvelEmployeAleatoire()
-{
-	string nom = "Employe abc";
-	string prenom = "prenom abc";
-	string adresse = "111 rue adresse";
-	float solde = 5000;
-	string forfait = "E";
-
-	clientApp->ajoutClient(nom, prenom, adresse, solde, forfait);
-}
-
-void Simulation::ajoutClient()
-{
-	std::uniform_int_distribution<int> distribution(1, 3);
-	int forfaitRand = distribution(Simulation::generator);
-	string forfait;
-	float min;
-	switch (forfaitRand)
-	{
-	case 1:
-		forfait = 'A';
-		min = Acheteur::FORFAIT;
-		break;
-	case 2:
-		forfait = 'V';
-		min = Vendeur::FORFAIT;
-		break;
-	case 3:
-		forfait = 'S';
-		min = Superclient::FORFAIT;
-		break;
-	default:
-		break;
-	}
-	std::uniform_int_distribution<int> distribution2((int)min, 1000000);
-	float solde = (float)distribution2(Simulation::generator);
-	clientApp->ajoutClient("NomSim"+to_string(clientApp->getAllClients().size()), "PrenomSim", "AdresseSim", solde, forfait);
 }
 
 int main()
