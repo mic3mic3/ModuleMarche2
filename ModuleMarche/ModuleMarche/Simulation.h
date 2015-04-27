@@ -18,9 +18,9 @@ class Simulation
 private:
 	int heures;
 	SimulationGestion simulationGestion;
+	ClientApp* clientApp;
 
 public:
-	static ClientApp clientApp;
 	static std::default_random_engine generator;
 	const float MONTANT_DEPART;
 	vector<Journee> journees;
