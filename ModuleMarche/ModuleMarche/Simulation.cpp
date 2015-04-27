@@ -23,6 +23,7 @@ std::default_random_engine Simulation::generator;
 Simulation::Simulation() :MONTANT_DEPART(1000)
 {
 	clientApp = ClientApp();
+	SimulationGestion
 	clientApp.setMarcheAuxPuces(new MarcheAuxPuces("MarchéSimulation", "AdresseMarché", new Compte(MONTANT_DEPART)));
 	generator = default_random_engine((unsigned int)time(NULL));
 

@@ -12,10 +12,12 @@ using std::vector;
 
 class Vendeur;
 class ClientApp;
+class SimulationGestion;
 class Simulation
 {
 private:
 	int heures;
+	SimulationGestion simulationGestion;
 
 public:
 	static ClientApp clientApp;
