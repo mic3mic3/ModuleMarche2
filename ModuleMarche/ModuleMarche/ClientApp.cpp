@@ -60,11 +60,19 @@ void ClientApp::setClient(Client* poClient,int index)
 
 int ClientApp::ajoutClient(string nom, string prenom, string adresse, float solde, string forfait)
 {
-	Client* cliTemp = FabriqueClient::creationClient(nom, prenom, adresse, solde, forfait);
-	if (cliTemp == nullptr)
+	Client* cliTemp = nullptr;
+	if (forfait == "E")
 	{
-		return -1;
+		cliTemp = new Employe(nom, prenom, adresse, new Compte(solde), 10.0, 0.05);
 	}
+	else
+	{
+		cliTemp = FabriqueClient::creationClient(nom, prenom, adresse, solde, forfait);
+	}
+
+	if (cliTemp == nullptr)
+		return -1;
+
 	clients.push_back(cliTemp);
 	return clients.size() - 1;
 }
