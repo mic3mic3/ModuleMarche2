@@ -25,17 +25,23 @@ public:
 	vector<Transaction*> historiqueTransactions;
 
 	Simulation();
+	~Simulation();
+
+	// Gestion la simulation
 	void miseAJour();
 	int getHeures();
+	void ecrireSimulation();
+
+	// Threads des clients
 	void simulerClient(HANDLE,int);
 	friend DWORD WINAPI appelClient(LPVOID);
-	void commanderArticlesManquantsMarche();
-	void ajouterArticleManquantVendeur(Vendeur*);
-	void ecrireSimulation();
+
+	// Fonctionnement du faux marché simulé
 	Article* genererNouvelArticleAleatoire();
 	void ajouterNouvelEmployeAleatoire();
 	void ajoutClient();
-	~Simulation();
+	void commanderArticlesManquantsMarche();
+	void ajouterArticleManquantVendeur(Vendeur*);
 };
 
 #endif
