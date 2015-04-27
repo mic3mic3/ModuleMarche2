@@ -237,6 +237,7 @@ void Simulation::ecrireSimulation()
 	}
 	totalGains = grandTotalVentes-grandTotalAchats;
 	journeesAEcrire += "Données globales\n";
+<<<<<<< HEAD
 	journeesAEcrire += "Montant de départ: " + to_string(MONTANT_DEPART) + "$\n";
 	journeesAEcrire += "Durée: " + to_string(journees.size()) + " jours et " + to_string(heures % 24) + " heures\n";
 	journeesAEcrire += "Total des articles achetés: " + to_string(totalArticlesAchetes) + "\n";
@@ -244,16 +245,34 @@ void Simulation::ecrireSimulation()
 	journeesAEcrire += "Grand total des achats: " + to_string(grandTotalAchats) + "$\n";
 	journeesAEcrire += "Grand total des ventes: " + to_string(grandTotalVentes) + "$\n";
 	journeesAEcrire += "Total des gains: " + to_string(totalGains) + "$\n";
+=======
+	journeesAEcrire += "Montant de départ: " + ClientApp::getMontantFormate(MONTANT_DEPART) + "\n";
+	journeesAEcrire += "Durée: " + to_string(journees.size()) + " jours et " + to_string(heures % 24) + " heures\n";
+	journeesAEcrire += "Total des articles achetés: " + to_string(totalArticlesAchetes) + "\n";
+	journeesAEcrire += "Total des articles vendus: " + to_string(totalArticlesVendus) + "\n";
+	journeesAEcrire += "Grand total des achats: " + ClientApp::getMontantFormate(grandTotalAchats) + "\n";
+	journeesAEcrire += "Grand total des ventes: " + ClientApp::getMontantFormate(grandTotalVentes) + "\n";
+	journeesAEcrire += "Total des gains: " + ClientApp::getMontantFormate(totalGains) + "\n";
+>>>>>>> origin/master
 	journeesAEcrire += "---------\n";
 	for (size_t cpt = 0; cpt < journees.size(); cpt++)
 	{
 		journeesAEcrire += "Journée " + to_string(cpt + 1) + "\n";
+<<<<<<< HEAD
 		journeesAEcrire += "Nombre d'articles achetés par le marché: " + to_string(journees[cpt].nbrArticlesAchetes) + "\n";
 		journeesAEcrire += "Nombre d'articles vendus par le marché: " + to_string(journees[cpt].nbrArticlesVendus) + "\n";
 		journeesAEcrire += "Total des achats du marché: " + to_string(journees[cpt].totalAchats) + "$\n";
 		journeesAEcrire += "Total des ventes du marché: " + to_string(journees[cpt].totalVentes) + "$\n";
 		journeesAEcrire += "Total des gains de la journée: " + to_string(journees[cpt].totalVentes-journees[cpt].totalAchats) + "$\n";
 		journeesAEcrire += "Solde actuel: " + to_string(journees[cpt].solde) + "$\n";
+=======
+		journeesAEcrire += "Nombre d'articles achetés: " + to_string(journees[cpt].nbrArticlesAchetes) + "\n";
+		journeesAEcrire += "Nombre d'articles vendus: " + to_string(journees[cpt].nbrArticlesVendus) + "\n";
+		journeesAEcrire += "Total des achats: " + ClientApp::getMontantFormate(journees[cpt].totalAchats) + "\n";
+		journeesAEcrire += "Total des ventes: " + ClientApp::getMontantFormate(journees[cpt].totalVentes) + "\n";
+		journeesAEcrire += "Total des gains de la journée: " + ClientApp::getMontantFormate(journees[cpt].totalVentes - journees[cpt].totalAchats) + "\n";
+		journeesAEcrire += "Solde actuel: " + ClientApp::getMontantFormate(journees[cpt].solde) + "\n";
+>>>>>>> origin/master
 		journeesAEcrire += "---------\n";
 	}
 	Fichier::setContenuRaw(string("Simulation-Journées.txt"), journeesAEcrire);
@@ -268,7 +287,7 @@ void Simulation::ecrireSimulation()
 		historique += "Marche: " + historiqueTransactions[cpt]->marche->getNom() + ";"
 			+ historiqueTransactions[cpt]->marche->getAdresse() + "\n";
 		historique += "Article: " + historiqueTransactions[cpt]->article->getNom() + ";"
-			+ to_string(historiqueTransactions[cpt]->article->getPrix()) + ";"
+			+ ClientApp::getMontantFormate(historiqueTransactions[cpt]->article->getPrix()) + ";"
 			+ historiqueTransactions[cpt]->article->getDescription() + ";"
 			+ historiqueTransactions[cpt]->article->getEtat()->getDescription() + ";"
 			+ to_string(historiqueTransactions[cpt]->article->getDate().jour) + "/"

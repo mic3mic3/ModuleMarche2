@@ -1,4 +1,5 @@
 Données globales
+<<<<<<< HEAD
 Montant de départ: 1000.000000$
 Durée: 7 jours et 0 heures
 Total des articles achetés: 25
@@ -62,4 +63,69 @@ Total des achats du marché: 21201.000000$
 Total des ventes du marché: 34342.699219$
 Total des gains de la journée: 13141.699219$
 Solde actuel: 30986.351563$
+=======
+Montant de départ: 1000.00$
+Durée: 7 jours et 0 heures
+Total des articles achetés: 22
+Total des articles vendus: 50
+Grand total des achats: 110644.60$
+Grand total des ventes: 448128.25$
+Total des gains: 337483.65$
+---------
+Journée 1
+Nombre d'articles achetés: 1
+Nombre d'articles vendus: 1
+Total des achats: 1349.00$
+Total des ventes: 1349.00$
+Total des gains de la journée: 0.00$
+Solde actuel: 1000.00$
+---------
+Journée 2
+Nombre d'articles achetés: 3
+Nombre d'articles vendus: 4
+Total des achats: 625.50$
+Total des ventes: 54309.19$
+Total des gains de la journée: 53683.69$
+Solde actuel: 54683.69$
+---------
+Journée 3
+Nombre d'articles achetés: 0
+Nombre d'articles vendus: 3
+Total des achats: 0.00$
+Total des ventes: 37200.50$
+Total des gains de la journée: 37200.50$
+Solde actuel: 91884.20$
+---------
+Journée 4
+Nombre d'articles achetés: 3
+Nombre d'articles vendus: 6
+Total des achats: 27995.50$
+Total des ventes: 77162.10$
+Total des gains de la journée: 49166.60$
+Solde actuel: 141050.79$
+---------
+Journée 5
+Nombre d'articles achetés: 7
+Nombre d'articles vendus: 14
+Total des achats: 40204.94$
+Total des ventes: 220775.50$
+Total des gains de la journée: 180570.54$
+Solde actuel: 321621.34$
+---------
+Journée 6
+Nombre d'articles achetés: 3
+Nombre d'articles vendus: 12
+Total des achats: 4036.00$
+Total des ventes: 50656.94$
+Total des gains de la journée: 46620.94$
+Solde actuel: 368242.28$
+---------
+Journée 7
+Nombre d'articles achetés: 5
+Nombre d'articles vendus: 10
+Total des achats: 36433.64$
+Total des ventes: 6675.00$
+Total des gains de la journée: -29758.64$
+Solde actuel: 338483.62$
+>>>>>>> origin/master
 ---------

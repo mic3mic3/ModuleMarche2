@@ -1,5 +1,6 @@
 Historique des transactions
 -----
+<<<<<<< HEAD
 Type de transaction: V
 Client: NomSim1;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
@@ -298,5 +299,437 @@ Type de transaction: V
 Client: NomSim4;PrenomSim;AdresseSim
 Marche: MarchéSimulation;AdresseMarché
 Article: Article abc;27068.000000;Lorem ipsum;Usage;1/1/1900
+=======
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2698.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;2698.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;229.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2464.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;51223.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;511.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;10438.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2963.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;2888.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;49201.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;9907.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;12600.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2203.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;10438.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;75819.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;8951.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;55391.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;66532.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2109.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2698.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;229.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;511.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2888.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;73182.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;2963.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;10272.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;13287.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;11952.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;868.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;20298.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;1059.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;5961.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;10438.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;75819.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;55391.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;73697.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2146.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;17073.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;76429.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;10484.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;9907.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2963.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;13287.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;868.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;1059.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;3419.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;5961.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;573.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;76409.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;19610.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;12421.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;12063.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;17073.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;9907.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;9102.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;95795.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;634.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2593.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;387.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;3419.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;76409.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;134.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;68.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;2203.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;2146.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;192.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;1263.00$;Lorem ipsum;Neuf;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;70473.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;806.00$;Lorem ipsum;Usage;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;11228.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 65
+Client: ;;
+Marche: ;
+Article: Article abc;3372.00$;Lorem ipsum;Materiaux;1/1/1900
+Date: 26/4/2015
+-----
+Type de transaction: 86
+Client: ;;
+Marche: ;
+Article: Article abc;828.00$;Lorem ipsum;Neuf;1/1/1900
+>>>>>>> origin/master
 Date: 26/4/2015
 -----
