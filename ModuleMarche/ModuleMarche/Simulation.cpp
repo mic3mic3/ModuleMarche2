@@ -13,6 +13,7 @@
 #include <random>
 #include <ctime>
 #include "FabriqueArticle.h"
+#include "FabriqueClient.h"
 #include "Date.h"
 #include "Fichier.h"
 
@@ -27,7 +28,12 @@ Simulation::Simulation() :MONTANT_DEPART(1000)
 	clientApp.setMarcheAuxPuces(new MarcheAuxPuces("", "", new Compte(MONTANT_DEPART)));
 	generator = default_random_engine(time(NULL));
 	//srand(time(NULL));
-	
+
+	// Génération d'employés aléatoires
+	for (size_t cptEmploye = 1; cptEmploye <= 5; cptEmploye++)
+	{
+		ajouterNouvelEmployeAleatoire();
+	}
 }
 
 Simulation::~Simulation()
@@ -252,26 +258,25 @@ void Simulation::ecrireSimulation()
 	string historique = "";
 }
 
-//int main()
-//{
-//	//Affichage::menuDemarrer();
-//	srand(static_cast<int>(time(0)));
-//	Simulation simu;
-//
-//	// Simulation d'une semaine
-//	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
-//	{
-//		for (int cpt = 1; cpt <= 24; cpt++)
-//		{
-//			simu.miseAJour();
-//		}
-//	}
-//
-//	simu.ecrireSimulation();
-//
-//	cout << "Fermeture de l'application..." << endl;
-//	return EXIT_SUCCESS;
-//}
+int main()
+{
+	srand(static_cast<int>(time(0)));
+	Simulation simu;
+
+	// Simulation d'une semaine
+	for (size_t cptJour = 1; cptJour <= 7; cptJour++)
+	{
+		for (int cpt = 1; cpt <= 24; cpt++)
+		{
+			simu.miseAJour();
+		}
+	}
+
+	simu.ecrireSimulation();
+
+	cout << "Fermeture de l'application..." << endl;
+	return EXIT_SUCCESS;
+}
 
 Article* Simulation::genererNouvelArticleAleatoire()
 {
@@ -333,4 +338,15 @@ Article* Simulation::genererNouvelArticleAleatoire()
 	int liAttribut3 = 0;
 
 	return FabriqueArticle::creationArticle(lcType, lsNomArticle, lfPrix, lsDescription, etat, loDateFabrication, liAttribut1, lsAttribut2, liAttribut3);
+}
+
+void Simulation::ajouterNouvelEmployeAleatoire()
+{
+	string nom = "Employe abc";
+	string prenom = "prenom abc";
+	string adresse = "111 rue adresse";
+	float solde = 5000;
+	string forfait = "E";
+
+	clientApp.ajoutClient(nom, prenom, adresse, solde, forfait);
 }

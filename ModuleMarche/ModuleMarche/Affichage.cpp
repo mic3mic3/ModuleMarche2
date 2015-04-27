@@ -1098,26 +1098,15 @@ vector<Fichier> Affichage::getEntreesEmploye(const Fichier& poNomCompteEmploye)
 	return loEmployes;
 }
 
-int main()
-{
-	Affichage::menuDemarrer();
-	//srand(static_cast<int>(time(0)));
-	//Simulation simu;
-	
-	// Simulation d'une semaine
-	//for (size_t cptJour = 1; cptJour <= 7; cptJour++)
-	//{
-	//	for (int cpt = 1; cpt <= 24; cpt++)
-	//	{
-	//		simu.miseAJour();
-	//	}
-	//}
-
-	cout << "Fermeture de l'application..." << endl;
-
-	Affichage::attendreTouche();
-	return EXIT_SUCCESS;
-}
+//int main()
+//{
+//	Affichage::menuDemarrer();
+//
+//	cout << "Fermeture de l'application..." << endl;
+//
+//	Affichage::attendreTouche();
+//	return EXIT_SUCCESS;
+//}
 
 void Affichage::attendreTouche()
 {

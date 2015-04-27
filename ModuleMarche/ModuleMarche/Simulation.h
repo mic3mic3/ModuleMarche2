@@ -34,6 +34,7 @@ public:
 	void ajouterArticleManquantVendeur(Vendeur*);
 	void ecrireSimulation();
 	Article* genererNouvelArticleAleatoire();
+	void ajouterNouvelEmployeAleatoire();
 	~Simulation();
 };
 
