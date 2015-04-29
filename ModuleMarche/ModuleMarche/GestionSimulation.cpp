@@ -65,7 +65,7 @@ Article* GestionSimulation::genererNouvelArticleAleatoire()
 {
 	int liPrixMinimum = 0;
 	int liPrixMaximum = 0;
-
+	string lsNomArticle = "";
 	char lcType = '-';
 	std::uniform_int_distribution<int> distributionType(1, 3);
 	int liRandomType = distributionType(Simulation::generator);
@@ -74,21 +74,24 @@ Article* GestionSimulation::genererNouvelArticleAleatoire()
 		lcType = 'D';
 		liPrixMinimum = 1;
 		liPrixMaximum = 15000;
+		lsNomArticle = "DiversSim";
 	}
 	else if (liRandomType == 2)
 	{
 		lcType = 'B';
 		liPrixMinimum = 10;
 		liPrixMaximum = 3000;
+		lsNomArticle = "BijouSim";
 	}
 	else if (liRandomType == 3)
 	{
 		lcType = 'V';
 		liPrixMinimum = 15000;
 		liPrixMaximum = 100000;
+		lsNomArticle = "VoitureSim";
 	}
 
-	string lsNomArticle = "ArticleSim";
+	
 
 	std::uniform_int_distribution<int> distributionPrix(liPrixMinimum, liPrixMaximum);
 	float lfPrix = (float)distributionPrix(Simulation::generator);

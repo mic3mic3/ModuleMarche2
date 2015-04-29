@@ -1052,7 +1052,7 @@ void Affichage::menuVenteArticles()
 			if (div = dynamic_cast<Divers*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
 			{
 				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";D;" 
-					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" 
 					<< date << "\n";
@@ -1060,7 +1060,7 @@ void Affichage::menuVenteArticles()
 			else if (bij = dynamic_cast<Bijou*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
 			{
 				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";B;" 
-					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" 
 					<< date << ";" 
@@ -1070,7 +1070,7 @@ void Affichage::menuVenteArticles()
 			else if (voit = dynamic_cast<Voiture*>(clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]))
 			{
 				marche << clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getNom() << ";V;" 
-					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrix() << ";" 
+					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getPrixEtat() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getDescription() << ";" 
 					<< clientApp.getMarcheAuxPuces()->getArticlesEnVente()[cpt]->getEtat()->getDescription() << ";" 
 					<< date << ";" 

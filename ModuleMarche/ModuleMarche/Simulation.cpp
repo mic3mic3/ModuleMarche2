@@ -222,7 +222,7 @@ void Simulation::ecrireSimulation()
 		historique += "Marche: " + historiqueTransactions[cpt]->marche->getNom() + ";"
 			+ historiqueTransactions[cpt]->marche->getAdresse() + "\n";
 		historique += "Article: " + historiqueTransactions[cpt]->article->getNom() + ";"
-			+ ClientApp::getMontantFormate(historiqueTransactions[cpt]->article->getPrix()) + ";"
+			+ ClientApp::getMontantFormate(historiqueTransactions[cpt]->article->getPrixEtat()) + ";"
 			+ historiqueTransactions[cpt]->article->getDescription() + ";"
 			+ historiqueTransactions[cpt]->article->getEtat()->getDescription() + ";"
 			+ to_string(historiqueTransactions[cpt]->article->getDate().jour) + "/"
